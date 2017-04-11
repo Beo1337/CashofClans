@@ -2,7 +2,8 @@
     <string name="app_name">CashofClans</string>
     <string name="title_activity_einstellungen">Einstellungen</string>
     <string name="title_activity_add">AddActivity</string>
-    <string name="title_activity_kategorie">KategorieActivity</string>
+    <string name="title_activity_category">Kategorien</string>
     <string name="default_waehrung">€</string>
     <string name="title_activity_statistik">StatistikActivity</string>
+    <string name="action_category_add">Hinzufügen</string>
 </resources>

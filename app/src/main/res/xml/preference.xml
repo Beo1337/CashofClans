@@ -17,7 +17,7 @@
     <Preference android:title="Kategorien" >
         <intent android:action="android.intent.action.VIEW"
             android:targetPackage="com.example.seps.cashofclans"
-            android:targetClass="com.example.seps.cashofclans.CategoryActivity"/>
+            android:targetClass="com.cashify.category.CategoryActivity"/>
     </Preference>
     <Preference android:title="monatliche Beiträge" >
         <intent android:action="android.intent.action.VIEW"

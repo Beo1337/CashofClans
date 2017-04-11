@@ -29,8 +29,8 @@
             android:label="@string/title_activity_statistik"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".CategoryActivity"
-            android:label="@string/title_activity_kategorie"
+            android:name="com.cashify.category.CategoryActivity"
+            android:label="@string/title_activity_category"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

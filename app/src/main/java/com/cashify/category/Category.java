@@ -13,6 +13,6 @@ public class Category {
     }
 
     public String getName() {
-        return this.getName();
+        return this.categoryName;
     }
 }
