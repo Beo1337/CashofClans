@@ -7,6 +7,7 @@
     android:fitsSystemWindows="false"
     tools:context="com.example.seps.cashofclans.CategoryActivity">
 
-    <include layout="@layout/content_category" />
+    <include layout="@layout/content_category"
+        android:id="@+id/include3" />
 
 </android.support.design.widget.CoordinatorLayout>
