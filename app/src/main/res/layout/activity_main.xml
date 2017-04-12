@@ -39,8 +39,9 @@
         android:layout_height="220dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:columnCount="3"
+        android:columnCount="6"
         android:rowCount="2"
+        android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
@@ -51,30 +52,65 @@
 
         <ImageButton
             android:id="@+id/imageButton3"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:background="none"
             android:onClick="add"
-            app:srcCompat="@drawable/favorit3" />
+            app:srcCompat="@drawable/icon_shoppingcart" />
 
         <ImageButton
             android:id="@+id/imageButton2"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:background="none"
             android:onClick="add"
-            app:srcCompat="@drawable/favorit2" />
+            app:srcCompat="@drawable/icon_beer" />
 
         <ImageButton
             android:id="@+id/imageButton"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:background="none"
             android:onClick="add"
-            app:srcCompat="@drawable/favorit1" />
+            app:srcCompat="@drawable/icon_sport" />
+
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:background="none"
+            android:onClick="add"
+            app:srcCompat="@drawable/icon_clothes" />
+
+        <ImageButton
+            android:id="@+id/imageButton5"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:background="none"
+            android:onClick="add"
+            app:srcCompat="@drawable/icon_school" />
+
+        <ImageButton
+            android:id="@+id/imageButton6"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:background="none"
+            android:onClick="add"
+            app:srcCompat="@drawable/icon_movie" />
+
+
     </GridLayout>
 
     <Button
@@ -83,6 +119,7 @@
         android:layout_height="wrap_content"
         android:text="+"
         android:onClick="add"
+        android:textSize="30dp"
         android:layout_marginLeft="66dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="64dp"
@@ -94,6 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="-"
+        android:textSize="30dp"
         android:onClick="add"
         android:layout_marginRight="65dp"
         app:layout_constraintRight_toRightOf="parent"
