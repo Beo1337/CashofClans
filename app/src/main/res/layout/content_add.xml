@@ -51,94 +51,6 @@
         app:layout_constraintVertical_bias="0.112" />
 
 
-    <GridLayout
-        android:layout_width="wrap_content"
-        android:layout_height="361dp"
-        android:columnCount="3"
-        android:rowCount="4"
-        app:layout_constraintTop_toBottomOf="@+id/Betrag"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="141dp">
-
-        <Button
-            android:id="@+id/Button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1"
-            android:onClick="add1"/>
-        <Button
-            android:id="@+id/Button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2"
-            android:onClick="add2"/>
-        <Button
-            android:id="@+id/Button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3"
-            android:onClick="add3"/>
-        <Button
-            android:id="@+id/Button4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="4"
-            android:onClick="add4"/>
-        <Button
-            android:id="@+id/Button5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5"
-            android:onClick="add5"/>
-        <Button
-            android:id="@+id/Button6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="6"
-            android:onClick="add6"/>
-        <Button
-            android:id="@+id/Button7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="7"
-            android:onClick="add7"/>
-        <Button
-            android:id="@+id/Button8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="8"
-            android:onClick="add8"/>
-        <Button
-            android:id="@+id/Button9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="9"
-            android:onClick="add9"/>
-        <Button
-            android:id="@+id/Button."
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="."
-            android:onClick="addDot"/>
-        <Button
-            android:id="@+id/Button0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:onClick="add0"/>
-        <Button
-            android:id="@+id/ButtonCommit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="eintrag"
-            android:onClick="eintragen"/>
-
-
-    </GridLayout>
-
     <ImageButton
         android:id="@+id/imageButton4"
         android:layout_width="50dp"
@@ -152,6 +64,105 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="193dp"
         app:layout_constraintHorizontal_bias="0.555" />
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="361dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="52dp"
+        android:columnCount="3"
+        android:rowCount="4"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Betrag">
+
+        <Button
+            android:id="@+id/Button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="add1"
+            android:text="1" />
+
+        <Button
+            android:id="@+id/Button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="add2"
+            android:text="2" />
+
+        <Button
+            android:id="@+id/Button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="add3"
+            android:text="3" />
+
+        <Button
+            android:id="@+id/Button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="add4"
+            android:text="4" />
+
+        <Button
+            android:id="@+id/Button5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="add5"
+            android:text="5" />
+
+        <Button
+            android:id="@+id/Button6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="add6"
+            android:text="6" />
+
+        <Button
+            android:id="@+id/Button7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="add7"
+            android:text="7" />
+
+        <Button
+            android:id="@+id/Button8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="add8"
+            android:text="8" />
+
+        <Button
+            android:id="@+id/Button9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="add9"
+            android:text="9" />
+
+        <Button
+            android:id="@+id/Button."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="addDot"
+            android:text="." />
+
+        <Button
+            android:id="@+id/Button0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="add0"
+            android:text="0" />
+
+        <Button
+            android:id="@+id/ButtonCommit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="eintragen"
+            android:text="eintrag" />
+
+
+    </GridLayout>
 
 
 </android.support.constraint.ConstraintLayout>
