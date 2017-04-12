@@ -1,5 +1,7 @@
 package com.cashify.category;
 
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.cashify.category.CategoryAdapter;
@@ -59,5 +62,18 @@ public class CategoryActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.category_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_category_add:
+                DialogFragment addFragment = new CategoryAddFragment();
+                addFragment.show(getSupportFragmentManager(), "category_add_diag");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
