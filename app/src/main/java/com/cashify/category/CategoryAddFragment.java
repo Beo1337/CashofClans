@@ -1,23 +1,33 @@
 package com.cashify.category;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.support.v4.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-
-import com.example.seps.cashofclans.R;
+import android.text.InputType;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class CategoryAddFragment extends DialogFragment {
+
+    private AddDialogListener listener;
+    private TextView catNameTextView;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.dialog_category_add, null));
+        EditText input = new EditText(getContext());
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        //TODO: Fix magic strings
         builder.setTitle("Kategorie hinzufügen")
                 .setPositiveButton("Hinzufügen", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        //TODO: Needs a bunch of safety checks
+                        listener.onCategoryAdd(input.getText().toString());
                     }
                 })
                 .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
@@ -25,5 +35,16 @@ public class CategoryAddFragment extends DialogFragment {
                     }
                 });
         return builder.create();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            listener = (AddDialogListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement NoticeDialogListener");
+        }
     }
 }

@@ -1,7 +1,6 @@
 package com.cashify.category;
 
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.cashify.category.CategoryAdapter;
 import com.cashify.category.CategoryManager;
@@ -25,7 +23,7 @@ import com.example.seps.cashofclans.R;
 // - delete categories
 // See specification
 // TODO: revisit 15 APR 2017 at the latest
-public class CategoryActivity extends AppCompatActivity {
+public class CategoryActivity extends AppCompatActivity implements AddDialogListener {
 
     private RecyclerView catRecycleView;
     private LinearLayoutManager layoutManager;
@@ -66,7 +64,6 @@ public class CategoryActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_category_add:
                 DialogFragment addFragment = new CategoryAddFragment();
@@ -75,5 +72,10 @@ public class CategoryActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onCategoryAdd(String categoryName) {
+        (new CategoryManager()).addCategory(categoryName);
     }
 }

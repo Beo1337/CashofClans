@@ -42,4 +42,9 @@ public class CategoryManager {
     public int getCount() {
         return categoryList.size();
     }
+
+    public boolean addCategory(String name) {
+        categoryList.add(new Category(name));
+        return true;
+    }
 }
