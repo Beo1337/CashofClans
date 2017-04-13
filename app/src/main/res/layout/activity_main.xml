@@ -46,7 +46,6 @@
         android:layout_marginLeft="64dp"
         android:layout_marginStart="64dp"
         android:background="none"
-        android:backgroundTint="none"
         android:onClick="add"
         android:text="+"
         android:textSize="30dp"
