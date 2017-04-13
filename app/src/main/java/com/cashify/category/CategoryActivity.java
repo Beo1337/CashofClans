@@ -14,6 +14,8 @@ import android.view.MenuItem;
 
 import com.example.seps.cashofclans.R;
 
+import butterknife.BindView;
+
 // Category view consists rn of a RecycleView and a non-functional floating add button.
 // Provided functionality:
 // - add new categories
@@ -23,7 +25,8 @@ import com.example.seps.cashofclans.R;
 // TODO: revisit 15 APR 2017 at the latest
 public class CategoryActivity extends AppCompatActivity implements CategoryAddFragment.Listener {
 
-    private RecyclerView catRecycleView;
+    @BindView(R.id.category_list) private RecyclerView catRecycleView;
+    @BindView(R.id.category_toolbar) private Toolbar toolbar;
     private LinearLayoutManager layoutManager;
     private CategoryAdapter adapter;
 
@@ -35,7 +38,6 @@ public class CategoryActivity extends AppCompatActivity implements CategoryAddFr
         layoutManager = new LinearLayoutManager(this);
         adapter = new CategoryAdapter(new CategoryManager());
 
-        catRecycleView = (RecyclerView) findViewById(R.id.category_list);
         catRecycleView.setHasFixedSize(true);
         catRecycleView.setLayoutManager(layoutManager);
         catRecycleView.setAdapter(adapter);
@@ -43,12 +45,9 @@ public class CategoryActivity extends AppCompatActivity implements CategoryAddFr
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
                 catRecycleView.getContext(),
                 layoutManager.getOrientation());
-
         catRecycleView.addItemDecoration(dividerItemDecoration);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.category_toolbar);
         setSupportActionBar(toolbar);
-
         ActionBar actionbar = getSupportActionBar();
         actionbar.setTitle(R.string.title_activity_category);
     }

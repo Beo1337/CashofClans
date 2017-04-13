@@ -17,7 +17,6 @@ public class CategoryAddFragment extends DialogFragment {
     }
 
     private Listener listener;
-    private TextView catNameTextView;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
