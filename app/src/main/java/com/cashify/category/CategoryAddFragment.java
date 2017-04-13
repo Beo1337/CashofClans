@@ -12,7 +12,11 @@ import android.widget.TextView;
 
 public class CategoryAddFragment extends DialogFragment {
 
-    private AddDialogListener listener;
+    public interface Listener {
+        public void onCategoryAdd(String categoryName);
+    }
+
+    private Listener listener;
     private TextView catNameTextView;
 
     @Override
@@ -41,7 +45,7 @@ public class CategoryAddFragment extends DialogFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            listener = (AddDialogListener) activity;
+            listener = (Listener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement NoticeDialogListener");

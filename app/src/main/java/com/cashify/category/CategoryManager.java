@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-
 // Category manager is intended to be the central point to get category entries from
 // TODO: revisit 15 APR 2017 at the latest
 public class CategoryManager {

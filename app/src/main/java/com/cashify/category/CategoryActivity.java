@@ -12,8 +12,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.cashify.category.CategoryAdapter;
-import com.cashify.category.CategoryManager;
 import com.example.seps.cashofclans.R;
 
 // Category view consists rn of a RecycleView and a non-functional floating add button.
@@ -23,7 +21,7 @@ import com.example.seps.cashofclans.R;
 // - delete categories
 // See specification
 // TODO: revisit 15 APR 2017 at the latest
-public class CategoryActivity extends AppCompatActivity implements AddDialogListener {
+public class CategoryActivity extends AppCompatActivity implements CategoryAddFragment.Listener {
 
     private RecyclerView catRecycleView;
     private LinearLayoutManager layoutManager;
