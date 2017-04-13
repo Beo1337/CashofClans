@@ -45,7 +45,6 @@
         android:layout_marginBottom="40dp"
         android:layout_marginLeft="64dp"
         android:layout_marginStart="64dp"
-        android:background="none"
         android:onClick="add"
         android:text="+"
         android:textSize="30dp"
@@ -60,7 +59,6 @@
         android:layout_marginBottom="40dp"
         android:layout_marginEnd="65dp"
         android:layout_marginRight="65dp"
-        android:background="none"
         android:onClick="add"
         android:text="-"
         android:textSize="30dp"
@@ -102,7 +100,6 @@
             android:layout_height="50dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
-            android:background="none"
             android:onClick="add"
             app:srcCompat="@drawable/icon_shoppingcart" />
 
@@ -112,7 +109,6 @@
             android:layout_height="50dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
-            android:background="none"
             android:onClick="add"
             app:srcCompat="@drawable/icon_beer" />
 
@@ -122,7 +118,6 @@
             android:layout_height="50dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
-            android:background="none"
             android:onClick="add"
             app:srcCompat="@drawable/icon_sport" />
 
@@ -132,7 +127,6 @@
             android:layout_height="50dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
-            android:background="none"
             android:onClick="add"
             app:srcCompat="@drawable/icon_clothes" />
 
@@ -142,7 +136,6 @@
             android:layout_height="50dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
-            android:background="none"
             android:onClick="add"
             app:srcCompat="@drawable/icon_school" />
 
@@ -152,13 +145,12 @@
             android:layout_height="50dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
-            android:background="none"
             android:onClick="add"
             app:srcCompat="@drawable/icon_movie" />
 
 
     </GridLayout>
-
+<!-- Liste um aus der Datenbank auszulesen
     <ExpandableListView
         android:layout_width="330dp"
         android:layout_height="150dp"
@@ -171,6 +163,6 @@
         android:orientation="horizontal"
         tools:layout_editor_absoluteX="27dp"
         tools:layout_editor_absoluteY="225dp" />
-
+-->
 
 </android.support.constraint.ConstraintLayout>
