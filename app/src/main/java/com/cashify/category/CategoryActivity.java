@@ -25,8 +25,8 @@ import butterknife.BindView;
 // TODO: revisit 15 APR 2017 at the latest
 public class CategoryActivity extends AppCompatActivity implements CategoryAddFragment.Listener {
 
-    @BindView(R.id.category_list) private RecyclerView catRecycleView;
-    @BindView(R.id.category_toolbar) private Toolbar toolbar;
+    @BindView(R.id.category_list) RecyclerView catRecycleView;
+    @BindView(R.id.category_toolbar) Toolbar toolbar;
     private LinearLayoutManager layoutManager;
     private CategoryAdapter adapter;
 

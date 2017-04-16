@@ -14,6 +14,12 @@
         android:entries="@array/zeiteinheit"
         android:entryValues="@array/zeiteinheit_values" />
 
+    <Preference android:title="Passwort" >
+        <intent android:action="android.intent.action.VIEW"
+            android:targetPackage="com.example.seps.cashofclans"
+            android:targetClass="com.cashify.password.PasswordActivity"/>
+    </Preference>
+
     <Preference android:title="Kategorien" >
         <intent android:action="android.intent.action.VIEW"
             android:targetPackage="com.example.seps.cashofclans"
