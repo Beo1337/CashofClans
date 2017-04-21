@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/background"
     tools:context="com.example.seps.cashofclans.MainActivity"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/Money"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -59,7 +60,7 @@
         android:layout_marginBottom="40dp"
         android:layout_marginEnd="65dp"
         android:layout_marginRight="65dp"
-        android:onClick="add"
+        android:onClick="sub"
         android:text="-"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -91,7 +92,7 @@
         android:rowCount="2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/Money">
 
 
         <ImageButton

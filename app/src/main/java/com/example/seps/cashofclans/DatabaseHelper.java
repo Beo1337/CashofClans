@@ -1,8 +1,10 @@
 package com.example.seps.cashofclans;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by SON GOHAN on 13.04.2017.
@@ -11,19 +13,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "cash.db";
-    public static final String TABLE_NAME_MAIN = "UEBERSICHT";
-    /*public static final String COL_ID = "ID";
-    public static final String COL_BETRAG = "BETRAG";
-    public static final String COL_TITEL = "TITEL";
-    public static final String COL_KATEGORIE = "KATEGORIE";
-    public static final String COL_DATE = "DATUM";
-    public static final String COL_GPS = "GPS";
-    public static final String COL_FOTO = "FOTO";
-
-    public static final String TABLE_CATEGORY = "KATEGORIE";
-    public static final String CAT_ID = "ID";
-    public static final String CAT_NAME ="NAME";
-    */
+    public static final String TABLE_NAME_MAIN = "uebersicht";
+    public static final String TABLE_NAME_CATEGORY = "category";
+    public static final String TABLE_NAME_REPEAT_ENTRY = "REPEAT_ENTRY";
 
 
     public DatabaseHelper(Context context) {
@@ -33,15 +25,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Typen der Spalten stimmen noch nicht
-        db.execSQL("CREATE TABLE "+TABLE_NAME_MAIN+" (ID INTEGER PRIMARY KEY AUTOINCREMENT, BETRAG TEXT, TITEL TEXT, KATEGORIE TEXT, DATUM TEXT, GPS TEXT, FOTO TEXT)");
-        //db.execSQL("CREATE TABLE "+TABLE_CATEGORY+" (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, ICON TEXT)");
+
+        db.execSQL("CREATE TABLE "+TABLE_NAME_MAIN+" (ID INTEGER PRIMARY KEY AUTOINCREMENT, BETRAG NUMBER(10,2), TITEL TEXT, KATEGORIE INTEGER, DATUM TEXT, GPS TEXT, FOTO TEXT)");
+        db.execSQL("CREATE TABLE "+TABLE_NAME_CATEGORY+" (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, ICON TEXT)");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME_MAIN);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME_CATEGORY);
         onCreate(db);
     }
 }
