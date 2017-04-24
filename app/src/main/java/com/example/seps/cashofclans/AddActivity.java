@@ -25,13 +25,25 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ *
+ * Diese Klasse wird verwendet um neue Einträge in die Überischtstabelle einzufügen.
+ *
+ * */
 public class AddActivity extends AppCompatActivity {
 
-    EditText betrag;
-    String s;
+    /**Name der Klasse für Logcat*/
+    private String TAG = this.getClass().getName();
+    /**In diesem Textfeld wird der aktuelle Kontostand angezeigt.*/
+    private EditText betrag;
+    /**Wird benötigt um die gewählte Zahl in das Textfeld zu schreiben.*/
+    private String s;
+    /**Datenbank*/
     DatabaseHelper myDb;
-    int vorzeichen = 1;
-    Spinner spin;
+    /**Wird benötigt um negative Einträge zu verbuchen*/
+    private int vorzeichen = 1;
+    /**Speichert eine Auswahlliste der verfügbaren Kategorien.*/
+    private Spinner spin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,26 +51,29 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         betrag= (EditText) findViewById(R.id.Betrag);
+        //nicht auswählbar machen, damit die standardmäßige Tastatur nicht erscheint.
         betrag.setEnabled(false);
 
         myDb = new DatabaseHelper(this);
 
+        //Über bundle können zusätzliche Infos aus dem Intent ausgelesen werden.
         Bundle bundle = getIntent().getExtras();
+
         Button commit = (Button)findViewById(R.id.ButtonCommit);
 
-        // get a cursor from the database with an "_id" field
+        //Cursor von der Kategorietabelle holen.
         Cursor c = myDb.getReadableDatabase().rawQuery("SELECT ID AS _id, NAME FROM category", null);
-        Log.i("AddActivity", "CURSOR COUNT: "+c.getCount());
-        // make an adapter from the cursor
+        Log.i(TAG, "CURSOR COUNT: "+c.getCount());
+        //Adapter aus dem Cursor erstellen.
         String[] from = new String[] {"NAME"};
         int[] to = new int[] {android.R.id.text1};
         SimpleCursorAdapter sca = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, c, from, to);
 
-        // set layout for activated adapter
+        //Vordefiniertes Layout dem Spinner zuweisen.
         sca.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        // get xml file spinner and set adapter
         spin = (Spinner) this.findViewById(R.id.category);
         spin.setAdapter(sca);
 
@@ -66,7 +81,7 @@ public class AddActivity extends AppCompatActivity {
         //Schauen ob hinzugefügt oder abgezogen wird
         if(bundle.getString("mode")!= null)
         {
-            if(bundle.getString("mode").equals("sub"))
+            if(bundle.getString("mode").equals("sub"))//Wenn abgezogen wird, Vorzeichen ändern.
             {
                 vorzeichen = -1;//Wenn abgezogen wird, Vorzeichen ändern
                 commit.setBackgroundColor(Color.RED);
@@ -74,17 +89,16 @@ public class AddActivity extends AppCompatActivity {
             else
                 commit.setBackgroundColor(Color.GREEN);
 
-            if(bundle.getString("cat")!=null)
+            if(bundle.getString("cat")!=null)//Wenn Shortcut gewählt wurde, ist Kategorie schon vorausgewählt.
             {
                 Spinner cat = (Spinner) findViewById(R.id.category);
                 selectValue(cat,bundle.getString("cat"));
                 cat.setEnabled(false);
             }
         }
-
-
     }
 
+    /** Diese Methode setzt den Spinner auf eine Kategorie.*/
     private void selectValue(Spinner spinner, String value) {
         for (int i = 0; i < spinner.getCount(); i++) {
             if (((Cursor)spinner.getItemAtPosition(i)).getString(1).equals(value)) {
@@ -94,7 +108,7 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
-
+    /**Nummern in das Betragfeld schreiben.*/
     public void add1(View v) {
         s = betrag.getText().toString();
         betrag.setText(s+"1");
@@ -150,12 +164,12 @@ public class AddActivity extends AppCompatActivity {
         betrag.setText(s+".");
     }
 
+    /**Diese Methode speichert die eingegebenen Werte in die Datenbank.*/
     public void eintragen(View v){
 
-        if(!betrag.getText().toString().equals("")) {
+        if(!betrag.getText().toString().equals("")) {//Wenn ein Betrag eingeben wurde, wird kein Eintrag in der Datenbank erstellt.
 
             SQLiteDatabase db = myDb.getWritableDatabase();
-            //Spinner cat = (Spinner) findViewById(R.id.category);
             EditText title = (EditText) findViewById(R.id.title);
 
             //Werte für Datenbank vorbereiten
@@ -182,12 +196,11 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
+    /**Diese Methode löscht die letzte Stelle des Betragfelds.*/
     public void del(View v){
         s = betrag.getText().toString();
         if(s.length()>0)
             s = s.substring(0,s.length()-1);
         betrag.setText(s);
     }
-
-
 }
