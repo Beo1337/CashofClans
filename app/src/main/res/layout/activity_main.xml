@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/background"
     tools:context="com.example.seps.cashofclans.MainActivity"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/Money"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -59,7 +60,7 @@
         android:layout_marginBottom="40dp"
         android:layout_marginEnd="65dp"
         android:layout_marginRight="65dp"
-        android:onClick="add"
+        android:onClick="sub"
         android:text="-"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -91,7 +92,7 @@
         android:rowCount="2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/Money">
 
 
         <ImageButton
@@ -100,7 +101,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
-            android:onClick="add"
+            android:onClick="grocery"
             app:srcCompat="@drawable/icon_shoppingcart" />
 
         <ImageButton
@@ -109,7 +110,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
-            android:onClick="add"
+            android:onClick="club"
             app:srcCompat="@drawable/icon_beer" />
 
         <ImageButton
@@ -118,7 +119,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
-            android:onClick="add"
+            android:onClick="sport"
             app:srcCompat="@drawable/icon_sport" />
 
         <ImageButton
@@ -127,7 +128,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
-            android:onClick="add"
+            android:onClick="clothes"
             app:srcCompat="@drawable/icon_clothes" />
 
         <ImageButton
@@ -136,7 +137,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
-            android:onClick="add"
+            android:onClick="books"
             app:srcCompat="@drawable/icon_school" />
 
         <ImageButton
@@ -145,24 +146,27 @@
             android:layout_height="50dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
-            android:onClick="add"
+            android:onClick="cinema"
             app:srcCompat="@drawable/icon_movie" />
 
 
     </GridLayout>
-<!-- Liste um aus der Datenbank auszulesen
-    <ExpandableListView
-        android:layout_width="330dp"
-        android:layout_height="150dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
+
+    <Button
+        android:id="@+id/button4"
+        android:text="DB"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:onClick="db"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="1dp"
-        android:background="@android:color/darker_gray"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="27dp"
-        tools:layout_editor_absoluteY="225dp" />
--->
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintHorizontal_bias="0.883"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>
