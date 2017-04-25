@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.SimpleCursorAdapter;
 
 /**
  *
@@ -16,8 +15,6 @@ import android.widget.SimpleCursorAdapter;
  * */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    /**Name der Klasse für Logcat*/
-    private String TAG = this.getClass().getName();
     /**Name der Datenbank*/
     public static final String DATABASE_NAME = "cash.db";
     /**Name der Tabelle welche die Einträge speichert*/
@@ -33,12 +30,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d(TAG,"onCreate!");
+        Log.d("Databasehelper","onCreate!");
         db.execSQL("CREATE TABLE "+TABLE_NAME_MAIN+" (ID INTEGER PRIMARY KEY AUTOINCREMENT, BETRAG NUMBER(10,2), TITEL TEXT, KATEGORIE INTEGER, DATUM DATE, GPS TEXT, FOTO TEXT, FOREIGN KEY(KATEGORIE) REFERENCES category(ID))");
         db.execSQL("CREATE TABLE "+TABLE_NAME_CATEGORY+" (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT , ICON TEXT, CONSTRAINT name_unique UNIQUE (NAME))");
 
         //Vordefinierte Kategorien in die Datenbank speichern.
-        addCategory("Lebensmittel", db);
+        addCategory("Lebensmittel",db);
         addCategory("Bar", db);
         addCategory("Sport", db);
         addCategory("Kleidung", db);
@@ -49,7 +46,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.d(TAG,"onUpgrade!");
+        Log.d("Databasehelper","onUpgrade!");
         //Tabellen löschen und neu erstellen.
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME_MAIN);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME_CATEGORY);
@@ -79,5 +76,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //In die Datenbank speichern
         long newRowId = db.insert("category", null, values);
         Log.i("DatabaseHelper", "Eingefügt " + newRowId);
+    }
+
+    /**Diese Methode ändert den Namen einer Kategorie.*/
+    public void changeCategoryName(String oldname, String newname, SQLiteDatabase db) {
+        //TODO funktioniert noch nicht
+        db.rawQuery("UPDATE "+TABLE_NAME_CATEGORY+" SET name = '"+newname+"' WHERE id = '"+oldname+"'",null);
+        Log.i("DataBaseHelper","Kategoriename alt "+oldname);
+        Log.i("DataBaseHelper","Kategoriename neu "+newname);
+        Log.i("DataBaseHelper","Kategoriename geändert!!!");
+
+        Cursor cursor = db.rawQuery("SELECT * FROM category", null);
+        String entry = "";
+        while(cursor.moveToNext())//Solange Einträge vorhanden sind, in den Ausgabestring speichern.
+        {
+            entry = entry +" "+ cursor.getInt(0);//ID
+            entry = entry +" "+ cursor.getString(1);//Name
+            entry = entry +" "+ cursor.getString(2);//Iconstring
+            entry = entry +"\n";
+        }
+        Log.i("DataBaseHelper",entry);
+    }
+
+    /**Diese Methode ändert das Icon einer Kategorie.*/
+    public void changeCategoryIcon(String name, String icon, SQLiteDatabase db) {
+        //TODO funktioniert noch nicht
+        db.rawQuery("UPDATE category SET icon = '"+name+"' WHERE name = '"+icon+"'",null);
+
+    }
+
+    /**Diese Methode löscht eine Kategorie aus der Datenbank.*/
+    public void deleteCategory (String name, SQLiteDatabase db){
+        //TODO funktioniert noch nicht
+        db.rawQuery("DELETE FROM category WHERE name = '"+name,null);
     }
 }

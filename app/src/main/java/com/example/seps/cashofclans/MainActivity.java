@@ -9,13 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     DatabaseHelper myDb;
     TextView betrag;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         myDb = new DatabaseHelper(this);
         refresh_money();
-
-
     }
 
     @Override
@@ -51,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
             betrag.setTextColor(Color.RED);
         else
             betrag.setTextColor(Color.GREEN);
+        db.close();
     }
 
     public void einstellungen(View v) {
@@ -70,45 +68,12 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(i, 0);
     }
 
-    public void grocery(View v){
+    public void shortcut(View v){
+        ImageButton b = (ImageButton) findViewById(v.getId());
+        Log.i("MainActivity","Shortcut: "+b.getTag().toString()+" gewählt");
         Intent i = new Intent(v.getContext(), AddActivity.class);
         i.putExtra("mode", "sub");
-        i.putExtra("cat", "Lebensmittel");
-        startActivityForResult(i, 0);
-    }
-
-    public void club(View v){
-        Intent i = new Intent(v.getContext(), AddActivity.class);
-        i.putExtra("mode", "sub");
-        i.putExtra("cat", "Bar");
-        startActivityForResult(i, 0);
-    }
-
-    public void sport(View v){
-        Intent i = new Intent(v.getContext(), AddActivity.class);
-        i.putExtra("mode", "sub");
-        i.putExtra("cat", "Sport");
-        startActivityForResult(i, 0);
-    }
-
-    public void clothes(View v){
-        Intent i = new Intent(v.getContext(), AddActivity.class);
-        i.putExtra("mode", "sub");
-        i.putExtra("cat", "Kleidung");
-        startActivityForResult(i, 0);
-    }
-
-    public void books(View v){
-        Intent i = new Intent(v.getContext(), AddActivity.class);
-        i.putExtra("mode", "sub");
-        i.putExtra("cat", "Bücher");
-        startActivityForResult(i, 0);
-    }
-
-    public void cinema(View v){
-        Intent i = new Intent(v.getContext(), AddActivity.class);
-        i.putExtra("mode", "sub");
-        i.putExtra("cat", "Kino");
+        i.putExtra("cat",b.getTag().toString());
         startActivityForResult(i, 0);
     }
 

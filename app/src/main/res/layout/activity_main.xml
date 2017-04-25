@@ -104,7 +104,8 @@
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
             android:background="@android:color/transparent"
-            android:onClick="grocery"
+            android:onClick="shortcut"
+            android:tag="Lebensmittel"
             app:srcCompat="@drawable/icon_shoppingcart" />
 
         <ImageButton
@@ -114,7 +115,8 @@
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
             android:background="@android:color/transparent"
-            android:onClick="club"
+            android:onClick="shortcut"
+            android:tag="Bar"
             app:srcCompat="@drawable/icon_beer" />
 
         <ImageButton
@@ -123,8 +125,9 @@
             android:layout_height="50dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
+            android:tag="Sport"
             android:background="@android:color/transparent"
-            android:onClick="sport"
+            android:onClick="shortcut"
             app:srcCompat="@drawable/icon_sport" />
 
         <ImageButton
@@ -134,7 +137,8 @@
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
             android:background="@android:color/transparent"
-            android:onClick="clothes"
+            android:onClick="shortcut"
+            android:tag="Kleidung"
             app:srcCompat="@drawable/icon_clothes" />
 
         <ImageButton
@@ -144,7 +148,8 @@
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
             android:background="@android:color/transparent"
-            android:onClick="books"
+            android:onClick="shortcut"
+            android:tag="Bücher"
             app:srcCompat="@drawable/icon_school" />
 
         <ImageButton
@@ -154,7 +159,8 @@
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
             android:background="@android:color/transparent"
-            android:onClick="cinema"
+            android:onClick="shortcut"
+            android:tag="Kino"
             app:srcCompat="@drawable/icon_movie" />
 
 

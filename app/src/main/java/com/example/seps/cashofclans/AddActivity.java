@@ -32,14 +32,12 @@ import java.util.Date;
  * */
 public class AddActivity extends AppCompatActivity {
 
-    /**Name der Klasse für Logcat*/
-    private String TAG = this.getClass().getName();
     /**In diesem Textfeld wird der aktuelle Kontostand angezeigt.*/
     private EditText betrag;
     /**Wird benötigt um die gewählte Zahl in das Textfeld zu schreiben.*/
     private String s;
     /**Datenbank*/
-    DatabaseHelper myDb;
+    private DatabaseHelper myDb;
     /**Wird benötigt um negative Einträge zu verbuchen*/
     private int vorzeichen = 1;
     /**Speichert eine Auswahlliste der verfügbaren Kategorien.*/
@@ -65,7 +63,7 @@ public class AddActivity extends AppCompatActivity {
 
         //Cursor von der Kategorietabelle holen.
         Cursor c = myDb.getReadableDatabase().rawQuery("SELECT ID AS _id, NAME FROM category", null);
-        Log.i(TAG, "CURSOR COUNT: "+c.getCount());
+        Log.i("AddActivity", "CURSOR COUNT: "+c.getCount());
         //Adapter aus dem Cursor erstellen.
         String[] from = new String[] {"NAME"};
         int[] to = new int[] {android.R.id.text1};
@@ -192,6 +190,7 @@ public class AddActivity extends AppCompatActivity {
             long newRowId = db.insert("uebersicht", null, values);
             Log.i("AddActivity", "Eingefügt " + newRowId);
 
+            db.close();
             finish();
         }
     }
