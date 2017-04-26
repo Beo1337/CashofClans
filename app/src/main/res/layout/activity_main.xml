@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/background"
+    android:background="#a6b1c1"
     tools:context="com.example.seps.cashofclans.MainActivity"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
@@ -14,93 +15,83 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="96dp"
         android:text="3946.84€"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="40sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteY="97dp"
+        tools:layout_editor_absoluteX="115dp" />
 
     <Button
         android:id="@+id/button"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="7dp"
-        android:layout_marginRight="7dp"
-        android:layout_marginTop="6dp"
         android:background="@drawable/icon_settings"
         android:onClick="einstellungen"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteY="6dp"
+        tools:layout_editor_absoluteX="347dp" />
 
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="101dp"
-        android:layout_marginStart="64dp"
+        style="@android:style/Widget.Button"
+        android:layout_width="160dp"
+        android:layout_height="50dp"
         android:background="@android:color/holo_green_dark"
         android:onClick="add"
-        android:text="+"
+        android:text="Einnahme"
         android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        tools:layout_editor_absoluteX="27dp"
+        tools:layout_editor_absoluteY="361dp" />
 
     <Button
         android:id="@+id/button3"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="65dp"
-        android:layout_marginRight="108dp"
+        style="@android:style/Widget.Button"
+        android:layout_width="160dp"
+        android:layout_height="50dp"
         android:background="@android:color/holo_red_dark"
         android:onClick="sub"
-        android:text="-"
+        android:text="Ausgabe"
         android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        tools:layout_editor_absoluteX="197dp"
+        tools:layout_editor_absoluteY="361dp" />
 
     <Button
         android:id="@+id/Statistik"
         android:layout_width="88dp"
         android:layout_height="48dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="6dp"
         android:onClick="stats"
         android:text="Woche"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="4dp" />
+        tools:layout_editor_absoluteY="6dp"
+        tools:layout_editor_absoluteX="4dp" />
+
+    <Button
+        android:id="@+id/button4"
+        android:text="DB"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:onClick="db"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="289dp" />
 
     <GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="330dp"
-        android:layout_height="67dp"
+        android:layout_height="150dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="1dp"
-        android:columnCount="6"
+        android:columnCount="3"
         android:orientation="horizontal"
         android:rowCount="2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Money">
+        tools:layout_editor_absoluteX="27dp"
+        tools:layout_editor_absoluteY="161dp">
 
 
         <ImageButton
             android:id="@+id/imageButton3"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
             android:background="@android:color/transparent"
@@ -110,8 +101,8 @@
 
         <ImageButton
             android:id="@+id/imageButton2"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
             android:background="@android:color/transparent"
@@ -121,19 +112,19 @@
 
         <ImageButton
             android:id="@+id/imageButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
-            android:tag="Sport"
             android:background="@android:color/transparent"
             android:onClick="shortcut"
+            android:tag="Sport"
             app:srcCompat="@drawable/icon_sport" />
 
         <ImageButton
             android:id="@+id/imageButton4"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
             android:background="@android:color/transparent"
@@ -143,8 +134,8 @@
 
         <ImageButton
             android:id="@+id/imageButton5"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
             android:background="@android:color/transparent"
@@ -154,8 +145,8 @@
 
         <ImageButton
             android:id="@+id/imageButton6"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
             android:background="@android:color/transparent"
@@ -165,22 +156,5 @@
 
 
     </GridLayout>
-
-    <Button
-        android:id="@+id/button4"
-        android:text="DB"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:onClick="db"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintHorizontal_bias="0.883"
-        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>
