@@ -36,7 +36,7 @@
             android:name="com.cashify.password.PasswordActivity"
             android:label="@string/title_activity_category"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ShowDataBaseActivity"></activity>
+        <activity android:name=".Database.ShowDataBaseActivity"></activity>
     </application>
 
 </manifest>

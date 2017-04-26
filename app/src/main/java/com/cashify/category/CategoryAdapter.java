@@ -36,7 +36,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Category cat = manager.getCategoryByIndex(position);
-        holder.textView.setText(cat.getName());
+        //TODO hab die vorhandene Categoryklasse genommen, muss hier eventuel angepasst werden. Lg Simon
+        //holder.textView.setText(cat.getName());
     }
 
     public int getItemCount() {

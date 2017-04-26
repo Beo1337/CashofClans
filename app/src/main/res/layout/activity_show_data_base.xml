@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.seps.cashofclans.ShowDataBaseActivity">
+    tools:context="com.example.seps.cashofclans.Database.ShowDataBaseActivity">
 
     <EditText
         android:id="@+id/ausg"

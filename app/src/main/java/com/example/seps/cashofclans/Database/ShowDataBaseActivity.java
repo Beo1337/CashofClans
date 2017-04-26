@@ -1,13 +1,13 @@
-package com.example.seps.cashofclans;
+package com.example.seps.cashofclans.Database;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.EditText;
-import android.widget.TextView;
+
+import com.example.seps.cashofclans.Database.DatabaseHelper;
+import com.example.seps.cashofclans.R;
 
 /**
  *
@@ -66,6 +66,7 @@ public class ShowDataBaseActivity extends AppCompatActivity {
             //entry = entry +" "+ cursor.getString(6);//Foto
             entry = entry +"\n";
         }
+        cursor.close();
 
         //Datenbankausgabe in die View schreiben.
         ausg = (EditText) findViewById(R.id.ausg);

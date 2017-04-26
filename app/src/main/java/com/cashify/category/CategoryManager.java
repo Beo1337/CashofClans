@@ -17,7 +17,8 @@ public class CategoryManager {
         if (categoryList == null) {
             categoryList = new LinkedList<>();
             String test = "See this repo for the source code. First, we often need to define a model to represent the data within each list item.";
-            for(String i : test.split("\\s+")) categoryList.add(new Category(i));
+            //TODO hab die vorhandene Categoryklasse genommen, muss hier eventuel angepasst werden. Lg Simon
+            //for(String i : test.split("\\s+")) categoryList.add(new Category(i));
         }
     }
 
@@ -43,7 +44,8 @@ public class CategoryManager {
     }
 
     public boolean addCategory(String name) {
-        categoryList.add(new Category(name));
+        //TODO hab die vorhandene Categoryklasse genommen, muss hier eventuel angepasst werden. Lg Simon
+        //categoryList.add(new Category(name));
         return true;
     }
 }
