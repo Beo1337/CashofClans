@@ -1,5 +1,7 @@
 package com.cashify.category;
 
+import com.example.seps.cashofclans.Database.DatabaseHelper;
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,22 +12,10 @@ public class CategoryManager {
 
     private static List<Category> categoryList;
 
-    // Mock method to generate category elements while there is no infrastructure in place to load
-    // from a data source
-    // TODO: review mechanism when database available
-    private static void populateList() {
-        if (categoryList == null) {
-            categoryList = new LinkedList<>();
-            String test = "See this repo for the source code. First, we often need to define a model to represent the data within each list item.";
-            //TODO hab die vorhandene Categoryklasse genommen, muss hier eventuel angepasst werden. Lg Simon
-            //for(String i : test.split("\\s+")) categoryList.add(new Category(i));
-        }
-    }
-
     // CategoryManager, this should probably be a singleton.
     // TODO: review once other functionality is in place
-    public CategoryManager() {
-        populateList();
+    public CategoryManager(DatabaseHelper dbHelper) {
+        categoryList.addAll(dbHelper.getCategories(dbHelper.getReadableDatabase()));
     }
 
     // Return single category entry by list position
@@ -45,7 +35,6 @@ public class CategoryManager {
 
     public boolean addCategory(String name) {
         //TODO hab die vorhandene Categoryklasse genommen, muss hier eventuel angepasst werden. Lg Simon
-        //categoryList.add(new Category(name));
         return true;
     }
 }
