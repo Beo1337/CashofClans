@@ -2,10 +2,14 @@ package com.example.seps.cashofclans;
 
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,6 +21,7 @@ import android.widget.Spinner;
 
 import com.example.seps.cashofclans.Database.DatabaseHelper;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -37,6 +42,8 @@ public class AddActivity extends AppCompatActivity {
     private int vorzeichen = 1;
     /**Speichert eine Auswahlliste der verfügbaren Kategorien.*/
     private Spinner spin;
+    /**Speichername des Fotos*/
+    private String foto = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,12 +176,14 @@ public class AddActivity extends AppCompatActivity {
             ContentValues values = new ContentValues();
             values.put("BETRAG", Double.valueOf(betrag.getText().toString()) * vorzeichen);
             values.put("TITEL",title.getText().toString());
+            values.put("FOTO",foto);
 
 
             String s = ((Cursor)spin.getSelectedItem()).getString(1);
             Cursor c = myDb.getReadableDatabase().rawQuery("SELECT ID FROM category WHERE NAME = '"+s+"'", null);
             c.moveToNext();
             values.put("KATEGORIE",c.getInt(0));
+
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String strDate = sdf.format(new Date());
@@ -196,5 +205,21 @@ public class AddActivity extends AppCompatActivity {
         if(s.length()>0)
             s = s.substring(0,s.length()-1);
         betrag.setText(s);
+    }
+
+    public void cam(View v){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String strDate = sdf.format(new Date());
+        String name = "CashifyPicture.jpg";
+
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File imageFile = new File(name);
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile));
+        // der RequestCode ist ein Callback, um nach Beenden der Kamera z.B. das Bild in einen
+        // ImageView oder so zu laden...
+        startActivityForResult(takePictureIntent, 1234);
+
+
     }
 }
