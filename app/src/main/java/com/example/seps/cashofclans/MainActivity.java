@@ -4,9 +4,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -32,6 +36,13 @@ public class MainActivity extends AppCompatActivity {
     public void onRestart() {
         super.onRestart();
         refresh_money();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
     public void refresh_money(){
@@ -84,6 +95,11 @@ public class MainActivity extends AppCompatActivity {
     public void stats(View v) {
         Intent i = new Intent(v.getContext(), StatistikActivity.class);
         startActivityForResult(i, 0);
+    }
+
+    public void main(View v){
+        Intent i = new Intent(v.getContext(),MainActivity.class);
+        startActivityForResult(i,0);
     }
 
     public void db(View v){
