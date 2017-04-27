@@ -1,6 +1,5 @@
 package com.example.seps.cashofclans;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,6 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.example.seps.cashofclans.Database.DatabaseHelper;
+import com.example.seps.cashofclans.Database.ShowDataBaseActivity;
 
 public class MainActivity extends AppCompatActivity {
     DatabaseHelper myDb;
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         myDb = new DatabaseHelper(this);
         refresh_money();
+        //getActionBar().hide();
     }
 
     @Override
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
             betrag.setTextColor(Color.RED);
         else
             betrag.setTextColor(Color.GREEN);
+        cursor.close();
         db.close();
     }
 

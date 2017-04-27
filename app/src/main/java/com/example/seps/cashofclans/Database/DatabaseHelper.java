@@ -1,4 +1,4 @@
-package com.example.seps.cashofclans;
+package com.example.seps.cashofclans.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,12 +7,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.cashify.category.Category;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 /**
  *
  * Diese Klasse wird benötigt um die Datenbank nach Installation der App zu erstelle und mit den vordefinierten Daten zu füllen.
  * Es werden Datenbankfunktionen angeboten, welche in der ganzen App verwendet werden können.
  *
  * */
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**Name der Datenbank*/
@@ -61,7 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("NAME", name);
 
         //In die Datenbank speichern
-        long newRowId = db.insert("category", null, values);
+        long newRowId = db.insert(TABLE_NAME_CATEGORY, null, values);
         Log.i("DatabaseHelper", "Eingefügt " + newRowId);
     }
 
@@ -74,40 +81,53 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("ICON",icon);
 
         //In die Datenbank speichern
-        long newRowId = db.insert("category", null, values);
+        long newRowId = db.insert(TABLE_NAME_CATEGORY, null, values);
         Log.i("DatabaseHelper", "Eingefügt " + newRowId);
     }
 
     /**Diese Methode ändert den Namen einer Kategorie.*/
     public void changeCategoryName(String oldname, String newname, SQLiteDatabase db) {
-        //TODO funktioniert noch nicht
-        db.rawQuery("UPDATE "+TABLE_NAME_CATEGORY+" SET name = '"+newname+"' WHERE id = '"+oldname+"'",null);
-        Log.i("DataBaseHelper","Kategoriename alt "+oldname);
-        Log.i("DataBaseHelper","Kategoriename neu "+newname);
-        Log.i("DataBaseHelper","Kategoriename geändert!!!");
+        //Wert für Datenbank vorbereiten
+        ContentValues values = new ContentValues();
+        values.put("NAME", newname);
 
-        Cursor cursor = db.rawQuery("SELECT * FROM category", null);
-        String entry = "";
-        while(cursor.moveToNext())//Solange Einträge vorhanden sind, in den Ausgabestring speichern.
-        {
-            entry = entry +" "+ cursor.getInt(0);//ID
-            entry = entry +" "+ cursor.getString(1);//Name
-            entry = entry +" "+ cursor.getString(2);//Iconstring
-            entry = entry +"\n";
-        }
-        Log.i("DataBaseHelper",entry);
+        //In die Datenbank speichern
+        long newRowId = db.update(TABLE_NAME_CATEGORY,values,"NAME LIKE '"+oldname+"'",null);
+        Log.i("DataBaseHelper","Kategoriename geändert!!!");
     }
 
     /**Diese Methode ändert das Icon einer Kategorie.*/
     public void changeCategoryIcon(String name, String icon, SQLiteDatabase db) {
-        //TODO funktioniert noch nicht
-        db.rawQuery("UPDATE category SET icon = '"+name+"' WHERE name = '"+icon+"'",null);
+        //Wert für Datenbank vorbereiten
+        ContentValues values = new ContentValues();
+        values.put("ICON", icon);
 
+        //In die Datenbank speichern
+        long newRowId = db.update(TABLE_NAME_CATEGORY,values,"NAME LIKE '"+name+"'",null);
+        Log.i("DataBaseHelper","Kategorieicon geändert!!!");
     }
 
     /**Diese Methode löscht eine Kategorie aus der Datenbank.*/
     public void deleteCategory (String name, SQLiteDatabase db){
-        //TODO funktioniert noch nicht
-        db.rawQuery("DELETE FROM category WHERE name = '"+name,null);
+        db.delete(TABLE_NAME_CATEGORY,"name LIKE '"+name+"'",null);
+        Log.i("DataBaseHelper","Kategorie gelöscht!!!");
+    }
+
+    /**Diese Methode liefert alle Kategorien als HashSet zurück.*/
+    public Set<Category> getCategories(SQLiteDatabase db){
+        Set<Category> allCategories = new HashSet<Category>();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM category", null);
+        while(cursor.moveToNext())
+        {
+            Category c = new Category(cursor.getInt(0),cursor.getString(1),cursor.getString(2));
+            allCategories.add(c);
+        }
+        Log.i("DatabaseHelper","The list is:");
+        Iterator<Category> i = allCategories.iterator();
+        while(i.hasNext())
+            Log.i("DatabaseHelper",i.next().toString());
+        cursor.close();
+        return allCategories;
     }
 }

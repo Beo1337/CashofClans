@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.example.seps.cashofclans.Database.DatabaseHelper;
 import com.example.seps.cashofclans.R;
 
 import butterknife.BindView;
@@ -29,6 +30,7 @@ public class CategoryActivity extends AppCompatActivity implements CategoryAddFr
     @BindView(R.id.category_toolbar) Toolbar toolbar;
     private LinearLayoutManager layoutManager;
     private CategoryAdapter adapter;
+    private CategoryManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,8 @@ public class CategoryActivity extends AppCompatActivity implements CategoryAddFr
         setContentView(R.layout.activity_category);
 
         layoutManager = new LinearLayoutManager(this);
-        adapter = new CategoryAdapter(new CategoryManager());
+        manager = new CategoryManager(new DatabaseHelper(this));
+        adapter = new CategoryAdapter(manager);
 
         catRecycleView.setHasFixedSize(true);
         catRecycleView.setLayoutManager(layoutManager);
@@ -73,6 +76,6 @@ public class CategoryActivity extends AppCompatActivity implements CategoryAddFr
 
     @Override
     public void onCategoryAdd(String categoryName) {
-        (new CategoryManager()).addCategory(categoryName);
+        manager.addCategory(categoryName);
     }
 }
