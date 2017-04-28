@@ -1,5 +1,7 @@
 package com.cashify.category;
 
+import android.provider.ContactsContract;
+
 import com.example.seps.cashofclans.Database.DatabaseHelper;
 
 import java.util.Collections;
@@ -11,10 +13,13 @@ import java.util.List;
 public class CategoryManager {
 
     private static List<Category> categoryList;
+    private DatabaseHelper dbHelper;
 
     // CategoryManager, this should probably be a singleton.
     // TODO: review once other functionality is in place
     public CategoryManager(DatabaseHelper dbHelper) {
+        this.dbHelper = dbHelper;
+        categoryList = new LinkedList<>();
         categoryList.addAll(dbHelper.getCategories(dbHelper.getReadableDatabase()));
     }
 
@@ -34,7 +39,7 @@ public class CategoryManager {
     }
 
     public boolean addCategory(String name) {
-        //TODO hab die vorhandene Categoryklasse genommen, muss hier eventuel angepasst werden. Lg Simon
+        this.dbHelper.addCategory(name, dbHelper.getWritableDatabase());
         return true;
     }
 }
