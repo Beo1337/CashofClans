@@ -78,6 +78,7 @@ public class CategoryActivity extends AppCompatActivity implements CategoryAddFr
 
     @Override
     public void onCategoryAdd(String categoryName) {
+
         manager.addCategory(categoryName);
     }
 }
