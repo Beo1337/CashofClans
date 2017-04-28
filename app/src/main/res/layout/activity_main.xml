@@ -10,51 +10,65 @@
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
 
+
     <TextView
         android:id="@+id/Money"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="99dp"
+        android:background="@android:color/darker_gray"
+        android:backgroundTint="@android:color/black"
+        android:backgroundTintMode="@android:color/black"
+        android:elevation="0dp"
+        android:paddingLeft="110dp"
+        android:paddingRight="105dp"
         android:text="3946.84€"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="40sp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="100dp"
-        android:layout_marginRight="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:backgroundTint="@android:color/black"
+        app:layout_constraintHorizontal_bias="0.466" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/settings_button"
         style="@style/Widget.AppCompat.Button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/icon_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="85dp"
+        android:layout_marginBottom="16dp"
+        android:drawableBottom="@mipmap/setting"
         android:onClick="einstellungen"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:text="Settings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/overview_button"
+        tools:layout_constraintLeft_creator="1" />
 
 
     <Button
         android:id="@+id/button2"
         style="@android:style/Widget.Button"
-        android:layout_width="160dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:background="@android:color/holo_green_dark"
         android:onClick="add"
         android:text="Einnahme"
         android:textSize="30dp"
         app:layout_constraintRight_toLeftOf="@+id/button3"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="25dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="240dp"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="12dp"
+        tools:layout_constraintLeft_creator="1" />
 
     <Button
         android:id="@+id/button3"
@@ -65,48 +79,54 @@
         android:onClick="sub"
         android:text="Ausgabe"
         android:textSize="30dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="27dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="240dp"
+        android:layout_marginEnd="27dp" />
 
     <Button
-        android:id="@+id/Statistik"
-        android:layout_width="88dp"
-        android:layout_height="48dp"
+        android:id="@+id/overview_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:drawableBottom="@mipmap/barchart"
         android:onClick="stats"
-        android:text="Woche"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+
+        android:text="Overview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/home_button" />
 
     <Button
         android:id="@+id/button4"
         android:text="DB"
-        android:layout_width="50dp"
+        android:layout_width="88dp"
         android:layout_height="50dp"
         android:onClick="db"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="6dp"
-        android:layout_marginRight="45dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="309dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="309dp" />
 
     <GridLayout
         android:id="@+id/gridLayout"
-        android:layout_width="330dp"
+        android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="27dp"
+        android:layout_marginStart="27dp"
         android:columnCount="6"
         android:orientation="horizontal"
         android:rowCount="2"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="158dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="27dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent">
+        android:layout_marginRight="27dp"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintLeft_creator="1">
 
 
         <ImageButton
@@ -164,6 +184,7 @@
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
             android:background="@android:color/transparent"
+            android:elevation="1dp"
             android:onClick="shortcut"
             android:scaleType="fitEnd"
             android:tag="Bücher"
@@ -183,5 +204,31 @@
 
 
     </GridLayout>
+
+    <Button
+        android:id="@+id/help_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="6dp"
+        android:drawableBottom="@mipmap/help"
+        android:text="Help"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/home_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableBottom="@mipmap/home"
+        android:text="Home"
+        android:onClick="main"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="16dp" />
+
 
 </android.support.constraint.ConstraintLayout>

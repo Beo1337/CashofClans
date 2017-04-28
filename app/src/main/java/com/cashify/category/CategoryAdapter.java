@@ -2,10 +2,13 @@ package com.cashify.category;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.seps.cashofclans.R;
+
+import org.w3c.dom.Text;
 
 // Category adapter interfaces between presentation layer and model
 // TODO: revisit 15 APR 2017 at the latest
@@ -14,10 +17,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     private CategoryManager manager;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textView;
-        public ViewHolder(TextView v) {
+        public View view;
+        public ViewHolder(View v) {
             super(v);
-            textView = v;
+            view = v;
         }
     }
 
@@ -28,7 +31,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public CategoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // TODO: this generates a shitty view, read up on this and fix
-        TextView v = (TextView) LayoutInflater.from(parent.getContext())
+        View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.content_category_elem, parent, false);
         return new ViewHolder(v);
     }
@@ -36,8 +39,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Category cat = manager.getCategoryByIndex(position);
-        //TODO hab die vorhandene Categoryklasse genommen, muss hier eventuel angepasst werden. Lg Simon
-        //holder.textView.setText(cat.getName());
+        TextView textView = (TextView) holder.view.findViewById(R.id.category_label);
+        textView.setText(cat.getCategoryName());
     }
 
     public int getItemCount() {
