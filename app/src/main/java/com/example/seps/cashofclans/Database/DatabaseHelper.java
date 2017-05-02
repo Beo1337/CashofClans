@@ -61,7 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**Diese Methoden fügt eine neue Kategorie in die Kategorie-Tabelle ein.*/
-    public void addCategory (String name, SQLiteDatabase db){
+    public boolean addCategory (String name, SQLiteDatabase db){
 
         //Werte für Datenbank vorbereiten
         ContentValues values = new ContentValues();
@@ -70,10 +70,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //In die Datenbank speichern
         long newRowId = db.insert(TABLE_NAME_CATEGORY, null, values);
         Log.i("DatabaseHelper", "Eingefügt " + newRowId);
+        if(newRowId > 0)
+            return true;
+        else
+            return false;
     }
 
     /**Diese Methoden fügt eine neue Kategorie in die Kategorie-Tabelle ein. Optional ist es möglich String für ein Icon mitzugeben.*/
-    public void addCategory (String name, String icon, SQLiteDatabase db) {
+    public boolean addCategory (String name, String icon, SQLiteDatabase db) {
 
         //Werte für Datenbank vorbereiten
         ContentValues values = new ContentValues();
@@ -83,34 +87,53 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //In die Datenbank speichern
         long newRowId = db.insert(TABLE_NAME_CATEGORY, null, values);
         Log.i("DatabaseHelper", "Eingefügt " + newRowId);
+
+        if(newRowId > 0)
+            return true;
+        else
+            return false;
     }
 
     /**Diese Methode ändert den Namen einer Kategorie.*/
-    public void changeCategoryName(String oldname, String newname, SQLiteDatabase db) {
+    public boolean changeCategoryName(String oldname, String newname, SQLiteDatabase db) {
         //Wert für Datenbank vorbereiten
         ContentValues values = new ContentValues();
         values.put("NAME", newname);
 
         //In die Datenbank speichern
-        long newRowId = db.update(TABLE_NAME_CATEGORY,values,"NAME LIKE '"+oldname+"'",null);
+        long RowId = db.update(TABLE_NAME_CATEGORY,values,"NAME LIKE '"+oldname+"'",null);
         Log.i("DataBaseHelper","Kategoriename geändert!!!");
+
+        if(RowId > 0)
+            return true;
+        else
+            return false;
     }
 
     /**Diese Methode ändert das Icon einer Kategorie.*/
-    public void changeCategoryIcon(String name, String icon, SQLiteDatabase db) {
+    public boolean changeCategoryIcon(String name, String icon, SQLiteDatabase db) {
         //Wert für Datenbank vorbereiten
         ContentValues values = new ContentValues();
         values.put("ICON", icon);
 
         //In die Datenbank speichern
-        long newRowId = db.update(TABLE_NAME_CATEGORY,values,"NAME LIKE '"+name+"'",null);
+        long RowId = db.update(TABLE_NAME_CATEGORY,values,"NAME LIKE '"+name+"'",null);
         Log.i("DataBaseHelper","Kategorieicon geändert!!!");
+
+        if(RowId > 0)
+            return true;
+        else
+            return false;
     }
 
     /**Diese Methode löscht eine Kategorie aus der Datenbank.*/
-    public void deleteCategory (String name, SQLiteDatabase db){
-        db.delete(TABLE_NAME_CATEGORY,"name LIKE '"+name+"'",null);
+    public boolean deleteCategory (String name, SQLiteDatabase db){
+        int del = db.delete(TABLE_NAME_CATEGORY,"name LIKE '"+name+"'",null);
         Log.i("DataBaseHelper","Kategorie gelöscht!!!");
+        if(del > 0)
+            return true;
+        else
+            return false;
     }
 
     /**Diese Methode liefert alle Kategorien als HashSet zurück.*/
