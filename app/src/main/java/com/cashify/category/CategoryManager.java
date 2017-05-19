@@ -39,7 +39,6 @@ public class CategoryManager {
     }
 
     public boolean addCategory(String name) {
-        this.dbHelper.addCategory(name, dbHelper.getWritableDatabase());
-        return true;
+        return this.dbHelper.addCategory(name, dbHelper.getWritableDatabase());
     }
 }

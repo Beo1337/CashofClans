@@ -40,6 +40,10 @@
             android:label="@string/title_activity_category"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name="com.cashify.category.CategoryDetailActivity"
+            android:label="@string/title_activity_category_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name="com.cashify.password.PasswordActivity"
             android:label="@string/title_activity_category"
             android:theme="@style/AppTheme.NoActionBar" />

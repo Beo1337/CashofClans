@@ -7,4 +7,5 @@
     <string name="title_activity_statistik">StatistikActivity</string>
     <string name="action_add">Hinzufügen</string>
     <string name="action_cancel">Abbrechen</string>
+    <string name="title_activity_category_detail" />
 </resources>

@@ -1,5 +1,6 @@
 package com.cashify.category;
 
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -78,7 +79,7 @@ public class CategoryActivity extends AppCompatActivity implements CategoryAddFr
 
     @Override
     public void onCategoryAdd(String categoryName) {
-
-        manager.addCategory(categoryName);
+        boolean success = manager.addCategory(categoryName);
+        //TODO snackbaar
     }
 }

@@ -1,11 +1,13 @@
 package com.cashify.category;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.seps.cashofclans.EinstellungenActivity;
 import com.example.seps.cashofclans.R;
 
 import org.w3c.dom.Text;
@@ -41,6 +43,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         Category cat = manager.getCategoryByIndex(position);
         TextView textView = (TextView) holder.view.findViewById(R.id.category_label);
         textView.setText(cat.getCategoryName());
+        textView.setOnClickListener(x -> {
+            Intent i = new Intent(x.getContext(), com.cashify.category.CategoryDetailActivity.class);
+            x.getContext().startActivity(i);
+        });
     }
 
     public int getItemCount() {
