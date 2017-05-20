@@ -2,6 +2,7 @@ package com.cashify.category;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import com.example.seps.cashofclans.EinstellungenActivity;
 import com.example.seps.cashofclans.R;
 
 import org.w3c.dom.Text;
+
+import static android.content.ContentValues.TAG;
 
 // Category adapter interfaces between presentation layer and model
 // TODO: revisit 15 APR 2017 at the latest
@@ -42,10 +45,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         Category cat = manager.getCategoryByIndex(position);
         TextView textView = (TextView) holder.view.findViewById(R.id.category_label);
-        textView.setText(cat.getCategoryName());
-        textView.setOnClickListener(x -> {
-            Intent i = new Intent(x.getContext(), com.cashify.category.CategoryDetailActivity.class);
-            x.getContext().startActivity(i);
+        textView.setText(cat.getCategoryName() + cat.getId());
+        textView.setOnClickListener(l -> {
+            Intent intent = new Intent(l.getContext(), com.cashify.category.CategoryDetailActivity.class);
+            intent.putExtra("categoryId", cat.getId());
+            Log.i(TAG, "onBindViewHolder: " + cat.getId());
+            l.getContext().startActivity(intent);
         });
     }
 
