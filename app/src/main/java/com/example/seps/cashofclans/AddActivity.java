@@ -5,25 +5,32 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.hardware.Camera;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
-
 import com.example.seps.cashofclans.Database.DatabaseHelper;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 
 /**
  *
@@ -32,6 +39,7 @@ import java.util.Date;
  * */
 public class AddActivity extends AppCompatActivity {
 
+    private static final String TAG = "AddActivity";
     /**In diesem Textfeld wird der aktuelle Kontostand angezeigt.*/
     private EditText betrag;
     /**Wird benötigt um die gewählte Zahl in das Textfeld zu schreiben.*/
@@ -44,6 +52,13 @@ public class AddActivity extends AppCompatActivity {
     private Spinner spin;
     /**Speichername des Fotos*/
     private String foto = null;
+
+    private File photoFile = null;
+
+    static final int REQUEST_TAKE_PHOTO = 1;
+    private String mCurrentPhotoPath;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +111,8 @@ public class AddActivity extends AppCompatActivity {
                 cat.setEnabled(false);
             }
         }
+
+
     }
 
     /** Diese Methode setzt den Spinner auf eine Kategorie.*/
@@ -214,12 +231,57 @@ public class AddActivity extends AppCompatActivity {
 
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File imageFile = new File(name);
-        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile));
-        // der RequestCode ist ein Callback, um nach Beenden der Kamera z.B. das Bild in einen
-        // ImageView oder so zu laden...
-        startActivityForResult(takePictureIntent, 1234);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
 
+            try {
+                photoFile = createImageFile();
+                foto = photoFile.getName();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                Log.d(TAG,"Fehler beim Erstellen des Files.");
+                ex.printStackTrace();
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.example.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
+        }
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Bitmap myBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+        if(myBitmap != null) {
+            Log.d(TAG, "Foto da");
+            ImageButton im = (ImageButton) findViewById(R.id.imageButton7);
+            im.setImageBitmap(myBitmap);
+        }
+        else
+            Log.d(TAG,"Foto nicht da!");
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "CashifyPicture_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+
 }

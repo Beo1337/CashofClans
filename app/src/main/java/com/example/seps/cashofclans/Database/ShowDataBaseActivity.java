@@ -63,7 +63,7 @@ public class ShowDataBaseActivity extends AppCompatActivity {
             entry = entry +" "+ cursor.getInt(3);//Kategorie (Fremdschlüssel)
             entry = entry +" "+ cursor.getString(4);//Datum
             //entry = entry +" "+ cursor.getString(5);//GPS
-            //entry = entry +" "+ cursor.getString(6);//Foto
+            entry = entry +" "+ cursor.getString(6);//Foto
             entry = entry +"\n";
         }
         cursor.close();

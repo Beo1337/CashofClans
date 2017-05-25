@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         }
         betrag= (TextView) findViewById(R.id.Money);
         Log.i("MainActivity","Betrag: "+summe);
+        summe = Math.round(summe*100)/100.0;
         betrag.setText(String.valueOf(summe)+ " €");
         if(summe<0)
             betrag.setTextColor(Color.RED);
