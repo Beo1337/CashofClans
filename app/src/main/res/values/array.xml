@@ -11,14 +11,14 @@
     </string-array>
 
     <string-array name="zeiteinheit">
+        <item>Alle</item>
         <item>"Jahr"</item>
         <item>"Monat"</item>
-        <item>"Woche"</item>
     </string-array>
 
     <string-array name="zeiteinheit_values">
-        <item >000</item>
-        <item >00</item>
-        <item >0</item>
+        <item >Alle</item>
+        <item >Jahr</item>
+        <item >Monat</item>
     </string-array>
 </resources>

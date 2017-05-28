@@ -3,6 +3,7 @@
 
     <ListPreference
         android:title="Währung"
+        android:key="waehrung"
         android:dialogTitle="Währung"
         android:entries="@array/waehrung"
         android:entryValues="@array/weahrung_values"
@@ -10,8 +11,10 @@
 
     <ListPreference
         android:title="Zeiteinheit"
+        android:key="zeit"
         android:dialogTitle="Zeiteinheit"
         android:entries="@array/zeiteinheit"
+        android:defaultValue="@string/default_time"
         android:entryValues="@array/zeiteinheit_values" />
 
     <Preference android:title="Passwort" >

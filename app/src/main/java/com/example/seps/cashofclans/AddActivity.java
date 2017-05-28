@@ -52,13 +52,10 @@ public class AddActivity extends AppCompatActivity {
     private Spinner spin;
     /**Speichername des Fotos*/
     private String foto = null;
-
+    /**File in dem das Foto gespeichert wird*/
     private File photoFile = null;
 
     static final int REQUEST_TAKE_PHOTO = 1;
-    private String mCurrentPhotoPath;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,26 +221,21 @@ public class AddActivity extends AppCompatActivity {
         betrag.setText(s);
     }
 
+    /**Diese Methode macht ein Foto welches zum Eintrag hinzugefügt wird*/
     public void cam(View v){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String strDate = sdf.format(new Date());
-        String name = "CashifyPicture.jpg";
-
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
+        //Wenn eine Kamera gefunden wurde:
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-
+            //Neues File für das Foto anlegen.
             try {
                 photoFile = createImageFile();
                 foto = photoFile.getName();
             } catch (IOException ex) {
-                // Error occurred while creating the File
                 Log.d(TAG,"Fehler beim Erstellen des Files.");
                 ex.printStackTrace();
             }
-            // Continue only if the File was successfully created
+            //Wenn ein File für das Foto erstellt werden konnte:
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(this,
                         "com.example.android.fileprovider",
@@ -255,6 +247,7 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
+    /**Diese Methode wird aufgerufen sobald das Foto gemacht wurde. Es wird der Fotobutton durch das Bild ersetzt.*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Bitmap myBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
@@ -267,19 +260,17 @@ public class AddActivity extends AppCompatActivity {
             Log.d(TAG,"Foto nicht da!");
     }
 
+    /**Diese Methode erstellt ein File in dem das Foto gespeichert wird und liefert dieses als Rückgabewert.*/
     private File createImageFile() throws IOException {
-        // Create an image file name
+        //Ein neues File für ein Bild anlegen.
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "CashifyPicture_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
+                imageFileName,
+                ".jpg",
+                storageDir
         );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
