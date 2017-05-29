@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         myDb = new DatabaseHelper(this);
         refresh_money();
-        //getActionBar().hide();
     }
 
     @Override
@@ -59,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = db.rawQuery("SELECT * FROM uebersicht", null);
         Log.i("MainActivity:","Anzahl Daten: "+cursor.getCount());
         double summe = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         while(cursor.moveToNext())
         {
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 Date d = null;
                 Date a = null;
                 try {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
                     d = sdf.parse(cursor.getString(4));
                     a = sdf.parse(sdf.format(new Date()));
                 } catch (ParseException e) {
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         betrag= (TextView) findViewById(R.id.Money);
         Log.i("MainActivity","Betrag: "+summe);
         summe = Math.round(summe*100)/100.0;
-        betrag.setText(String.valueOf(summe)+ " €");
+        betrag.setText(String.valueOf(summe)+ "€");
         if(summe<0)
             betrag.setTextColor(Color.RED);
         else
