@@ -62,6 +62,12 @@ public class CategoryActivity extends AppCompatActivity implements CategoryAddFr
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.category_menu, menu);
