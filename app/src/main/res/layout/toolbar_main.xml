@@ -30,11 +30,7 @@
       android:onClick="main"
       android:text="Home"
       app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintLeft_toLeftOf="parent"
-      />
-
-
-      />
+      app:layout_constraintLeft_toLeftOf="parent"/>
 
   <Button
       android:id="@+id/overview_button"
@@ -42,7 +38,6 @@
       android:layout_height="wrap_content"
       android:layout_marginBottom="16dp"
       android:drawableBottom="@mipmap/barchart"
-
       android:onClick="stats"
       android:text="Overview"
       app:layout_constraintBottom_toBottomOf="parent"

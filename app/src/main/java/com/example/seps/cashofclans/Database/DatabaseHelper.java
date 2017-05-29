@@ -153,4 +153,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return allCategories;
     }
+
+    public int removeEntry(int id) {
+        //TODO: @Simon
+        return 1;
+    }
 }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.seps.cashofclans.Database.DatabaseHelper;
 import com.example.seps.cashofclans.Database.ShowDataBaseActivity;
+import com.example.seps.cashofclans.Overview.OverviewListActivity;
 import com.example.seps.cashofclans.Overview.StatistikActivity;
 
 import java.text.ParseException;
@@ -144,6 +145,9 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(i, 0);
     }
 
-
+    public void list(View v){
+        Intent i = new Intent(v.getContext(),OverviewListActivity.class);
+        startActivityForResult(i,0);
+    }
 
 }

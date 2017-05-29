@@ -5,8 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
-
-import com.example.seps.cashofclans.Database.DatabaseHelper;
 import com.example.seps.cashofclans.R;
 
 /**
