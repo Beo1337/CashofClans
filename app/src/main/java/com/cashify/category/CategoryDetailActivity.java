@@ -3,6 +3,7 @@ package com.cashify.category;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.seps.cashofclans.Database.DatabaseHelper;
@@ -14,6 +15,7 @@ public class CategoryDetailActivity extends AppCompatActivity {
 
     private Category category;
     private EditText catNameField;
+    private Button delButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +30,16 @@ public class CategoryDetailActivity extends AppCompatActivity {
             category = catManager.getCategoryById(catId);
             catNameField = (EditText) findViewById(R.id.category_detail_name);
             catNameField.setText(category.getCategoryName());
+
+            delButton = (Button) findViewById(R.id.category_detail_delete);
+            delButton.setOnClickListener(l -> {
+                catManager.removeCategory(category.getCategoryName());
+                this.finish();
+            });
+
+
         } catch (Exception e) {
-            
+
         }
     }
 }

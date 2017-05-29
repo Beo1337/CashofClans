@@ -9,12 +9,15 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.seps.cashofclans.Database.DatabaseHelper;
 import com.example.seps.cashofclans.R;
+
+import static android.content.ContentValues.TAG;
 
 // Category view consists rn of a RecycleView and a non-functional floating add button.
 // Provided functionality:
@@ -81,5 +84,6 @@ public class CategoryActivity extends AppCompatActivity implements CategoryAddFr
     public void onCategoryAdd(String categoryName) {
         boolean success = manager.addCategory(categoryName);
         //TODO snackbaar
+        adapter.notifyDataSetChanged();
     }
 }

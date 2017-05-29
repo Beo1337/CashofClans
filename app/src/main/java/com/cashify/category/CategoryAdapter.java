@@ -46,11 +46,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         Category cat = manager.getCategoryByIndex(position);
         TextView textView = (TextView) holder.view.findViewById(R.id.category_label);
         textView.setText(cat.getCategoryName() + cat.getId());
-        textView.setOnClickListener(l -> {
-            Intent intent = new Intent(l.getContext(), com.cashify.category.CategoryDetailActivity.class);
-            intent.putExtra("categoryId", cat.getId());
-            Log.i(TAG, "onBindViewHolder: " + cat.getId());
-            l.getContext().startActivity(intent);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), com.cashify.category.CategoryDetailActivity.class);
+                intent.putExtra("categoryId", cat.getId());
+                Log.i(TAG, "onBindViewHolder: " + cat.getId());
+                v.getContext().startActivity(intent);
+            }
         });
     }
 
