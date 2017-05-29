@@ -60,7 +60,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    /**Diese Methoden fügt eine neue Kategorie in die Kategorie-Tabelle ein.*/
+    /**Diese Methode fügt eine neue Kategorie in die Kategorie-Tabelle ein.*/
     public boolean addCategory (String name, SQLiteDatabase db){
 
         //Werte für Datenbank vorbereiten
@@ -76,7 +76,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
     }
 
-    /**Diese Methoden fügt eine neue Kategorie in die Kategorie-Tabelle ein. Optional ist es möglich String für ein Icon mitzugeben.*/
+    /**Diese Methode fügt eine neue Kategorie in die Kategorie-Tabelle ein. Optional ist es möglich String für ein Icon mitzugeben.*/
     public boolean addCategory (String name, String icon, SQLiteDatabase db) {
 
         //Werte für Datenbank vorbereiten

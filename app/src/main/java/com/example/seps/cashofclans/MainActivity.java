@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(i, 0);
     }
 
-    public void main(View v){
+    public void  main(View v){
         Intent i = new Intent(v.getContext(),MainActivity.class);
         startActivityForResult(i,0);
     }
