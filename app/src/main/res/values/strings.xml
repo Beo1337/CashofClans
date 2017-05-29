@@ -4,8 +4,10 @@
     <string name="title_activity_add">AddActivity</string>
     <string name="title_activity_category">Kategorien</string>
     <string name="default_waehrung">€</string>
+    <string name="default_time">Alle</string>
     <string name="title_activity_statistik">StatistikActivity</string>
     <string name="action_add">Hinzufügen</string>
     <string name="action_cancel">Abbrechen</string>
     <string name="title_activity_category_detail" />
+    <string name="title_activity_alarm">AlarmActivity</string>
 </resources>
