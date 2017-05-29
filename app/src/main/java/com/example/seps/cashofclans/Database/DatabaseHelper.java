@@ -3,6 +3,7 @@ package com.example.seps.cashofclans.Database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -63,17 +64,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**Diese Methode fügt eine neue Kategorie in die Kategorie-Tabelle ein.*/
     public boolean addCategory (String name, SQLiteDatabase db){
 
+        long newRowId = 0;
+
         //Werte für Datenbank vorbereiten
         ContentValues values = new ContentValues();
         values.put("NAME", name);
 
         //In die Datenbank speichern
-        long newRowId = db.insert(TABLE_NAME_CATEGORY, null, values);
-        Log.i("DatabaseHelper", "Eingefügt " + newRowId);
-        if(newRowId > 0)
-            return true;
-        else
+        try {
+            newRowId = db.insert(TABLE_NAME_CATEGORY, null, values);
+        } catch(SQLiteConstraintException e){
+            Log.i("DatabaseHelper", "FUCK UP " + e.getMessage());
             return false;
+        }
+
+
+        if(newRowId > 0) {
+            Log.i("DatabaseHelper", "Eingefügt " + newRowId);
+            return true;
+        } else {
+            Log.i("DatabaseHelper", "Eingefügt NOPE " + newRowId);
+            return false;
+        }
     }
 
     /**Diese Methode fügt eine neue Kategorie in die Kategorie-Tabelle ein. Optional ist es möglich String für ein Icon mitzugeben.*/

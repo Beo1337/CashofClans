@@ -27,20 +27,19 @@ public class CategoryManager {
         categoryList.addAll(dbHelper.getCategories(dbHelper.getReadableDatabase()));
     }
 
+    private void reloadFromDb() {
+        categoryList.clear();
+        categoryList.addAll(dbHelper.getCategories(dbHelper.getReadableDatabase()));
+    }
+
     // Return single category entry by list position
     public Category getCategoryByIndex(int index) {
         return categoryList.get(index);
     }
 
     public Category getCategoryById(int id) throws Exception {
-        Optional<Category> cat = categoryList.stream().filter(c -> c.getId() == id).findFirst();
-        if (cat.isPresent()) {
-            return cat.get();
-        } else {
-            Log.i(TAG, "getCategoryById: category not found");
-            throw new Exception("category id not found");
-        }
-
+        for(Category c : categoryList) if (c.getId() == id) return c;
+        throw new Exception("Cat id not found");
     }
 
     // Return list of all elements (unmodifiable)
@@ -54,6 +53,14 @@ public class CategoryManager {
     }
 
     public boolean addCategory(String name) {
-        return this.dbHelper.addCategory(name, dbHelper.getWritableDatabase());
+        boolean success = this.dbHelper.addCategory(name, dbHelper.getWritableDatabase());
+        if (success) this.reloadFromDb();
+        return success;
+    }
+
+    public boolean removeCategory(String name) {
+        boolean success = this.dbHelper.deleteCategory(name, dbHelper.getWritableDatabase());
+        if (success) this.reloadFromDb();
+        return success;
     }
 }
