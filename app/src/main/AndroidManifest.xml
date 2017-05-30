@@ -65,7 +65,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Database.ShowDataBaseActivity" />
         <activity android:name=".Overview.OverviewListActivity" />
-        <activity android:name=".AlarmActivity"></activity>
+        <activity android:name=".AlarmActivity" />
+        <activity android:name=".Overview.PictureActivity"></activity>
     </application>
 
 </manifest>

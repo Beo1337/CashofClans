@@ -11,10 +11,10 @@
     tools:layout_editor_absoluteX="0dp">
 
     <include layout="@layout/toolbar_main"
-        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteY="45dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         android:id="@+id/include2"></include>
 
 
@@ -40,41 +40,7 @@
         tools:layout_editor_absoluteX="-25dp" />
 
 
-    <Button
-        android:id="@+id/button2"
-        style="@android:style/Widget.Button"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:background="@android:color/holo_green_dark"
-        android:onClick="add"
-        android:text="Einnahme"
-        android:textSize="30dp"
-        app:layout_constraintRight_toLeftOf="@+id/button3"
-        android:layout_marginRight="12dp"
-        android:layout_marginLeft="25dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="240dp"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="12dp"
-        tools:layout_constraintLeft_creator="1" />
 
-    <Button
-        android:id="@+id/button3"
-        style="@android:style/Widget.Button"
-        android:layout_width="160dp"
-        android:layout_height="50dp"
-        android:background="@android:color/holo_red_dark"
-        android:onClick="sub"
-        android:text="Ausgabe"
-        android:textSize="30dp"
-        android:layout_marginRight="27dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="240dp"
-        android:layout_marginEnd="27dp" />
 
 
     <Button
@@ -186,6 +152,40 @@
 
 
     </GridLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="add"
+        app:srcCompat="@drawable/plusicon"
+        android:background="@android:color/transparent"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/include2"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.189" />
+
+    <ImageButton
+        android:id="@+id/imageButton9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="sub"
+        app:srcCompat="@drawable/minusicon"
+        android:background="@android:color/transparent"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/include2"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/imageButton8"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintVertical_bias="0.123" />
+
 
 
 </android.support.constraint.ConstraintLayout>

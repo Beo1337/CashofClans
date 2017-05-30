@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.cashify.category.Category;
+import com.example.seps.cashofclans.Entry;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -166,8 +167,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return allCategories;
     }
 
-    public int removeEntry(int id) {
-        //TODO: @Simon
-        return 1;
+    /**Diese Methode liefert alle Entries als HashSet zurück*/
+    public Set<Entry> getEntries(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Set<Entry> allEntries = new HashSet<Entry>();
+
+        Cursor cursor = db.rawQuery("SELECT u.ID,u.BETRAG,u.TITEL,u.DATUM,U.FOTO,c.NAME FROM "+TABLE_NAME_MAIN+" u JOIN "+TABLE_NAME_CATEGORY+" c ON u.KATEGORIE = c.ID", null);
+        while(cursor.moveToNext())
+        {
+            //Log.d("DatabaseHelper"," "+cursor.getInt(0));
+            Entry e = new Entry(cursor.getInt(0),cursor.getDouble(1),cursor.getString(2),cursor.getString(5),cursor.getString(3),cursor.getString(4));
+            allEntries.add(e);
+        }
+        Log.i("DatabaseHelper","The list is:");
+        Iterator<Entry> i = allEntries.iterator();
+        while(i.hasNext())
+            Log.i("DatabaseHelper",i.next().toString());
+        cursor.close();
+
+        return allEntries;
+    }
+
+    /**Diese Methode löscht den Eintrag mit der übergegenen ID aus der Datenbank.*/
+    public boolean removeEntry(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int del = db.delete(TABLE_NAME_MAIN,"ID ="+id,null);
+        db.close();
+        Log.i("DataBaseHelper","Eintrag gelöscht!!!");
+        if(del > 0)
+            return true;
+        else
+            return false;
     }
 }

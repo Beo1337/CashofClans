@@ -230,7 +230,7 @@ public class AddActivity extends AppCompatActivity {
             //Neues File für das Foto anlegen.
             try {
                 photoFile = createImageFile();
-                foto = photoFile.getName();
+                foto = photoFile.getAbsolutePath();
             } catch (IOException ex) {
                 Log.d(TAG,"Fehler beim Erstellen des Files.");
                 ex.printStackTrace();
@@ -254,7 +254,7 @@ public class AddActivity extends AppCompatActivity {
         if(myBitmap != null) {
             Log.d(TAG, "Foto da");
             ImageButton im = (ImageButton) findViewById(R.id.imageButton7);
-            im.setImageBitmap(myBitmap);
+            im.setImageResource(R.drawable.cameracheckicon);
         }
         else
             Log.d(TAG,"Foto nicht da!");

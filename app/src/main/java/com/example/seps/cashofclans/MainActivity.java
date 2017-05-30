@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**Diese Methode aktualisiert den Kontostand auf der Startseite*/
     public void refresh_money() {
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -86,12 +87,9 @@ public class MainActivity extends AppCompatActivity {
                 else if(time.equals("Jahr")){
                     if(d.getYear()==a.getYear())
                         summe += cursor.getDouble(1);
-
                 }
             }
-
         }
-
         betrag= (TextView) findViewById(R.id.Money);
         Log.i("MainActivity","Betrag: "+summe);
         summe = Math.round(summe*100)/100.0;
@@ -104,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         db.close();
     }
 
+    /***************OnClick-Funktionen***************/
     public void einstellungen(View v) {
         Intent i = new Intent(v.getContext(), EinstellungenActivity.class);
         startActivityForResult(i, 0);
