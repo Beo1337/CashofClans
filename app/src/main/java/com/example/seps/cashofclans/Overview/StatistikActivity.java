@@ -1,10 +1,12 @@
 package com.example.seps.cashofclans.Overview;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
@@ -28,11 +30,13 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -133,8 +137,7 @@ public class StatistikActivity extends AppCompatActivity {
     }
 
     public void stats(View v) {
-        Intent i = new Intent(v.getContext(), StatistikActivity.class);
-        startActivityForResult(i, 0);
+
     }
 
     public void  main(View v){
@@ -183,15 +186,49 @@ public class StatistikActivity extends AppCompatActivity {
             }
         });
 
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String time = sharedPref.getString("zeit","");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
         Iterator<com.example.seps.cashofclans.Entry> i1 = entryList.iterator();
         while(i1.hasNext()) {//Für jeden Eintrag
             com.example.seps.cashofclans.Entry e = i1.next();
             if(e.getBetrag()<0)
             {
 
-                double v = ((Double)value.get(e.getKategorie())).doubleValue();
-                v += (e.getBetrag()*-1);
-                value.put(e.getKategorie(),v);
+                if(time.equals("Alle"))
+                {
+                    double v = ((Double)value.get(e.getKategorie())).doubleValue();
+                    v += (e.getBetrag()*-1);
+                    value.put(e.getKategorie(),v);
+                }
+                else {
+
+                    Date d = null;
+                    Date a = null;
+                    try {
+
+                        d = sdf.parse(e.getDatum());
+                        a = sdf.parse(sdf.format(new Date()));
+                    } catch (ParseException ex) {
+                        ex.printStackTrace();
+                    }
+                    if (time.equals("Monat")) {
+                        if (d.getMonth() == a.getMonth()) {
+                            double v = ((Double) value.get(e.getKategorie())).doubleValue();
+                            v += (e.getBetrag() * -1);
+                            value.put(e.getKategorie(), v);
+                        }
+                    }
+                    else if(time.equals("Jahr")){
+                        if(d.getYear()==a.getYear()){
+                            double v = ((Double)value.get(e.getKategorie())).doubleValue();
+                            v += (e.getBetrag()*-1);
+                            value.put(e.getKategorie(),v);
+                        }
+                    }
+                }
+
             }
         }
 
@@ -225,6 +262,12 @@ public class StatistikActivity extends AppCompatActivity {
         pieChart.setDescription("Ausgaben in €");
 
 
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        addChart();
     }
 
 
