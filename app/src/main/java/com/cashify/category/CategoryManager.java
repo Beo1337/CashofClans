@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.seps.cashofclans.Database.DatabaseHelper;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -23,13 +24,19 @@ public class CategoryManager {
     // TODO: review once other functionality is in place
     public CategoryManager(DatabaseHelper dbHelper) {
         this.dbHelper = dbHelper;
-        categoryList = new LinkedList<>();
-        categoryList.addAll(dbHelper.getCategories(dbHelper.getReadableDatabase()));
+        reloadFromDb();
     }
 
     private void reloadFromDb() {
+        if (categoryList == null) categoryList = new LinkedList<>();
         categoryList.clear();
         categoryList.addAll(dbHelper.getCategories(dbHelper.getReadableDatabase()));
+        Collections.sort(categoryList, new Comparator<Category>() {
+            @Override
+            public int compare(Category o1, Category o2) {
+                return o1.getCategoryName().compareTo(o2.getCategoryName());
+            }
+        });
     }
 
     // Return single category entry by list position
