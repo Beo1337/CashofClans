@@ -1,20 +1,47 @@
 package com.example.seps.cashofclans.Overview;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.cashify.category.Category;
+import com.example.seps.cashofclans.Database.DatabaseHelper;
+import com.example.seps.cashofclans.EinstellungenActivity;
+import com.example.seps.cashofclans.MainActivity;
 import com.example.seps.cashofclans.R;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class StatistikActivity extends AppCompatActivity {
 
+    private static final String TAG = "StatistikActivity";
     Button btn_list;
     Button btn_3_months;
     Button btn_6_months;
@@ -22,11 +49,18 @@ public class StatistikActivity extends AppCompatActivity {
     EditText start_editText;
     EditText end_editText;
 
+    ArrayList<Entry> entries ;
+    ArrayList<String> PieEntryLabels ;
+    PieChart pieChart;
+    PieDataSet pieDataSet ;
+    PieData pieData ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistik);
+        addChart();
 
         btn_list = (Button) findViewById(R.id.list_button);
         btn_list.setOnClickListener(new View.OnClickListener() {
@@ -97,4 +131,101 @@ public class StatistikActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void stats(View v) {
+        Intent i = new Intent(v.getContext(), StatistikActivity.class);
+        startActivityForResult(i, 0);
+    }
+
+    public void  main(View v){
+        Intent i = new Intent(v.getContext(),MainActivity.class);
+        startActivityForResult(i,0);
+    }
+
+    public void einstellungen(View v) {
+        Intent i = new Intent(v.getContext(), EinstellungenActivity.class);
+        startActivityForResult(i, 0);
+    }
+
+
+    public void addChart(){
+
+        DatabaseHelper myDb = new DatabaseHelper(this);
+
+        pieChart = (PieChart) findViewById(R.id.chart);
+
+        entries = new ArrayList<>();
+
+        PieEntryLabels = new ArrayList<String>();
+
+        HashMap<String,Object> value = new HashMap<String,Object>();
+        List<Category> categoryList = new LinkedList<>();
+        categoryList.clear();
+        categoryList.addAll(myDb.getCategories(myDb.getReadableDatabase()));
+        Collections.sort(categoryList, new Comparator<Category>() {
+            @Override
+            public int compare(Category o1, Category o2) {
+                return o1.getCategoryName().compareTo(o2.getCategoryName());
+            }
+        });
+        Iterator<Category> i = categoryList.iterator();
+        while(i.hasNext()) {//Für jeden Eintrag
+            Category c = i.next();
+            value.put(c.getCategoryName(),0.0);
+        }
+        //Liste aller Einträge aus der Datenbank holen.
+        List<com.example.seps.cashofclans.Entry> entryList = new LinkedList<>();
+        entryList.addAll(myDb.getEntries());
+        Collections.sort(entryList, new Comparator<com.example.seps.cashofclans.Entry>() {//Sortiert nach Datum
+            @Override
+            public int compare(com.example.seps.cashofclans.Entry o1, com.example.seps.cashofclans.Entry o2) {
+                return o1.getDatum().compareTo(o2.getDatum());
+            }
+        });
+
+        Iterator<com.example.seps.cashofclans.Entry> i1 = entryList.iterator();
+        while(i1.hasNext()) {//Für jeden Eintrag
+            com.example.seps.cashofclans.Entry e = i1.next();
+            if(e.getBetrag()<0)
+            {
+
+                double v = ((Double)value.get(e.getKategorie())).doubleValue();
+                v += (e.getBetrag()*-1);
+                value.put(e.getKategorie(),v);
+            }
+        }
+
+        i = categoryList.iterator();
+        int counter = 0;
+        while(i.hasNext()) {//Für jeden Eintrag
+            Category c = i.next();
+
+            int wert = ((Double)value.get(c.getCategoryName())).intValue();
+            if(wert>0) {
+                Log.d(TAG,"Kategorie: "+c.getCategoryName()+" Wert: "+wert);
+                entries.add(new BarEntry(wert, counter));
+                PieEntryLabels.add(c.getCategoryName());
+            }
+            else
+                value.remove(c.getCategoryName());
+            counter++;
+        }
+
+        pieDataSet = new PieDataSet(entries, "");
+
+        pieData = new PieData(PieEntryLabels, pieDataSet);
+
+        pieDataSet.setColors(new int[] { Color.parseColor("#5c759a"), Color.parseColor("#695c9a"), Color.parseColor("#8e5c9a"), Color.parseColor("#9a5c82"),Color.parseColor("#9a5c5c"),Color.parseColor("#9a825c"),Color.parseColor("#8e9a5c"), Color.parseColor("#699a5c")});
+        pieDataSet.setValueTextSize(16f);
+
+        pieChart.setData(pieData);
+
+        pieChart.animateY(3000);
+        pieChart.setHoleColor(Color.parseColor("#85a8e5"));
+        pieChart.setDescription("Ausgaben in €");
+
+
+    }
+
+
 }

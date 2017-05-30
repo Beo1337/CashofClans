@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.view.View;
 
+
+import com.example.seps.cashofclans.Overview.StatistikActivity;
 
 import static android.provider.SyncStateContract.Helpers.update;
 
@@ -51,6 +54,20 @@ public class EinstellungenActivity extends PreferenceActivity {
         prefer2.setOnPreferenceChangeListener(this.changeText);
     }
 
+    public void stats(View v) {
+        Intent i = new Intent(v.getContext(), StatistikActivity.class);
+        startActivityForResult(i, 0);
+    }
+
+    public void  main(View v){
+        Intent i = new Intent(v.getContext(),MainActivity.class);
+        startActivityForResult(i,0);
+    }
+
+    public void einstellungen(View v) {
+        Intent i = new Intent(v.getContext(), EinstellungenActivity.class);
+        startActivityForResult(i, 0);
+    }
 
 
 

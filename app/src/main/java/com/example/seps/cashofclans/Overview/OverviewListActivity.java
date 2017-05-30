@@ -3,9 +3,7 @@ package com.example.seps.cashofclans.Overview;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.Bundle;
@@ -14,22 +12,19 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.seps.cashofclans.Database.DatabaseHelper;
 import com.example.seps.cashofclans.Entry;
 import com.example.seps.cashofclans.R;
-
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 
 public class OverviewListActivity extends AppCompatActivity {
 
@@ -78,9 +73,10 @@ public class OverviewListActivity extends AppCompatActivity {
         }
         tableLayout.addView(rowHeader);
 
+        //Liste aller Einträge aus der Datenbank holen.
         List<Entry> entryList = new LinkedList<>();
         entryList.addAll(myDb.getEntries());
-        Collections.sort(entryList, new Comparator<Entry>() {
+        Collections.sort(entryList, new Comparator<Entry>() {//Sortiert nach Datum
                     @Override
                     public int compare(Entry o1, Entry o2) {
                         return o1.getDatum().compareTo(o2.getDatum());
@@ -88,7 +84,7 @@ public class OverviewListActivity extends AppCompatActivity {
         });
 
         Iterator<Entry> i = entryList.iterator();
-        while(i.hasNext()){
+        while(i.hasNext()){//Für jeden Eintrag
             Entry e = i.next();
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
