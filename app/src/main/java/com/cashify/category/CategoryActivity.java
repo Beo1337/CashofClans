@@ -19,13 +19,12 @@ import com.example.seps.cashofclans.R;
 
 import static android.content.ContentValues.TAG;
 
-// Category view consists rn of a RecycleView and a non-functional floating add button.
+// Category view consists rn of a RecycleView
 // Provided functionality:
 // - add new categories
-// - rename categories
+// (- rename categories) to add
 // - delete categories
 // See specification
-// TODO: revisit 15 APR 2017 at the latest
 public class CategoryActivity extends AppCompatActivity implements CategoryAddFragment.Listener {
 
     private RecyclerView catRecycleView;
