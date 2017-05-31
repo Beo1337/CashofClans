@@ -2,14 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ListPreference
-        android:title="Währung"
-        android:key="waehrung"
-        android:dialogTitle="Währung"
-        android:entries="@array/waehrung"
-        android:entryValues="@array/weahrung_values"
-        android:defaultValue="@string/default_waehrung"/>
-
-    <ListPreference
         android:title="Zeiteinheit"
         android:key="zeit"
         android:dialogTitle="Zeiteinheit"

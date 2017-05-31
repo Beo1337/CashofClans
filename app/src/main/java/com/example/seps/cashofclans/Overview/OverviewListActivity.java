@@ -25,7 +25,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-
+/**
+ * Diese Klasse stellt die Einträge der Datenbank als Liste dar.
+ */
 public class OverviewListActivity extends AppCompatActivity {
 
     private static final String TAG = "OverviewListActivity";
@@ -199,12 +201,5 @@ public class OverviewListActivity extends AppCompatActivity {
         }
         kategorie_cursor.close();
         return null;
-    }
-
-    public static Bitmap RotateBitmap(Bitmap source, float angle)
-    {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 }

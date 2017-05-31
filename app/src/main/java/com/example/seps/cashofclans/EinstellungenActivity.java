@@ -31,13 +31,10 @@ public class EinstellungenActivity extends PreferenceActivity {
 
 
         this.time = sharedPref.getString("zeit","");
-        this.waehrung = sharedPref.getString("waehrung","");
 
         final Preference prefer1 = findPreference("zeit");
-        final Preference prefer2 = findPreference("waehrung");
 
         prefer1.setSummary(this.time);
-        prefer2.setSummary(this.waehrung);
 
 
         this.changeText = new Preference.OnPreferenceChangeListener() {
@@ -51,7 +48,6 @@ public class EinstellungenActivity extends PreferenceActivity {
         };
 
         prefer1.setOnPreferenceChangeListener(this.changeText);
-        prefer2.setOnPreferenceChangeListener(this.changeText);
     }
 
     public void stats(View v) {

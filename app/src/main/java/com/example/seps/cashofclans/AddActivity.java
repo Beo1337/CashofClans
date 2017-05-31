@@ -1,6 +1,8 @@
 package com.example.seps.cashofclans;
 
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,21 +16,26 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import com.example.seps.cashofclans.Database.DatabaseHelper;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -55,6 +62,12 @@ public class AddActivity extends AppCompatActivity {
     private String foto = null;
     /**File in dem das Foto gespeichert wird*/
     private File photoFile = null;
+    /**Jahr des Eintrags*/
+    private int mYear = -1;
+    /**Monat des Eintrags*/
+    private int mMonth = -1;
+    /**Tag des Eintrags*/
+    private int mDay = -1;
 
     static final int REQUEST_TAKE_PHOTO = 1;
 
@@ -199,10 +212,21 @@ public class AddActivity extends AppCompatActivity {
             c.moveToNext();
             values.put("KATEGORIE",c.getInt(0));
 
+            String strDate;
+            if(mYear==-1) {//Wenn noch kein Datum vergeben wurde, nimm das jetztige Datum.
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                strDate = sdf.format(new Date());
+            }
+            else{//Wenn ein Datum vergeben wurde, nimm dieses
+                mMonth++;//Monat starte bei 0 daher vorher ++ und nacher --
+                if(mMonth<10)
+                    strDate = mYear+"-0"+mMonth+"-"+mDay+" 00:00:00";
+                else
+                    strDate = mYear+"-"+mMonth+"-"+mDay+" 00:00:00";
+                mMonth--;
+            }
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String strDate = sdf.format(new Date());
-
+            Log.d(TAG,"Eingetragenes Datum: "+strDate);
             values.put("DATUM", strDate);
 
             //In die Datenbank speichern
@@ -225,27 +249,31 @@ public class AddActivity extends AppCompatActivity {
     /**Diese Methode macht ein Foto welches zum Eintrag hinzugefügt wird*/
     public void cam(View v){
 
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        //Wenn eine Kamera gefunden wurde:
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            //Neues File für das Foto anlegen.
-            try {
-                photoFile = createImageFile();
-                foto = photoFile.getAbsolutePath();
-            } catch (IOException ex) {
-                Log.d(TAG,"Fehler beim Erstellen des Files.");
-                ex.printStackTrace();
-            }
-            //Wenn ein File für das Foto erstellt werden konnte:
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+        try{
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            //Wenn eine Kamera gefunden wurde:
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                //Neues File für das Foto anlegen.
+                try {
+                    photoFile = createImageFile();
+                    foto = photoFile.getAbsolutePath();
+                } catch (IOException ex) {
+                    Log.d(TAG,"Fehler beim Erstellen des Files.");
+                    ex.printStackTrace();
+                }
+                //Wenn ein File für das Foto erstellt werden konnte:
+                if (photoFile != null) {
+                    Uri photoURI = FileProvider.getUriForFile(this,
+                            "com.example.android.fileprovider",
+                            photoFile);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                }
             }
         }
-
+        catch (Exception e1){//Falls irgend ein Fehler mit der Camera auftreten sollte, wird dieser gefangen.
+            Toast.makeText(AddActivity.this, "Foto aufnehmen nicht möglich!", Toast.LENGTH_LONG).show();
+        }
     }
 
     /**Diese Methode wird aufgerufen sobald das Foto gemacht wurde. Es wird der Fotobutton durch das Bild ersetzt.*/
@@ -274,6 +302,37 @@ public class AddActivity extends AppCompatActivity {
         );
         return image;
     }
+
+    /**Diese Methode ruft einen Auswahldialog für einen Datumspicker auf.*/
+    public void showStartDateDialog(View v){
+        if(mYear == -1) {//Wenn noch kein Tag gewählt wurde.
+            Calendar c = Calendar.getInstance();
+            mYear = c.get(Calendar.YEAR);
+            mMonth = c.get(Calendar.MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);
+        }
+        DatePickerDialog dialog = new DatePickerDialog(AddActivity.this,
+                new mDateSetListener(), mYear, mMonth, mDay);
+        dialog.show();
+    }
+
+    /**Dieser Listener reagiert auf Änderungen des Datumspickers und schreibt das geänderte Datum in die dafür vorgesehnen Felder*/
+    class mDateSetListener implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            mYear = year;
+            mMonth = monthOfYear;
+            mDay = dayOfMonth;
+            StringBuilder date = new StringBuilder().append(mMonth + 1).append("/").append(mDay).append("/").append(mYear).append(" ");
+            Log.d(TAG,date.toString());
+
+
+        }
+    }
+
+
 
 
 }
