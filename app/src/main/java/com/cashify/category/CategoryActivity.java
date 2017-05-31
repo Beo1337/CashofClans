@@ -13,23 +13,24 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.seps.cashofclans.Database.DatabaseHelper;
 import com.example.seps.cashofclans.R;
 
 import static android.content.ContentValues.TAG;
 
-// Category view consists rn of a RecycleView
-// Provided functionality:
+// CategoryActivity
+// primarily provides a scrolling list of all categories.
+// * Functionality:
 // - add new categories
-// (- rename categories) to add
-// - delete categories
-// See specification
+// (- rename categories through CategoryDetailActivity - to be added)
+// - delete categories through CategoryDetailActivity
+
 public class CategoryActivity extends AppCompatActivity implements CategoryAddFragment.Listener {
 
     private RecyclerView catRecycleView;
     private Toolbar toolbar;
-    private LinearLayoutManager layoutManager;
     private CategoryAdapter adapter;
     private CategoryManager manager;
 
@@ -41,24 +42,29 @@ public class CategoryActivity extends AppCompatActivity implements CategoryAddFr
         catRecycleView = (RecyclerView) findViewById(R.id.category_list);
         toolbar = (Toolbar) findViewById(R.id.category_toolbar);
 
-        layoutManager = new LinearLayoutManager(this);
         manager = new CategoryManager(new DatabaseHelper(this));
         adapter = new CategoryAdapter(manager);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
         catRecycleView.setHasFixedSize(true);
         catRecycleView.setLayoutManager(layoutManager);
         catRecycleView.setAdapter(adapter);
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
-                catRecycleView.getContext(),
-                layoutManager.getOrientation()
+        catRecycleView.addItemDecoration(
+                new DividerItemDecoration(
+                        catRecycleView.getContext(),
+                        layoutManager.getOrientation()
+                )
         );
-        catRecycleView.addItemDecoration(dividerItemDecoration);
 
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setTitle(R.string.title_activity_category);
     }
+
+
+    // Resume behaviour
 
     @Override
     protected void onResume() {
@@ -88,7 +94,8 @@ public class CategoryActivity extends AppCompatActivity implements CategoryAddFr
     @Override
     public void onCategoryAdd(String categoryName) {
         boolean success = manager.addCategory(categoryName);
-        //TODO snackbaar
-        adapter.notifyDataSetChanged();
+        String toastMsg = getString(success ? R.string.msg_category_added : R.string.msg_category_add_failed);
+        if (success) adapter.notifyDataSetChanged();
+        Toast.makeText(CategoryActivity.this, toastMsg, Toast.LENGTH_LONG).show();
     }
 }

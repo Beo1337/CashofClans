@@ -3,15 +3,9 @@ package com.example.seps.cashofclans.Overview;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.SpannableString;
-import android.text.style.RelativeSizeSpan;
-import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,12 +17,10 @@ import com.example.seps.cashofclans.EinstellungenActivity;
 import com.example.seps.cashofclans.MainActivity;
 import com.example.seps.cashofclans.R;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -168,13 +160,13 @@ public class StatistikActivity extends AppCompatActivity {
         Collections.sort(categoryList, new Comparator<Category>() {
             @Override
             public int compare(Category o1, Category o2) {
-                return o1.getCategoryName().compareTo(o2.getCategoryName());
+                return o1.getName().compareTo(o2.getName());
             }
         });
         Iterator<Category> i = categoryList.iterator();
         while(i.hasNext()) {//Für jeden Eintrag
             Category c = i.next();
-            value.put(c.getCategoryName(),0.0);
+            value.put(c.getName(),0.0);
         }
         //Liste aller Einträge aus der Datenbank holen.
         List<com.example.seps.cashofclans.Entry> entryList = new LinkedList<>();
@@ -237,14 +229,14 @@ public class StatistikActivity extends AppCompatActivity {
         while(i.hasNext()) {//Für jeden Eintrag
             Category c = i.next();
 
-            int wert = ((Double)value.get(c.getCategoryName())).intValue();
+            int wert = ((Double)value.get(c.getName())).intValue();
             if(wert>0) {
-                Log.d(TAG,"Kategorie: "+c.getCategoryName()+" Wert: "+wert);
+                Log.d(TAG,"Kategorie: "+c.getName()+" Wert: "+wert);
                 entries.add(new BarEntry(wert, counter));
-                PieEntryLabels.add(c.getCategoryName());
+                PieEntryLabels.add(c.getName());
             }
             else
-                value.remove(c.getCategoryName());
+                value.remove(c.getName());
             counter++;
         }
 
