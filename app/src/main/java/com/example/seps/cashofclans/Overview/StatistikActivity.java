@@ -164,7 +164,7 @@ public class StatistikActivity extends AppCompatActivity {
         HashMap<String,Object> value = new HashMap<String,Object>();
         List<Category> categoryList = new LinkedList<>();
         categoryList.clear();
-        categoryList.addAll(myDb.getCategories(myDb.getReadableDatabase()));
+        categoryList.addAll(myDb.getCategories());
         Collections.sort(categoryList, new Comparator<Category>() {
             @Override
             public int compare(Category o1, Category o2) {

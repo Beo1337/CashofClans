@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -24,6 +25,8 @@ import java.util.Set;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    /**Der TAG wird für das Log verwendet um anzuzeigen von welcher Klasse der Logeintrag stammt.*/
+    private static final String TAG = "DatabaseHelper";
     /**Name der Datenbank*/
     public static final String DATABASE_NAME = "cash.db";
     /**Name der Tabelle welche die Einträge speichert*/
@@ -39,32 +42,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d("Databasehelper","onCreate!");
-        db.execSQL("CREATE TABLE "+TABLE_NAME_MAIN+" (ID INTEGER PRIMARY KEY AUTOINCREMENT, BETRAG NUMBER(10,2), TITEL TEXT, KATEGORIE INTEGER, DATUM DATE, GPS TEXT, FOTO TEXT, FOREIGN KEY(KATEGORIE) REFERENCES category(ID))");
+        Log.d(TAG,"onCreate!");
+        db.execSQL("CREATE TABLE "+TABLE_NAME_MAIN+" (ID INTEGER PRIMARY KEY AUTOINCREMENT, BETRAG NUMBER(10,2), TITEL TEXT, KATEGORIE INTEGER, DATUM DATE, FOTO TEXT, FOREIGN KEY(KATEGORIE) REFERENCES category(ID) ON DELETE RESTRICT)");
         db.execSQL("CREATE TABLE "+TABLE_NAME_CATEGORY+" (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT , ICON TEXT, CONSTRAINT name_unique UNIQUE (NAME))");
 
         //Vordefinierte Kategorien in die Datenbank speichern.
-        addCategory("Lebensmittel",db);
-        addCategory("Bar", db);
-        addCategory("Sport", db);
-        addCategory("Kleidung", db);
-        addCategory("Bücher", db);
-        addCategory("Kino", db);
-        addCategory("Gehalt",db);
+        addCat("Lebensmittel",db);
+        addCat("Bar",db);
+        addCat("Sport",db);
+        addCat("Kleidung",db);
+        addCat("Bücher",db);
+        addCat("Kino",db);
+        addCat("Gehalt",db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.d("Databasehelper","onUpgrade!");
+        Log.d(TAG,"onUpgrade!");
         //Tabellen löschen und neu erstellen.
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME_MAIN);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME_CATEGORY);
         onCreate(db);
     }
 
-    /**Diese Methode fügt eine neue Kategorie in die Kategorie-Tabelle ein.*/
-    public boolean addCategory (String name, SQLiteDatabase db){
 
+    /**Diese Methode fügt eine neue Kategorie in die Kategorie-Tabelle ein.*/
+    private boolean addCat (String name,SQLiteDatabase db){
         long newRowId = 0;
 
         //Werte für Datenbank vorbereiten
@@ -74,32 +77,69 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //In die Datenbank speichern
         try {
             newRowId = db.insert(TABLE_NAME_CATEGORY, null, values);
-        } catch(SQLiteConstraintException e){
-            Log.i("DatabaseHelper", "FUCK UP " + e.getMessage());
+        } catch(SQLiteException e){
+            Log.i(TAG, "Fehler beim Einfügen der Kategorie" + e.getMessage());
             return false;
         }
 
 
         if(newRowId > 0) {
-            Log.i("DatabaseHelper", "Eingefügt " + newRowId);
+            Log.i(TAG, "Eingefügt " + newRowId);
             return true;
         } else {
-            Log.i("DatabaseHelper", "Eingefügt NOPE " + newRowId);
+            Log.i(TAG, "Eingefügt NOPE " + newRowId);
+            return false;
+        }
+    }
+
+
+    /**Diese Methode fügt eine neue Kategorie in die Kategorie-Tabelle ein.*/
+    public boolean addCategory (String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long newRowId = 0;
+
+        //Werte für Datenbank vorbereiten
+        ContentValues values = new ContentValues();
+        values.put("NAME", name);
+
+        //In die Datenbank speichern
+        try {
+            newRowId = db.insert(TABLE_NAME_CATEGORY, null, values);
+        } catch(SQLiteException e){
+            Log.i(TAG, "Fehler beim Einfügen der Kategorie" + e.getMessage());
+            db.close();
+            return false;
+        }
+        db.close();
+
+        if(newRowId > 0) {
+            Log.i(TAG, "Eingefügt " + newRowId);
+            return true;
+        } else {
+            Log.i(TAG, "Eingefügt NOPE " + newRowId);
             return false;
         }
     }
 
     /**Diese Methode fügt eine neue Kategorie in die Kategorie-Tabelle ein. Optional ist es möglich String für ein Icon mitzugeben.*/
-    public boolean addCategory (String name, String icon, SQLiteDatabase db) {
-
+    public boolean addCategory (String name, String icon) {
+        SQLiteDatabase db = this.getWritableDatabase();
         //Werte für Datenbank vorbereiten
         ContentValues values = new ContentValues();
+        long newRowId;
         values.put("NAME", name);
         values.put("ICON",icon);
 
         //In die Datenbank speichern
-        long newRowId = db.insert(TABLE_NAME_CATEGORY, null, values);
-        Log.i("DatabaseHelper", "Eingefügt " + newRowId);
+        try {
+            newRowId = db.insert(TABLE_NAME_CATEGORY, null, values);
+            Log.i(TAG, "Eingefügt " + newRowId);
+        }catch(SQLiteException e){
+            Log.i(TAG, "Fehler beim Einfügen der Kategorie" + e.getMessage());
+            db.close();
+            return false;
+        }
+        db.close();
 
         if(newRowId > 0)
             return true;
@@ -108,41 +148,70 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**Diese Methode ändert den Namen einer Kategorie.*/
-    public boolean changeCategoryName(String oldname, String newname, SQLiteDatabase db) {
+    public boolean changeCategoryName(int id, String newname) {
+        SQLiteDatabase db = this.getWritableDatabase();
         //Wert für Datenbank vorbereiten
         ContentValues values = new ContentValues();
+        long rowId;
         values.put("NAME", newname);
 
         //In die Datenbank speichern
-        long RowId = db.update(TABLE_NAME_CATEGORY,values,"NAME LIKE '"+oldname+"'",null);
-        Log.i("DataBaseHelper","Kategoriename geändert!!!");
+        try {
+            rowId = db.update(TABLE_NAME_CATEGORY,values,"ID = "+id,null);
+            Log.i(TAG,"Kategoriename geändert!!!");
+        }catch(SQLiteException e){
+            Log.i(TAG, "Fehler beim Ändern des Namens der Kategorie" + e.getMessage());
+            db.close();
+            return false;
+        }
+        db.close();
 
-        if(RowId > 0)
+        if(rowId > 0)
             return true;
         else
             return false;
     }
 
     /**Diese Methode ändert das Icon einer Kategorie.*/
-    public boolean changeCategoryIcon(String name, String icon, SQLiteDatabase db) {
+    public boolean changeCategoryIcon(int id, String icon) {
+        SQLiteDatabase db = this.getWritableDatabase();
         //Wert für Datenbank vorbereiten
         ContentValues values = new ContentValues();
+        long rowId;
         values.put("ICON", icon);
 
         //In die Datenbank speichern
-        long RowId = db.update(TABLE_NAME_CATEGORY,values,"NAME LIKE '"+name+"'",null);
-        Log.i("DataBaseHelper","Kategorieicon geändert!!!");
+        try {
+            rowId = db.update(TABLE_NAME_CATEGORY,values,"ID = "+id,null);
+            Log.i(TAG,"Kategoriename geändert!!!");
+        }catch(SQLiteException e){
+            Log.i(TAG, "Fehler beim Ändern des Icons der Kategorie" + e.getMessage());
+            db.close();
+            return false;
+        }
+        db.close();
 
-        if(RowId > 0)
+        if(rowId > 0)
             return true;
         else
             return false;
     }
 
     /**Diese Methode löscht eine Kategorie aus der Datenbank.*/
-    public boolean deleteCategory (String name, SQLiteDatabase db){
-        int del = db.delete(TABLE_NAME_CATEGORY,"name LIKE '"+name+"'",null);
-        Log.i("DataBaseHelper","Kategorie gelöscht!!!");
+    public boolean deleteCategory (String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int del;
+        try {
+
+            del = db.delete(TABLE_NAME_CATEGORY,"name LIKE '"+name+"' AND NOT EXISTS (SELECT KATEGORIE FROM "+TABLE_NAME_MAIN+" WHERE KATEGORIE = (SELECT ID FROM "+TABLE_NAME_CATEGORY+" WHERE name LIKE '"+name+"'))",null);
+            Log.i("DataBaseHelper","Kategorie gelöscht!!!  "+ del);
+        }
+        catch(SQLiteException e){
+            Log.i(TAG, "Fehler beim Löschen einer Kategorie" + e.getMessage());
+            db.close();
+            return false;
+        }
+        db.close();
         if(del > 0)
             return true;
         else
@@ -150,7 +219,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**Diese Methode liefert alle Kategorien als HashSet zurück.*/
-    public Set<Category> getCategories(SQLiteDatabase db){
+    public Set<Category> getCategories(){
+        SQLiteDatabase db = this.getReadableDatabase();
         Set<Category> allCategories = new HashSet<Category>();
 
         Cursor cursor = db.rawQuery("SELECT * FROM category", null);
@@ -159,11 +229,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Category c = new Category(cursor.getInt(0),cursor.getString(1),cursor.getString(2));
             allCategories.add(c);
         }
-        Log.i("DatabaseHelper","The list is:");
+        Log.i(TAG,"The list is:");
         Iterator<Category> i = allCategories.iterator();
         while(i.hasNext())
-            Log.i("DatabaseHelper",i.next().toString());
+            Log.i(TAG,i.next().toString());
         cursor.close();
+        db.close();
         return allCategories;
     }
 
@@ -179,10 +250,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Entry e = new Entry(cursor.getInt(0),cursor.getDouble(1),cursor.getString(2),cursor.getString(5),cursor.getString(3),cursor.getString(4));
             allEntries.add(e);
         }
-        Log.i("DatabaseHelper","The list is:");
+        Log.i(TAG,"The list is:");
         Iterator<Entry> i = allEntries.iterator();
         while(i.hasNext())
-            Log.i("DatabaseHelper",i.next().toString());
+            Log.i(TAG,i.next().toString());
         cursor.close();
 
         return allEntries;
@@ -193,7 +264,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         int del = db.delete(TABLE_NAME_MAIN,"ID ="+id,null);
         db.close();
-        Log.i("DataBaseHelper","Eintrag gelöscht!!!");
+        Log.i(TAG,"Eintrag gelöscht!!!");
         if(del > 0)
             return true;
         else

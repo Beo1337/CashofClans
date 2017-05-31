@@ -2,6 +2,7 @@ package com.cashify.category;
 
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.seps.cashofclans.Database.DatabaseHelper;
 
@@ -30,7 +31,7 @@ public class CategoryManager {
     private void reloadFromDb() {
         if (categoryList == null) categoryList = new LinkedList<>();
         categoryList.clear();
-        categoryList.addAll(dbHelper.getCategories(dbHelper.getReadableDatabase()));
+        categoryList.addAll(dbHelper.getCategories());
         Collections.sort(categoryList, new Comparator<Category>() {
             @Override
             public int compare(Category o1, Category o2) {
@@ -60,13 +61,13 @@ public class CategoryManager {
     }
 
     public boolean addCategory(String name) {
-        boolean success = this.dbHelper.addCategory(name, dbHelper.getWritableDatabase());
+        boolean success = this.dbHelper.addCategory(name);
         if (success) this.reloadFromDb();
         return success;
     }
 
     public boolean removeCategory(String name) {
-        boolean success = this.dbHelper.deleteCategory(name, dbHelper.getWritableDatabase());
+        boolean success = this.dbHelper.deleteCategory(name);
         if (success) this.reloadFromDb();
         return success;
     }

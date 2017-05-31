@@ -39,6 +39,7 @@ import java.util.Date;
  * */
 public class AddActivity extends AppCompatActivity {
 
+    /**Der TAG wird für das Log verwendet um anzuzeigen von welcher Klasse der Logeintrag stammt.*/
     private static final String TAG = "AddActivity";
     /**In diesem Textfeld wird der aktuelle Kontostand angezeigt.*/
     private EditText betrag;
