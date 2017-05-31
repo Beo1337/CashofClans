@@ -1,5 +1,7 @@
 package com.example.seps.cashofclans;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -13,6 +15,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cashify.tabmain.TabMainActivity;
 import com.example.seps.cashofclans.Database.DatabaseHelper;
@@ -152,6 +155,22 @@ public class MainActivity extends AppCompatActivity {
     public void tabmain(View v) {
         Intent i = new Intent(v.getContext(), TabMainActivity.class);
         startActivityForResult(i, 0);
+    }
+    public void checkService(View v){
+        if(isMyServiceRunning(DauerauftraegeService.class))
+            Toast.makeText(this, "Service da!!", Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(this, "Service nicht da!!", Toast.LENGTH_LONG).show();
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

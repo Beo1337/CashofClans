@@ -3,14 +3,13 @@ package com.example.seps.cashofclans.Database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.cashify.category.Category;
-import com.example.seps.cashofclans.Entry;
+import com.example.seps.cashofclans.Overview.Entry;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -45,6 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d(TAG,"onCreate!");
         db.execSQL("CREATE TABLE "+TABLE_NAME_MAIN+" (ID INTEGER PRIMARY KEY AUTOINCREMENT, BETRAG NUMBER(10,2), TITEL TEXT, KATEGORIE INTEGER, DATUM DATE, FOTO TEXT, FOREIGN KEY(KATEGORIE) REFERENCES category(ID) ON DELETE RESTRICT)");
         db.execSQL("CREATE TABLE "+TABLE_NAME_CATEGORY+" (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT , ICON TEXT, CONSTRAINT name_unique UNIQUE (NAME))");
+        db.execSQL("CREATE TABLE "+TABLE_NAME_REPEAT_ENTRY+" (ID INTEGER PRIMARY KEY AUTOINCREMENT, BETRAG NUMBER(10,2), TITEL TEXT, KATEGORIE INTEGER, TAG INTEGER, FOREIGN KEY(KATEGORIE) REFERENCES category(ID) ON DELETE RESTRICT)");
 
         //Vordefinierte Kategorien in die Datenbank speichern.
         addCat("Lebensmittel",db);
@@ -62,6 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //Tabellen löschen und neu erstellen.
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME_MAIN);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME_CATEGORY);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME_REPEAT_ENTRY);
         onCreate(db);
     }
 

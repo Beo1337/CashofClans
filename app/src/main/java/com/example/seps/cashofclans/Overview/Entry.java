@@ -1,4 +1,4 @@
-package com.example.seps.cashofclans;
+package com.example.seps.cashofclans.Overview;
 
 import java.util.Date;
 

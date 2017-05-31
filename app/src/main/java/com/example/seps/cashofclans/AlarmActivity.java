@@ -7,14 +7,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 public class AlarmActivity extends Activity {
+
+    private static final String TAG = "AlarmActivity";
     int hr = 0;
     int min = 0;
     int sec = 0;
@@ -23,6 +29,7 @@ public class AlarmActivity extends Activity {
     AlarmManager alarmManager;
     PendingIntent pendingIntent;
     BroadcastReceiver mReceiver;
+
 
     EditText ethr;
     EditText etmin;
@@ -35,7 +42,6 @@ public class AlarmActivity extends Activity {
         ethr = (EditText) findViewById(R.id.ethr);
         etmin = (EditText) findViewById(R.id.etmin);
         etsec = (EditText) findViewById(R.id.etsec);
-        RegisterAlarmBroadcast();
     }
 
     @Override
@@ -46,50 +52,44 @@ public class AlarmActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(mReceiver);
+        //unregisterReceiver(mReceiver);
         super.onDestroy();
     }
 
     public void onClickSetAlarm(View v) {
-        String shr = ethr.getText().toString();
-        String smin = etmin.getText().toString();
-        String ssec = etsec.getText().toString();
 
-        if(shr.equals(""))
-            hr = 0;
-        else {
-            hr = Integer.parseInt(ethr.getText().toString());
-            hr=hr*60*60*1000;
-        }
 
-        if(smin.equals(""))
-            min = 0;
-        else {
-            min = Integer.parseInt(etmin.getText().toString());
-            min = min*60*1000;
-        }
+        Log.d(TAG,"Alarm gesetzt.");
+        RegisterAlarmBroadcast();
+        // Set the alarm to start at 8:00 a.m.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 21);
+        calendar.set(Calendar.MINUTE, 5);
+        calendar.set(Calendar.SECOND,0);
+        Log.d(TAG,"Zeit: "+calendar.getTimeInMillis());
 
-        if(ssec.equals(""))
-            sec = 0;
-        else {
-            sec = Integer.parseInt(etsec.getText().toString());
-            sec = sec * 1000;
-        }
-        result = hr+min+sec;
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), result , pendingIntent);
+        // setRepeating() lets you specify a precise custom interval--in this case,
+        // 20 minutes.
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1000*20, pendingIntent);
+
     }
 
     private void RegisterAlarmBroadcast() {
+        Log.d(TAG,"BroadcastReceiver registriert.");
         mReceiver = new BroadcastReceiver() {
             // private static final String TAG = "Alarm Example Receiver";
             @Override
             public void onReceive(Context context, Intent intent) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(System.currentTimeMillis());
+                Log.d(TAG,"ALARM Zeit zum Eintragen "+calendar.getTime());
                 Toast.makeText(context, "Alarm time has been reached", Toast.LENGTH_LONG).show();
             }
         };
 
-        registerReceiver(mReceiver, new IntentFilter("sample"));
-        pendingIntent = PendingIntent.getBroadcast(this, 0, new Intent("sample"), 0);
+        LocalBroadcastManager.getInstance(AlarmActivity.this).registerReceiver(mReceiver, new IntentFilter("sample"));
+        pendingIntent = PendingIntent.getBroadcast(AlarmActivity.this, 0, new Intent("sample"), 0);
         alarmManager = (AlarmManager)(this.getSystemService(Context.ALARM_SERVICE));
     }
 

@@ -14,10 +14,22 @@
         <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
         <uses-permission android:name="android.permission.CAMERA" />
         <uses-permission android:name="android.permission.WAKE_LOCK" />
+        <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
-        <receiver
-            android:name=".Dauerauftraege"
-            android:process=":remote" />
+        <receiver android:name=".BootReceiver" android:exported="true" android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.AIRPLANE_MODE"></action>
+                <action android:name="android.intent.action.REBOOT"></action>
+                <action android:name="android.intent.action.USER_PRESENT"></action>
+                <action android:name="android.intent.action.USER_UNLOCKED"></action>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".DauerauftraegeService"></service>
+
 
         <uses-feature android:name="android.hardware.camera" />
         <uses-feature android:name="android.hardware.camera.autofocus" />
