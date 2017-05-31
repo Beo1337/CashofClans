@@ -29,11 +29,11 @@ public class CategoryDetailActivity extends AppCompatActivity {
         try {
             category = catManager.getCategoryById(catId);
             catNameField = (EditText) findViewById(R.id.category_detail_name);
-            catNameField.setText(category.getCategoryName());
+            catNameField.setText(category.getName());
 
             delButton = (Button) findViewById(R.id.category_detail_delete);
             delButton.setOnClickListener(l -> {
-                catManager.removeCategory(category.getCategoryName());
+                catManager.removeCategory(category.getName());
                 this.finish();
             });
 

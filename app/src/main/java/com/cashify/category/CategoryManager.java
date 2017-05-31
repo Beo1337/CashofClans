@@ -1,28 +1,19 @@
 package com.cashify.category;
 
-import android.provider.ContactsContract;
-import android.util.Log;
-import android.widget.Toast;
-
 import com.example.seps.cashofclans.Database.DatabaseHelper;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
-
-import static android.content.ContentValues.TAG;
 
 // Category manager is intended to be the central point to get category entries from
-// TODO: revisit 15 APR 2017 at the latest
+
 public class CategoryManager {
 
     private static List<Category> categoryList;
     private DatabaseHelper dbHelper;
 
-    // CategoryManager, this should probably be a singleton.
-    // TODO: review once other functionality is in place
     public CategoryManager(DatabaseHelper dbHelper) {
         this.dbHelper = dbHelper;
         reloadFromDb();
@@ -35,7 +26,7 @@ public class CategoryManager {
         Collections.sort(categoryList, new Comparator<Category>() {
             @Override
             public int compare(Category o1, Category o2) {
-                return o1.getCategoryName().compareTo(o2.getCategoryName());
+                return o1.getName().compareTo(o2.getName());
             }
         });
     }

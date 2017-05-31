@@ -10,8 +10,11 @@ import android.text.InputType;
 import android.widget.EditText;
 import android.widget.TextView;
 
+// CategoryAddFragment is a glorified input dialog, kinda like back in Windows 95
+
 public class CategoryAddFragment extends DialogFragment {
 
+    // Necessary to pass the dialog input back to the activity that created the dialog
     public interface Listener {
         public void onCategoryAdd(String categoryName);
     }
@@ -40,6 +43,9 @@ public class CategoryAddFragment extends DialogFragment {
         return builder.create();
     }
 
+    // This is deprecated, but it's small and it works...
+    // Underlying activity needs to implement the listener interface to receive the dialog input
+    // The fragment hooks into the activity through this method and passes the result back
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
