@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.cashify.tabmain.TabMainActivity;
 import com.example.seps.cashofclans.Database.DatabaseHelper;
 import com.example.seps.cashofclans.Database.ShowDataBaseActivity;
 import com.example.seps.cashofclans.Overview.OverviewListActivity;
@@ -146,6 +147,11 @@ public class MainActivity extends AppCompatActivity {
     public void list(View v){
         Intent i = new Intent(v.getContext(),OverviewListActivity.class);
         startActivityForResult(i,0);
+    }
+
+    public void tabmain(View v) {
+        Intent i = new Intent(v.getContext(), TabMainActivity.class);
+        startActivityForResult(i, 0);
     }
 
 }

@@ -184,5 +184,14 @@
         app:layout_constraintVertical_bias="0.123"
         app:srcCompat="@drawable/minusicon" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="tabmain"
+        android:text="Magic!"
+        tools:layout_editor_absoluteX="88dp"
+        tools:layout_editor_absoluteY="24dp" />
+
 
 </android.support.constraint.ConstraintLayout>
