@@ -197,21 +197,10 @@ public class AddActivity extends AppCompatActivity {
 
         if(!betrag.getText().toString().equals("")) {//Wenn ein Betrag eingeben wurde, wird kein Eintrag in der Datenbank erstellt.
 
-            SQLiteDatabase db = myDb.getWritableDatabase();
             EditText title = (EditText) findViewById(R.id.title);
-
-            //Werte für Datenbank vorbereiten
-            ContentValues values = new ContentValues();
-            values.put("BETRAG", Double.valueOf(betrag.getText().toString()) * vorzeichen);
-            values.put("TITEL",title.getText().toString());
-            values.put("FOTO",foto);
-
-
+            //Kategorie holen
             String s = ((Cursor)spin.getSelectedItem()).getString(1);
-            Cursor c = myDb.getReadableDatabase().rawQuery("SELECT ID FROM category WHERE NAME = '"+s+"'", null);
-            c.moveToNext();
-            values.put("KATEGORIE",c.getInt(0));
-
+            //Datum festlegen
             String strDate;
             if(mYear==-1) {//Wenn noch kein Datum vergeben wurde, nimm das jetztige Datum.
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -225,15 +214,11 @@ public class AddActivity extends AppCompatActivity {
                     strDate = mYear+"-"+mMonth+"-"+mDay+" 00:00:00";
                 mMonth--;
             }
-
             Log.d(TAG,"Eingetragenes Datum: "+strDate);
-            values.put("DATUM", strDate);
 
-            //In die Datenbank speichern
-            long newRowId = db.insert("uebersicht", null, values);
-            Log.i("AddActivity", "Eingefügt " + newRowId);
-
-            db.close();
+            //addEntry(Betrag,Titel,Foto,Kategorie,Datum)
+            if(!myDb.addEntry(Double.valueOf(betrag.getText().toString()) * vorzeichen,title.getText().toString(),foto,s,strDate))
+                Toast.makeText(this, "Fehler beim Eintragen!", Toast.LENGTH_LONG).show();
             finish();
         }
     }

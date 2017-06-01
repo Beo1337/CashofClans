@@ -57,8 +57,9 @@ public class Dauerauftraege{
                 calendar.setTimeInMillis(System.currentTimeMillis());
                 Log.d("mReceiver","Name des Intents:   "+intent.getAction());
                 Log.d("mReceiver","ALARM Zeit zum Eintragen "+calendar.getTime());
-                Toast.makeText(context, "Alarm time has been reached", Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "Werte werden eingetragen!", Toast.LENGTH_LONG).show();
                 DatabaseHelper db = new DatabaseHelper(context);
+                db.checkMonthlyEntries(context);
 
 
             }

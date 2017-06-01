@@ -1,19 +1,34 @@
 package com.example.seps.cashofclans.Database;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.cashify.category.Category;
+import com.example.seps.cashofclans.MainActivity;
+import com.example.seps.cashofclans.MonthlyEntry;
 import com.example.seps.cashofclans.Overview.Entry;
+import com.example.seps.cashofclans.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 /**
  *
@@ -260,6 +275,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return allEntries;
     }
 
+    public boolean addEntry(double betrag, String title, String foto, String kategorie, String date){
+        SQLiteDatabase db;
+        SQLiteDatabase dbr = this.getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("BETRAG", betrag);
+        values.put("TITEL",title);
+        values.put("FOTO",foto);
+
+        Cursor c = dbr.rawQuery("SELECT ID FROM category WHERE NAME = '"+kategorie+"'", null);
+        c.moveToNext();
+        values.put("KATEGORIE",c.getInt(0));
+        c.close();
+        dbr.close();
+        values.put("DATUM", date);
+        db = this.getWritableDatabase();
+        //In die Datenbank speichern
+        long newRowId = db.insert("uebersicht", null, values);
+        Log.i(TAG, "Eingefügt " + newRowId);
+
+        db.close();
+
+        if(newRowId > 0)
+            return true;
+        else
+            return false;
+    }
+
     /**Diese Methode löscht den Eintrag mit der übergegenen ID aus der Datenbank.*/
     public boolean removeEntry(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -268,6 +310,135 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.i(TAG,"Eintrag gelöscht!!!");
         if(del > 0)
             return true;
+        else
+            return false;
+    }
+
+    /**Diese Methode checkt ob Einträge aus den monatlichen Einträgen heute eingetragen werden müssen.*/
+    public void checkMonthlyEntries(Context context){
+        SQLiteDatabase db = this.getWritableDatabase();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd");
+        SimpleDateFormat sdft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String strDate;
+        String entries = "";
+        int aktuellerTag;
+        int count = 0;
+
+
+
+        aktuellerTag =Integer.valueOf(sdf.format(new Date()));
+        Log.d(TAG,"aktueller Tag: "+aktuellerTag);
+
+        List<MonthlyEntry> entryList = new LinkedList<>();
+        entryList.addAll(getMonthlyEntries());
+
+        Iterator<MonthlyEntry> i = entryList.iterator();
+        Log.d(TAG,"Anzahl monatlicher Einträge: "+entryList.size());
+        while(i.hasNext()) {//Für jeden Eintrag
+            MonthlyEntry e = i.next();
+            Log.d(TAG,"Tag des Eintrags: "+e.getTag());
+            if(e.getTag()==aktuellerTag)
+            {
+                //Eintragen
+                Log.d(TAG,"Monatlicher Eintrag eingetragen: "+e.getTitel());
+                strDate = sdft.format(new Date());
+                addEntry(e.getBetrag(),e.getTitel(),null,e.getKategorie(),strDate);
+                count++;
+                entries = entries+e.getTitel()+"\n ";
+
+            }
+        }
+
+        if(count>0){
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(context)
+                            .setSmallIcon(R.drawable.notificationicon)
+                            .setContentTitle("Neue Einträge gebucht!!")
+                            .setContentText(entries);
+
+            Intent resultIntent = new Intent(context, MainActivity.class);
+
+            PendingIntent resultPendingIntent =
+                    PendingIntent.getActivity(
+                            context,
+                            0,
+                            resultIntent,
+                            PendingIntent.FLAG_UPDATE_CURRENT
+                    );
+            mBuilder.setContentIntent(resultPendingIntent);
+            mBuilder.setAutoCancel(true);
+
+            // Sets an ID for the notification
+            int mNotificationId = 001;
+            // Gets an instance of the NotificationManager service
+            NotificationManager mNotifyMgr =
+                    (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+            // Builds the notification and issues it.
+            mNotifyMgr.notify(mNotificationId, mBuilder.build());
+
+        }
+
+
+    }
+
+    /**Diese Methode liefert alle monatlichen Entries als HashSet zurück*/
+    public Set<MonthlyEntry> getMonthlyEntries() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Set<MonthlyEntry> allEntries = new HashSet<MonthlyEntry>();
+
+        Cursor cursor = db.rawQuery("SELECT u.ID,u.BETRAG,u.TITEL,u.TAG,c.NAME FROM "+TABLE_NAME_REPEAT_ENTRY+" u JOIN "+TABLE_NAME_CATEGORY+" c ON u.KATEGORIE = c.ID", null);
+        while(cursor.moveToNext())
+        {
+            //Log.d("DatabaseHelper"," "+cursor.getInt(0));
+            MonthlyEntry e = new MonthlyEntry(cursor.getInt(0),cursor.getDouble(1),cursor.getString(2),cursor.getString(4),cursor.getInt(3));
+            allEntries.add(e);
+        }
+        Log.i(TAG,"The list is:");
+        Iterator<MonthlyEntry> i = allEntries.iterator();
+        while(i.hasNext())
+            Log.i(TAG,i.next().toString());
+        cursor.close();
+        db.close();
+
+        return allEntries;
+    }
+
+    /**Diese Methode fügt einen neuen Monatlichen Eintrag in die Datenbank ein.*/
+    public boolean addMonthlyEntry (double betrag, String titel, String kategorie, int tag){
+        SQLiteDatabase db;
+        SQLiteDatabase dbr = this.getReadableDatabase();
+        ContentValues values = new ContentValues();
+        long newRowId;
+        values.put("BETRAG", betrag);
+        values.put("TITEL",titel);
+
+        Cursor c = dbr.rawQuery("SELECT ID FROM category WHERE NAME = '"+kategorie+"'", null);
+        c.moveToNext();
+        values.put("KATEGORIE",c.getInt(0));
+        c.close();
+        dbr.close();
+
+        values.put("TAG",tag);
+        db = this.getWritableDatabase();
+        newRowId = db.insert(TABLE_NAME_REPEAT_ENTRY, null, values);
+        db.close();
+        if(newRowId > 0) {
+            Log.d(TAG,"Monatlicher Eintrag hinzugefügt");
+            return true;
+        }
+        else
+            return false;
+    }
+
+    /**Diese Methode löscht einen monatlichen Eintrag.*/
+    public boolean deleteMonthlyEntry (int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int del = db.delete(TABLE_NAME_REPEAT_ENTRY,"ID ="+id,null);
+        db.close();
+        if(del > 0) {
+            Log.i(TAG,"montatlicher Eintrag gelöscht!!!");
+            return true;
+        }
         else
             return false;
     }

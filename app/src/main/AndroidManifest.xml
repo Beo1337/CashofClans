@@ -18,10 +18,6 @@
 
         <receiver android:name=".BootReceiver" android:exported="true" android:enabled="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-                <action android:name="android.intent.action.AIRPLANE_MODE"></action>
-                <action android:name="android.intent.action.REBOOT"></action>
                 <action android:name="android.intent.action.USER_PRESENT"></action>
                 <action android:name="android.intent.action.USER_UNLOCKED"></action>
                 <category android:name="android.intent.category.DEFAULT"/>

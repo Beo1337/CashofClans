@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         myDb = new DatabaseHelper(this);
+        //myDb.addMonthlyEntry(-400,"Miete","Bar",1);
+
         refresh_money();
     }
 
@@ -91,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
                 else if(time.equals("Jahr")){
                     if(d.getYear()==a.getYear())
                         summe += cursor.getDouble(1);
+                }
+                else
+                {
+                    summe += cursor.getDouble(1);
                 }
             }
         }

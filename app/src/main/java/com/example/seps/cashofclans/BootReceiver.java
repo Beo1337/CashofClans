@@ -36,7 +36,7 @@ public class BootReceiver extends BroadcastReceiver {
         if(!isMyServiceRunning(DauerauftraegeService.class,context)) {
             Log.d(TAG,"Service gestartet!");
             Intent myIntent = new Intent(context, DauerauftraegeService.class);
-            //context.startService(myIntent);
+            context.startService(myIntent);
         }
     }
 
