@@ -14,8 +14,11 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.seps.cashofclans.Database.DatabaseHelper;
-import com.example.seps.cashofclans.R;
+
+import com.cashify.overview.Entry;
+import com.cashify.overview.PictureActivity;
+import com.cashify.database.DatabaseHelper;
+import com.cashify.R;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;

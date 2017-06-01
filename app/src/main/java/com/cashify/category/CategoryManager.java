@@ -1,6 +1,6 @@
 package com.cashify.category;
 
-import com.example.seps.cashofclans.Database.DatabaseHelper;
+import com.cashify.database.DatabaseHelper;
 
 import java.util.Collections;
 import java.util.Comparator;

@@ -5,13 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#85a8e5"
-    tools:context="com.example.seps.cashofclans.Overview.StatistikActivity">
+    tools:context="com.cashify.overview.StatistikActivity">
 
 
     <include
         android:id="@+id/include2"
         layout="@layout/toolbar_main"
-        android:layout_marginBottom="-104dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"

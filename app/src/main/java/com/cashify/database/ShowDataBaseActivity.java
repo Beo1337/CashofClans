@@ -1,11 +1,11 @@
-package com.example.seps.cashofclans.Database;
+package com.cashify.database;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
-import com.example.seps.cashofclans.R;
+import com.cashify.R;
 
 /**
  *

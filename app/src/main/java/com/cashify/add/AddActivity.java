@@ -1,22 +1,16 @@
-package com.example.seps.cashofclans;
+package com.cashify.add;
 
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.hardware.Camera;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -30,7 +24,8 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.seps.cashofclans.Database.DatabaseHelper;
+import com.cashify.database.DatabaseHelper;
+import com.cashify.R;
 
 import java.io.File;
 import java.io.IOException;

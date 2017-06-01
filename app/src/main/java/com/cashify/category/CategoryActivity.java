@@ -1,6 +1,5 @@
 package com.cashify.category;
 
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -9,16 +8,13 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.seps.cashofclans.Database.DatabaseHelper;
-import com.example.seps.cashofclans.R;
-
-import static android.content.ContentValues.TAG;
+import com.cashify.database.DatabaseHelper;
+import com.cashify.R;
 
 // CategoryActivity
 // primarily provides a scrolling list of all categories.

@@ -1,4 +1,4 @@
-package com.example.seps.cashofclans;
+package com.cashify.mothly_entries;
 
 import android.app.Service;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.example.seps.cashofclans;
+package com.cashify.settings;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,9 +9,9 @@ import android.preference.PreferenceManager;
 import android.view.View;
 
 
-import com.example.seps.cashofclans.Overview.StatistikActivity;
-
-import static android.provider.SyncStateContract.Helpers.update;
+import com.cashify.overview.StatistikActivity;
+import com.cashify.MainActivity;
+import com.cashify.R;
 
 public class EinstellungenActivity extends PreferenceActivity {
 

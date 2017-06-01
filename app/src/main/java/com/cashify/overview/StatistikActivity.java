@@ -1,4 +1,4 @@
-package com.example.seps.cashofclans.Overview;
+package com.cashify.overview;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,10 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.cashify.category.Category;
-import com.example.seps.cashofclans.Database.DatabaseHelper;
-import com.example.seps.cashofclans.EinstellungenActivity;
-import com.example.seps.cashofclans.MainActivity;
-import com.example.seps.cashofclans.R;
+import com.cashify.database.DatabaseHelper;
+import com.cashify.settings.EinstellungenActivity;
+import com.cashify.MainActivity;
+import com.cashify.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
@@ -174,11 +174,11 @@ public class StatistikActivity extends AppCompatActivity {
             value.put(c.getName(),0.0);
         }
         //Liste aller Einträge aus der Datenbank holen.
-        List<com.example.seps.cashofclans.Overview.Entry> entryList = new LinkedList<>();
+        List<com.cashify.overview.Entry> entryList = new LinkedList<>();
         entryList.addAll(myDb.getEntries());
-        Collections.sort(entryList, new Comparator<com.example.seps.cashofclans.Overview.Entry>() {//Sortiert nach Datum
+        Collections.sort(entryList, new Comparator<com.cashify.overview.Entry>() {//Sortiert nach Datum
             @Override
-            public int compare(com.example.seps.cashofclans.Overview.Entry o1, com.example.seps.cashofclans.Overview.Entry o2) {
+            public int compare(com.cashify.overview.Entry o1, com.cashify.overview.Entry o2) {
                 return o1.getDatum().compareTo(o2.getDatum());
             }
         });
@@ -187,9 +187,9 @@ public class StatistikActivity extends AppCompatActivity {
         String time = sharedPref.getString("zeit","");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        Iterator<com.example.seps.cashofclans.Overview.Entry> i1 = entryList.iterator();
+        Iterator<com.cashify.overview.Entry> i1 = entryList.iterator();
         while(i1.hasNext()) {//Für jeden Eintrag
-            com.example.seps.cashofclans.Overview.Entry e = i1.next();
+            com.cashify.overview.Entry e = i1.next();
             if(e.getBetrag()<0)
             {
 

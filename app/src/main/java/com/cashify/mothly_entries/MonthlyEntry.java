@@ -1,4 +1,4 @@
-package com.example.seps.cashofclans;
+package com.cashify.mothly_entries;
 
 /**
  * Created by Beo on 01.06.2017.

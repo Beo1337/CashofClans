@@ -1,4 +1,4 @@
-package com.example.seps.cashofclans.Overview;
+package com.cashify.overview;
 
 import java.util.Date;
 

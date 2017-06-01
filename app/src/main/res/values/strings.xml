@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CashofClans</string>
+    <string name="app_name">Cashify</string>
     <string name="title_activity_einstellungen">Einstellungen</string>
     <string name="title_activity_add">AddActivity</string>
     <string name="title_activity_category">Kategorien</string>

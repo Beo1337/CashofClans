@@ -1,4 +1,4 @@
-package com.example.seps.cashofclans.Database;
+package com.cashify.database;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -13,14 +13,12 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.cashify.category.Category;
-import com.example.seps.cashofclans.MainActivity;
-import com.example.seps.cashofclans.MonthlyEntry;
-import com.example.seps.cashofclans.Overview.Entry;
-import com.example.seps.cashofclans.R;
+import com.cashify.MainActivity;
+import com.cashify.mothly_entries.MonthlyEntry;
+import com.cashify.overview.Entry;
+import com.cashify.R;
 
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;

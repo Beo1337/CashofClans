@@ -1,4 +1,4 @@
-package com.example.seps.cashofclans;
+package com.cashify.mothly_entries;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -8,13 +8,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+
+import com.cashify.R;
 
 import java.util.Calendar;
 

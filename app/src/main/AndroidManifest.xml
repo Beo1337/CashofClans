@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.seps.cashofclans">
+    package="com.cashify">
 
     <application
         android:allowBackup="true"
@@ -16,7 +16,7 @@
         <uses-permission android:name="android.permission.WAKE_LOCK" />
         <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
-        <receiver android:name=".BootReceiver" android:exported="true" android:enabled="true">
+        <receiver android:name="com.cashify.mothly_entries.BootReceiver" android:exported="true" android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.USER_PRESENT"></action>
                 <action android:name="android.intent.action.USER_UNLOCKED"></action>
@@ -24,7 +24,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".DauerauftraegeService"></service>
+        <service android:name="com.cashify.mothly_entries.DauerauftraegeService"></service>
 
 
         <uses-feature android:name="android.hardware.camera" />
@@ -40,7 +40,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".MainActivity">
+        <activity android:name="com.cashify.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -52,15 +52,15 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".EinstellungenActivity"
+            android:name="com.cashify.settings.EinstellungenActivity"
             android:label="@string/title_activity_einstellungen"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AddActivity"
+            android:name="com.cashify.add.AddActivity"
             android:label="@string/title_activity_add"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Overview.StatistikActivity"
+            android:name="com.cashify.overview.StatistikActivity"
             android:label="@string/title_activity_statistik"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -76,13 +76,12 @@
             android:label="@string/title_activity_category_detail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.cashify.password.PasswordActivity"
+            android:name="com.cashify.overview.password.PasswordActivity"
             android:label="@string/title_activity_category"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Database.ShowDataBaseActivity" />
-        <activity android:name=".Overview.OverviewListActivity" />
-        <activity android:name=".AlarmActivity" />
-        <activity android:name=".Overview.PictureActivity"></activity>
+        <activity android:name="com.cashify.database.ShowDataBaseActivity" />
+        <activity android:name="com.cashify.mothly_entries.AlarmActivity" />
+        <activity android:name="com.cashify.overview.PictureActivity"></activity>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.seps.cashofclans;
+package com.cashify.mothly_entries;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -6,11 +6,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.PowerManager;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.example.seps.cashofclans.Database.DatabaseHelper;
+import com.cashify.database.DatabaseHelper;
 
 import java.util.Calendar;
 

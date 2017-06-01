@@ -8,16 +8,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-import com.cashify.category.CategoryAdapter;
-import com.cashify.category.CategoryManager;
-import com.example.seps.cashofclans.Database.DatabaseHelper;
-import com.example.seps.cashofclans.R;
+import com.cashify.database.DatabaseHelper;
+import com.cashify.R;
 
 public class OverviewListActivity extends AppCompatActivity {
 
     private RecyclerView catRecycleView;
     private Toolbar toolbar;
     private OverviewAdapter adapter;
+    private OverviewManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +26,8 @@ public class OverviewListActivity extends AppCompatActivity {
         catRecycleView = (RecyclerView) findViewById(R.id.overview_list);
         toolbar = (Toolbar) findViewById(R.id.overview_toolbar);
 
-        adapter = new OverviewAdapter();
+        manager = new OverviewManager(new DatabaseHelper(this));
+        adapter = new OverviewAdapter(manager);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
@@ -47,4 +47,5 @@ public class OverviewListActivity extends AppCompatActivity {
         actionbar.setTitle("CHANGE THIS");
 
     }
+
 }

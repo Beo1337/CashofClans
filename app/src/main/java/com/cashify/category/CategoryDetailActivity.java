@@ -6,8 +6,8 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.seps.cashofclans.Database.DatabaseHelper;
-import com.example.seps.cashofclans.R;
+import com.cashify.database.DatabaseHelper;
+import com.cashify.R;
 
 import static android.content.ContentValues.TAG;
 

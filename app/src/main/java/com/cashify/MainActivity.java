@@ -1,4 +1,4 @@
-package com.example.seps.cashofclans;
+package com.cashify;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -17,11 +17,15 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cashify.add.AddActivity;
+import com.cashify.mothly_entries.DauerauftraegeService;
+import com.cashify.settings.EinstellungenActivity;
 import com.cashify.tabmain.TabMainActivity;
-import com.example.seps.cashofclans.Database.DatabaseHelper;
-import com.example.seps.cashofclans.Database.ShowDataBaseActivity;
+import com.cashify.database.DatabaseHelper;
+import com.cashify.database.ShowDataBaseActivity;
 import com.example.seps.cashofclans.Overview.OverviewListActivity;
-import com.example.seps.cashofclans.Overview.StatistikActivity;
+import com.cashify.overview.StatistikActivity;
+import com.cashify.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

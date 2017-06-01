@@ -11,4 +11,15 @@
         <item >Jahr</item>
         <item >Monat</item>
     </string-array>
+
+    <string-array name="options">
+        <item>Bild</item>
+        <item>Bearbeiten</item>
+        <item>Löschen</item>
+    </string-array>
+
+    <string-array name="options_without_pic">
+        <item>Bearbeiten</item>
+        <item>Löschen</item>
+    </string-array>
 </resources>
