@@ -18,14 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cashify.add.AddActivity;
-import com.cashify.mothly_entries.DauerauftraegeService;
+import com.cashify.monthly_entries.DauerauftraegeService;
 import com.cashify.settings.EinstellungenActivity;
 import com.cashify.tabmain.TabMainActivity;
 import com.cashify.database.DatabaseHelper;
 import com.cashify.database.ShowDataBaseActivity;
 import com.example.seps.cashofclans.Overview.OverviewListActivity;
 import com.cashify.overview.StatistikActivity;
-import com.cashify.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

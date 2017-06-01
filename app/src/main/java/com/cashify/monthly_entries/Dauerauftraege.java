@@ -1,4 +1,4 @@
-package com.cashify.mothly_entries;
+package com.cashify.monthly_entries;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -29,12 +29,12 @@ public class Dauerauftraege{
         // Set the alarm to start at 8:00 a.m.
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 22);
-        calendar.set(Calendar.MINUTE, 7);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 5);
         calendar.set(Calendar.SECOND,0);
         Log.d(TAG,"Zeit: "+calendar.getTimeInMillis());
 
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+10000, 1000*20, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
     public void cancelAlarm(Context context)

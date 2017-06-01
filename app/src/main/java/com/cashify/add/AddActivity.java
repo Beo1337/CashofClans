@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cashify.database.DatabaseHelper;
@@ -44,7 +45,7 @@ public class AddActivity extends AppCompatActivity {
     /**Der TAG wird für das Log verwendet um anzuzeigen von welcher Klasse der Logeintrag stammt.*/
     private static final String TAG = "AddActivity";
     /**In diesem Textfeld wird der aktuelle Kontostand angezeigt.*/
-    private EditText betrag;
+    private TextView betrag;
     /**Wird benötigt um die gewählte Zahl in das Textfeld zu schreiben.*/
     private String s;
     /**Datenbank*/
@@ -73,9 +74,7 @@ public class AddActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        betrag= (EditText) findViewById(R.id.Betrag);
-        //nicht auswählbar machen, damit die standardmäßige Tastatur nicht erscheint.
-        betrag.setEnabled(false);
+        betrag= (TextView) findViewById(R.id.Betrag);
 
         myDb = new DatabaseHelper(this);
 
@@ -190,7 +189,7 @@ public class AddActivity extends AppCompatActivity {
     /**Diese Methode speichert die eingegebenen Werte in die Datenbank.*/
     public void eintragen(View v){
 
-        if(!betrag.getText().toString().equals("")) {//Wenn ein Betrag eingeben wurde, wird kein Eintrag in der Datenbank erstellt.
+        if(!betrag.getText().toString().equals("")) {//Wenn kein Betrag eingeben wurde, wird kein Eintrag in der Datenbank erstellt.
 
             EditText title = (EditText) findViewById(R.id.title);
             //Kategorie holen

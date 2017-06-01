@@ -1,4 +1,4 @@
-package com.cashify.mothly_entries;
+package com.cashify.monthly_entries;
 
 import android.app.ActivityManager;
 import android.app.AlarmManager;

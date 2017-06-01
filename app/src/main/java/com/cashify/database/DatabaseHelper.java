@@ -14,7 +14,7 @@ import android.util.Log;
 
 import com.cashify.category.Category;
 import com.cashify.MainActivity;
-import com.cashify.mothly_entries.MonthlyEntry;
+import com.cashify.monthly_entries.MonthlyEntry;
 import com.cashify.overview.Entry;
 import com.cashify.R;
 

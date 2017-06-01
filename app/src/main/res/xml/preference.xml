@@ -23,7 +23,7 @@
     <Preference android:title="monatliche Beiträge" >
         <intent android:action="android.intent.action.VIEW"
             android:targetPackage="com.example.seps.cashofclans"
-            android:targetClass="com.example.seps.cashofclans.AlarmActivity"
+            android:targetClass="com.cashify.monthly_entries.MonthlyEntryActivity"
             />
     </Preference>
 

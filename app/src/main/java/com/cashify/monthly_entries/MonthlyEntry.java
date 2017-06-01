@@ -1,4 +1,4 @@
-package com.cashify.mothly_entries;
+package com.cashify.monthly_entries;
 
 /**
  * Created by Beo on 01.06.2017.
