@@ -62,9 +62,14 @@ public class StatistikActivity extends AppCompatActivity {
         btn_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 Intent i = new Intent(StatistikActivity.this, OverviewListActivity.class);
                 i.putExtra("start",start_editText.getText());
                 i.putExtra("end",end_editText.getText());
+                StatistikActivity.this.startActivity(i);
+                */
+
+                Intent i = new Intent(StatistikActivity.this, com.cashify.overview.OverviewListActivity.class);
                 StatistikActivity.this.startActivity(i);
             }
         });

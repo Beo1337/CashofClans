@@ -13,4 +13,5 @@
     <string name="title_activity_password">Passwort</string>
     <string name="msg_category_added">"Kategorie hinzugefügt!"</string>
     <string name="msg_category_add_failed">"Fehler beim Hinzufügen"</string>
+    <string name="title_activity_overview">Übersicht</string>
 </resources>
