@@ -18,10 +18,14 @@ import android.view.MenuItem;
 import com.cashify.R;
 import com.cashify.database.DatabaseHelper;
 
+/**
+ * Diese Klasse stelt die monatlichen Einträge dar, und bietet eine Möglichkeit neue Einträge hinzuzufügen.
+ * */
 public class MonthlyEntryActivity extends AppCompatActivity {
 
     private RecyclerView catRecycleView;
     private Toolbar toolbar;
+    /***/
     private MonthlyEntryAdapter adapter;
     private MonthlyEntryManager manager;
 
@@ -40,6 +44,7 @@ public class MonthlyEntryActivity extends AppCompatActivity {
 
         catRecycleView.setHasFixedSize(true);
         catRecycleView.setLayoutManager(layoutManager);
+        //Die RecyclerView mit den Werten aus dem Adater befüllen.
         catRecycleView.setAdapter(adapter);
 
         catRecycleView.addItemDecoration(
@@ -51,10 +56,9 @@ public class MonthlyEntryActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setTitle("CHANGE THIS");
-
     }
 
+    /**Diese  Methode initialisert das Contextmenu das durch drücken des + Buttons in der Titelleiste aufgerufen wird.*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -62,6 +66,7 @@ public class MonthlyEntryActivity extends AppCompatActivity {
         return true;
     }
 
+    /**Wenn eine der Optionen des Contexmenüs ausgewählt wurde, wird die entsprechende Aktion ausgeführt.*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -75,6 +80,7 @@ public class MonthlyEntryActivity extends AppCompatActivity {
         }
     }
 
+    /**Wird die Aktivity aus dem Hintergrund wieder in den Vordergrund gebarcht, soll der Adapter aktualisert werden da Änderungen an den Datensätzen vorgenommen werden konnten.*/
     @Override
     public void onRestart() {
         super.onRestart();

@@ -273,6 +273,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return allEntries;
     }
 
+    /**Diese Methode fügt einen Eintrag in die Übersichtstabelle ein.*/
     public boolean addEntry(double betrag, String title, String foto, String kategorie, String date){
         SQLiteDatabase db;
         SQLiteDatabase dbr = this.getReadableDatabase();
@@ -321,8 +322,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String entries = "";
         int aktuellerTag;
         int count = 0;
-
-
 
         aktuellerTag =Integer.valueOf(sdf.format(new Date()));
         Log.d(TAG,"aktueller Tag: "+aktuellerTag);

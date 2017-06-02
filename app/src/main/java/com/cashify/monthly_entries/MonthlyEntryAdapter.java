@@ -12,15 +12,14 @@ import android.widget.TextView;
 import com.cashify.R;
 
 /**
- * Created by Beo on 01.06.2017.
+ * Diese Klasse befüllt den Viewholder mit den einzelnen Einträgen aus der Datenbank.
  */
-
 public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapter.ViewHolder>{
 
+    /**Über den Manager können die monatlichen Einträge aus der Datenbank geholt werden. */
     private MonthlyEntryManager manager;
 
-    // ViewHolder wraps the view that we want to pass to the RecyclerView,
-    // we only needs this because RecyclerView.ViewHolder is abstract
+    /**Diese Methode liefert den ViewHolder welcher mit den Daten aus der Datenbank befüllt wurde*/
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private View view;
         public ViewHolder(View v) {
@@ -68,9 +67,8 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapte
         holder.view.setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View arg0) {
 
+                //Es wird ein Dialog mit den
                 AlertDialog.Builder optionsDialog = new AlertDialog.Builder(holder.view.getContext());
-
-
                 optionsDialog.setTitle("Bitte Option auswählen").setItems(
                     R.array.options_without_pic, new DialogInterface.OnClickListener() {
                         @Override

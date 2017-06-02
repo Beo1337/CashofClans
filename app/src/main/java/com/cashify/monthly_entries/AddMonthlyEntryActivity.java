@@ -10,14 +10,9 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.cashify.R;
 import com.cashify.database.DatabaseHelper;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class AddMonthlyEntryActivity extends AppCompatActivity {
 
@@ -29,6 +24,7 @@ public class AddMonthlyEntryActivity extends AppCompatActivity {
     private DatabaseHelper myDb;
     /**Speichert eine Auswahlliste der verfügbaren Kategorien.*/
     private Spinner spin;
+    /**Diser Numberpicker repräsentiert den Tag an dem der Eintrag gebucht werden soll (1-31)*/
     private NumberPicker np;
 
     @Override

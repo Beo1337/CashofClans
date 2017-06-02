@@ -7,12 +7,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Beo on 01.06.2017.
+ * Diese Klasse befüllt eine Liste mit den monatlichen Einträgen aus der Datenbank und bietet Mehtoden für das Hinzufügen und Löschen von Einträgen an.
  */
-
 public class MonthlyEntryManager {
 
+    /**Diese Liste repräsentiert alle monatlichen Einträge in der Datenbank.*/
     private static List<MonthlyEntry> entryList;
+    /**Über den DatabaseHelper können sämtliche Datenbankfunktionen abgerufen werden.*/
     private DatabaseHelper dbHelper;
 
     public MonthlyEntryManager(DatabaseHelper dbHelper) {
@@ -20,45 +21,42 @@ public class MonthlyEntryManager {
         reloadFromDb();
     }
 
+    /**Diese Klasse lädt die monatlichen Einträge aus der Datenbank in die Liste.*/
     private void reloadFromDb() {
         if (entryList == null) entryList = new LinkedList<>();
         entryList.clear();
         entryList.addAll(dbHelper.getMonthlyEntries());
-        /*Collections.sort(entryList, new Comparator<Entry>() {//Sortiert nach Datum
-            @Override
-            public int compare(Entry o1, Entry o2) {
-                return o1.getDatum().compareTo(o2.getDatum());
-            }
-        });*/
     }
 
-    // Return single entry by list position
+    /**Diese Methode liefert den monatlichen Eintrag der Liste mit dem übergebenen Index.*/
     public MonthlyEntry getMonthlyEntryByIndex(int index) {
         return entryList.get(index);
     }
 
+    /**Diese Methode liefert den monatlichen Eintrag der Liste mit der übergebenen ID.*/
     public MonthlyEntry getMonthlyEntryById(int id) throws Exception {
         for(MonthlyEntry c : entryList) if (c.getId() == id) return c;
         throw new Exception("Monthly Entry id not found");
     }
 
-    // Return list of all elements (unmodifiable)
+    /**Diese Methode liefert alle monatlichen Einträge als Liste zurück.*/
     public List<MonthlyEntry> getMonthlyEntries() {
         return Collections.unmodifiableList(entryList);
     }
 
-    // Return collection size
+    /**Diese Methode liefert die Anzahl der Elemente in der Liste.*/
     public int getCount() {
         return entryList.size();
     }
 
-
+    /**Diese Methode löscht den monatlichen Eintrag mit der übergebenen ID aus der Datenbank.*/
     public boolean removeMonthlyEntry(int id) {
         boolean success = this.dbHelper.deleteMonthlyEntry(id);
         if (success) this.reloadFromDb();
         return success;
     }
 
+    /**Diese Methode fügt einen neuen monatlichen Eintrag in die Datenbank ein.*/
     public boolean addMonthlyEntry(double betrag,String titel,String kategorie,int tag){
         boolean success = this.dbHelper.addMonthlyEntry(betrag,titel,kategorie,tag);
         if (success) this.reloadFromDb();

@@ -9,28 +9,28 @@ import android.content.Intent;
 import android.util.Log;
 
 /**
- * Created by Beo on 31.05.2017.
+ * Diese Klasse wird benötigt um einen Service zu starten, welcher ein mal am Tag überprüft, ob monatliche Einträge zu buchen sind.
+ * Der Service wird gestartet sobald der Intent USER_PRESENT vom System geschickt wird. (Entsperren des Bildschirms)
  */
-
 public class BootReceiver extends BroadcastReceiver {
-
+    /**Der TAG wird für das Log verwendet um anzuzeigen von welcher Klasse der Logeintrag stammt.*/
     private static final String TAG = "BootReceiver";
-    AlarmManager alarmManager;
-    PendingIntent pendingIntent;
-    BroadcastReceiver mReceiver;
 
+    //Diese Methode wird aufgerufen wenn vom System der Intent USER_PRESENT empfangen wird.
     @Override
     public void onReceive(Context context, Intent intent) {
 
         Log.d(TAG,"Name des Intents: "+intent.getAction());
-        //setAlarm(context);
+        //Wenn unser Service nicht schon gestartet ist.
         if(!isMyServiceRunning(DauerauftraegeService.class,context)) {
+            //Den unseren Service für die monatlichen Einträge starten.
             Log.d(TAG,"Service gestartet!");
             Intent myIntent = new Intent(context, DauerauftraegeService.class);
             context.startService(myIntent);
         }
     }
 
+    /**Diese Methode schaut nach ob der Übergebene Service bereits gestart ist.*/
     private boolean isMyServiceRunning(Class<?> serviceClass,Context context) {
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -40,41 +40,4 @@ public class BootReceiver extends BroadcastReceiver {
         }
         return false;
     }
-
-    /*public void setAlarm(Context context){
-        Log.d(TAG,"Alarm gesetzt.");
-        RegisterAlarmBroadcast(context);
-        // Set the alarm to start at 8:00 a.m.
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 22);
-        calendar.set(Calendar.MINUTE, 7);
-        calendar.set(Calendar.SECOND,0);
-        Log.d(TAG,"Zeit: "+calendar.getTimeInMillis());
-
-        // setRepeating() lets you specify a precise custom interval--in this case,
-        // 20 minutes.
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+10000, 1000*20, pendingIntent);
-    }
-
-
-    private void RegisterAlarmBroadcast(Context context) {
-        Log.d(TAG,"BroadcastReceiver registriert.");
-        mReceiver = new BroadcastReceiver() {
-            // private static final String TAG = "Alarm Example Receiver";
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(System.currentTimeMillis());
-                Log.d("mReceiver","Name des Intents:   "+intent.getAction());
-                Log.d("mReceiver","ALARM Zeit zum Eintragen "+calendar.getTime());
-                Toast.makeText(context, "Alarm time has been reached", Toast.LENGTH_LONG).show();
-
-            }
-        };
-
-        context.getApplicationContext().registerReceiver(mReceiver, new IntentFilter("sample"));
-        pendingIntent = PendingIntent.getBroadcast(context, 0, new Intent("sample"), 0);
-        alarmManager = (AlarmManager)(context.getSystemService(Context.ALARM_SERVICE));
-    }*/
 }

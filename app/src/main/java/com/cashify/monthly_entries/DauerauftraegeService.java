@@ -6,11 +6,11 @@ import android.os.IBinder;
 import android.util.Log;
 
 /**
- * Created by Beo on 29.05.2017.
+ * Dieser Service wird vom BootReceiver gestartet.
  */
-
 public class DauerauftraegeService extends Service {
 
+    /**In der diser Klasse wird die tägliche Überprüfung der monatlichen Einträge durchgeführt.*/
     Dauerauftraege alarm = new Dauerauftraege();
     public void onCreate()
     {
@@ -36,4 +36,5 @@ public class DauerauftraegeService extends Service {
     {
         return null;
     }
+
 }

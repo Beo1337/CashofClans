@@ -15,23 +15,28 @@ import java.util.Calendar;
 /**
  * Created by Beo on 29.05.2017.
  */
-
 public class Dauerauftraege{
 
     private static final String TAG = "Dauerauftraege";
-    AlarmManager alarmManager;
-    PendingIntent pendingIntent;
-    BroadcastReceiver mReceiver;
+    /**Der Alarmmanger führt zu einer bestimmten Zeit eine Aktion durch.*/
+    private AlarmManager alarmManager;
+    /**Intent der an den Receivier geschickt wird, wenn die monatlichen Einträge gecheckt werden sollen. */
+    private PendingIntent pendingIntent;
+    /**Dieser Receiver hört auf die vom Alarmmanger ausgelöste Aktion.*/
+    private BroadcastReceiver mReceiver;
 
+    /**Diese Methode setzt die Zeit für die Überprüfung der monatlichen Einträge.*/
     public void setAlarm(Context context){
         Log.d(TAG,"Alarm gesetzt.");
         RegisterAlarmBroadcast(context);
-
+        //Zeit auf 23:59 setzen
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 23);
         calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.SECOND,0);
+
         Log.d(TAG,"Zeit zwischen gerade und Auslösen:"+getTimeFromMilli(calendar.getTimeInMillis()+180000-System.currentTimeMillis()));
+        //Die Alarmzeit auf 23:59 + 3Minuten als 00:2 des nächsten Tages setzetn. Dieser Alarm wird dann täglich wiederholt.
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis()+180000, AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
@@ -45,24 +50,20 @@ public class Dauerauftraege{
         return ""+stunde+":"+minute+":"+sekunde;
     }
 
-    public void cancelAlarm(Context context)
-    {
-        Intent intent = new Intent(context, Dauerauftraege.class);
-        PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(sender);
-    }
-
+    /**Diese Methode registriert einen Receiver beim Alarmmanger um nach dem Auslösen dessen, die monatlichen Einträge zu checken. */
     private void RegisterAlarmBroadcast(Context context) {
         Log.d(TAG,"BroadcastReceiver registriert.");
         mReceiver = new BroadcastReceiver() {
 
+
+            //Wenn der Alarmmanger den PendingIntent auslöst wird die Überprüfung der monatlichen Einträge angestoßen.
             @Override
             public void onReceive(Context context, Intent intent) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(System.currentTimeMillis());
                 Log.d("mReceiver","Name des Intents:   "+intent.getAction());
                 Log.d("mReceiver","ALARM Zeit zum Eintragen "+calendar.getTime());
+                //Überprüfen der monatlichen Einträge.
                 DatabaseHelper db = new DatabaseHelper(context);
                 db.checkMonthlyEntries(context);
             }

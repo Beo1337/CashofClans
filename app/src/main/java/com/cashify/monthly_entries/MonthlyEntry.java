@@ -3,9 +3,8 @@ package com.cashify.monthly_entries;
 import com.cashify.base.AbstractEntry;
 
 /**
- * Created by Beo on 01.06.2017.
+ * Diese Klasse repräsentiert einen monatlichen Eintrag.
  */
-
 public class MonthlyEntry extends AbstractEntry {
 
     int tag;

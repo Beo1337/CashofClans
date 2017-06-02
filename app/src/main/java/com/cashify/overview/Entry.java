@@ -3,10 +3,8 @@ package com.cashify.overview;
 import com.cashify.base.AbstractEntry;
 
 /**
- * Created by Beo on 30.05.2017.
  * Diese Klasse repräsentiert einen Geldeintrag in der Datenbank.
  */
-
 public class Entry extends AbstractEntry{
 
     private String datum;

@@ -24,10 +24,8 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.cashify.database.DatabaseHelper;
 import com.cashify.R;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;

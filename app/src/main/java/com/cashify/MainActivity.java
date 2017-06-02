@@ -11,12 +11,10 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.cashify.add.AddActivity;
 import com.cashify.monthly_entries.DauerauftraegeService;
 import com.cashify.settings.EinstellungenActivity;
@@ -25,11 +23,15 @@ import com.cashify.database.DatabaseHelper;
 import com.cashify.database.ShowDataBaseActivity;
 import com.example.seps.cashofclans.Overview.OverviewListActivity;
 import com.cashify.overview.StatistikActivity;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Die MainActivity wird aufgerufen sobald die App gestartet wird.
+ * Von ihr aus kann dann zu den anderen Funktionalitäten der App navigiert werden.
+ *
+ * */
 public class MainActivity extends AppCompatActivity {
 
     //TODO Tage überprüfen bei den monatlichen Einträgen
@@ -49,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    /**Über den DatabaseHelper können sämtliche Datenbankfunktionen abgerufen werden.*/
     DatabaseHelper myDb;
+    /**Stellt den Saldo der Einnahmen und Ausgaen auf der Startseite dar.*/
     TextView betrag;
 
     @Override
@@ -58,28 +62,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         myDb = new DatabaseHelper(this);
-        //myDb.addMonthlyEntry(-400,"Miete","Bar",1);
 
+        //Nach dem Erstellen soll der Saldo berechnet und ausgegeben werden.
         refresh_money();
     }
 
     @Override
     public void onRestart() {
         super.onRestart();
+        //Wird die App wieder in den Vordergrund gebracht, soll der Saldo neu berechnet werden, da Änderungen an der Datenbank durchgeführt worden sein konnten.
         refresh_money();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
     }
 
     /**Diese Methode aktualisiert den Kontostand auf der Startseite*/
     public void refresh_money() {
 
+        /**Die SharedPrefence wird benötigt um die Zeit für die relevanten Buchungen zu bekommen.*/
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        /**Zeitintervall aus der SharedPreference.*/
         String time = sharedPref.getString("zeit","");
         Log.d("MainActivity",time);
 
@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /***************OnClick-Funktionen***************/
+
     public void einstellungen(View v) {
         Intent i = new Intent(v.getContext(), EinstellungenActivity.class);
         startActivityForResult(i, 0);
@@ -191,6 +192,9 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Service nicht da!!", Toast.LENGTH_LONG).show();
     }
 
+    /*********************************************************/
+
+    /**Diese Methode checkt ob der Service für die monatlichen Einträge gestartet ist.*/
     private boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {

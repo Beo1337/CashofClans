@@ -13,30 +13,35 @@ import com.cashify.overview.StatistikActivity;
 import com.cashify.MainActivity;
 import com.cashify.R;
 
+/**
+ * Diese Klasse stellt die in den Einstelungen gemachten Werte dar und kümmert sich um Änderungen dieser.
+ *
+ * */
 public class EinstellungenActivity extends PreferenceActivity {
 
+    /**Über die sharedPreference können Einstellungen überall in der App gesetzt und ausglesen werden.*/
     private SharedPreferences sharedPref;
-
+    /**Dieser Listener hört auf Änderungen der Einstellungen.*/
     private Preference.OnPreferenceChangeListener changeText;
-
+    /**Dieser String repräsentiert eine Zeitperiode.*/
     private String time;
-    private String waehrung;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preference);
 
+        //Die SharedPreferences der App auslesen
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
-
+        //Die Einstellung zeit aus den SharedPrefernces holen und in die View setzten.
         this.time = sharedPref.getString("zeit","");
 
         final Preference prefer1 = findPreference("zeit");
 
         prefer1.setSummary(this.time);
 
-
+        //Wenn die Einstellung vom User geändert wird, wird diese zurück in de SharedPreference geschrieben.
         this.changeText = new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newVal) {
@@ -47,9 +52,11 @@ public class EinstellungenActivity extends PreferenceActivity {
 
         };
 
+        //Listener auf die Einstellungsview der Zeiteinheit registrieren.
         prefer1.setOnPreferenceChangeListener(this.changeText);
     }
 
+    /**Funktionen für die Buttons der Toolbar*/
     public void stats(View v) {
         Intent i = new Intent(v.getContext(), StatistikActivity.class);
         startActivityForResult(i, 0);
@@ -64,7 +71,7 @@ public class EinstellungenActivity extends PreferenceActivity {
         Intent i = new Intent(v.getContext(), EinstellungenActivity.class);
         startActivityForResult(i, 0);
     }
-
+    /*****************************************/
 
 
 }
