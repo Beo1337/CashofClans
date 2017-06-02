@@ -338,11 +338,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if(e.getTag()==aktuellerTag)
             {
                 //Eintragen
-                Log.d(TAG,"Monatlicher Eintrag eingetragen: "+e.getTitel());
+                Log.d(TAG,"Monatlicher Eintrag eingetragen: "+e.getTitle());
                 strDate = sdft.format(new Date());
-                addEntry(e.getBetrag(),e.getTitel(),null,e.getKategorie(),strDate);
+                addEntry(e.getAmount(),e.getTitle(),null,e.getCategory(),strDate);
                 count++;
-                entries = entries+e.getTitel()+"\n ";
+                entries = entries+e.getTitle()+"\n ";
 
             }
         }
