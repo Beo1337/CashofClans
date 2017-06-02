@@ -1,20 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.seps.cashofclans">
+    package="com.cashify">
 
     <application
         android:allowBackup="true"
         android:background="#85a8e5"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/notificationicon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/backgroundmoneybag"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
         <uses-permission android:name="android.permission.CAMERA" />
+        <uses-permission android:name="android.permission.WAKE_LOCK" />
+        <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+        <receiver
+            android:name=".monthly_entries.BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.USER_UNLOCKED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".monthly_entries.DauerauftraegeService" />
 
         <uses-feature android:name="android.hardware.camera" />
         <uses-feature android:name="android.hardware.camera.autofocus" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -24,27 +51,40 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EinstellungenActivity"
+            android:name=".tabmain.TabMainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".settings.EinstellungenActivity"
             android:label="@string/title_activity_einstellungen"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AddActivity"
+            android:name=".add.AddActivity"
             android:label="@string/title_activity_add"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Overview.StatistikActivity"
+            android:name=".overview.StatistikActivity"
             android:label="@string/title_activity_statistik"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.cashify.category.CategoryActivity"
+            android:name=".category.CategoryActivity"
             android:label="@string/title_activity_category"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.cashify.password.PasswordActivity"
+            android:name=".overview.OverviewListActivity"
             android:label="@string/title_activity_category"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Database.ShowDataBaseActivity" />
-        <activity android:name=".Overview.OverviewListActivity"></activity>
+        <activity
+            android:name=".category.CategoryDetailActivity"
+            android:label="@string/title_activity_category_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".password.PasswordActivity"
+            android:label="@string/title_activity_category"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".database.ShowDataBaseActivity" />
+        <activity android:name=".monthly_entries.MonthlyEntryActivity" />
+        <activity android:name=".overview.PictureActivity" />
+        <activity android:name=".monthly_entries.AddMonthlyEntryActivity"></activity>
     </application>
 
 </manifest>

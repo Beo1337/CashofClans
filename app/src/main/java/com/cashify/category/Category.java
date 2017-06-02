@@ -15,7 +15,7 @@ public class Category {
         return id;
     }
 
-    public String getCategoryName() {
+    public String getName() {
         return categoryName;
     }
 
@@ -23,7 +23,7 @@ public class Category {
         return icon;
     }
 
-    public void setCategoryName(String categoryName) {
+    public void setName(String categoryName) {
         this.categoryName = categoryName;
     }
 

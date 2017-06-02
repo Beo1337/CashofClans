@@ -2,16 +2,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ListPreference
-        android:title="Währung"
-        android:dialogTitle="Währung"
-        android:entries="@array/waehrung"
-        android:entryValues="@array/weahrung_values"
-        android:defaultValue="@string/default_waehrung"/>
-
-    <ListPreference
         android:title="Zeiteinheit"
+        android:key="zeit"
         android:dialogTitle="Zeiteinheit"
         android:entries="@array/zeiteinheit"
+        android:defaultValue="@string/default_time"
         android:entryValues="@array/zeiteinheit_values" />
 
     <Preference android:title="Passwort" >
@@ -28,7 +23,7 @@
     <Preference android:title="monatliche Beiträge" >
         <intent android:action="android.intent.action.VIEW"
             android:targetPackage="com.example.seps.cashofclans"
-            android:targetClass="com.example.seps.cashofclans.AddActivity"
+            android:targetClass="com.cashify.monthly_entries.MonthlyEntryActivity"
             />
     </Preference>
 
