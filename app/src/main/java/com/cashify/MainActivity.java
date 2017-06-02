@@ -4,8 +4,6 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.cashify.add.AddActivity;
 import com.cashify.monthly_entries.DauerauftraegeService;
+import com.cashify.overview.Entry;
 import com.cashify.settings.EinstellungenActivity;
 import com.cashify.tabmain.TabMainActivity;
 import com.cashify.database.DatabaseHelper;
@@ -26,6 +25,9 @@ import com.cashify.overview.StatistikActivity;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Die MainActivity wird aufgerufen sobald die App gestartet wird.
@@ -34,7 +36,6 @@ import java.util.Date;
  * */
 public class MainActivity extends AppCompatActivity {
 
-    //TODO Tage überprüfen bei den monatlichen Einträgen
     //TODO ändern von monatlichen Einträgen
     //TODO ändern von Kategorien
     //TODO ändern von Einträgen
@@ -52,9 +53,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**Über den DatabaseHelper können sämtliche Datenbankfunktionen abgerufen werden.*/
-    DatabaseHelper myDb;
+    private DatabaseHelper myDb;
     /**Stellt den Saldo der Einnahmen und Ausgaen auf der Startseite dar.*/
-    TextView betrag;
+    private TextView betrag;
+    /**Diese Liste enthält alle Einträge aus der Datenbank.*/
+    private static List<Entry> entryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,21 +84,26 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         /**Zeitintervall aus der SharedPreference.*/
         String time = sharedPref.getString("zeit","");
-        Log.d("MainActivity",time);
-
-        SQLiteDatabase db = myDb.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM uebersicht", null);
-        Log.i("MainActivity:","Anzahl Daten: "+cursor.getCount());
-        double summe = 0;
+        /**Zeitformat des Datums der Einträge.*/
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        while(cursor.moveToNext())
-        {
+        double summe = 0;
 
+        Log.d("MainActivity",time);
+
+        //Liste aus der Datenbank befüllen.
+        if (entryList == null)
+            entryList = new LinkedList<>();
+        entryList.clear();
+        entryList.addAll(myDb.getEntries());
+
+        Iterator<Entry> i = entryList.iterator();
+        while(i.hasNext()) {//Für jeden Eintrag
+            Entry e = i.next();
 
             if(time.equals("Alle"))
             {
-                summe += cursor.getDouble(1);
+                summe += e.getAmount();
             }
             else {
 
@@ -103,25 +111,26 @@ public class MainActivity extends AppCompatActivity {
                 Date a = null;
                 try {
 
-                    d = sdf.parse(cursor.getString(4));
+                    d = sdf.parse(e.getDatum());
                     a = sdf.parse(sdf.format(new Date()));
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                } catch (ParseException ex) {
+                    ex.printStackTrace();
                 }
                 if (time.equals("Monat")) {
                     if (d.getMonth() == a.getMonth())
-                        summe += cursor.getDouble(1);
+                        summe += e.getAmount();
                 }
                 else if(time.equals("Jahr")){
                     if(d.getYear()==a.getYear())
-                        summe += cursor.getDouble(1);
+                        summe += e.getAmount();
                 }
                 else
                 {
-                    summe += cursor.getDouble(1);
+                    summe += e.getAmount();
                 }
             }
         }
+
         betrag= (TextView) findViewById(R.id.Money);
         Log.i("MainActivity","Betrag: "+summe);
         summe = Math.round(summe*100)/100.0;
@@ -130,8 +139,6 @@ public class MainActivity extends AppCompatActivity {
             betrag.setTextColor(Color.RED);
         else
             betrag.setTextColor(Color.GREEN);
-        cursor.close();
-        db.close();
     }
 
     /***************OnClick-Funktionen***************/

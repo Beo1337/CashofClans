@@ -317,24 +317,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void checkMonthlyEntries(Context context){
         SQLiteDatabase db = this.getWritableDatabase();
         SimpleDateFormat sdf = new SimpleDateFormat("dd");
+        SimpleDateFormat sdfm = new SimpleDateFormat("MM");
+        SimpleDateFormat sdfy = new SimpleDateFormat("yyyy");
         SimpleDateFormat sdft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String strDate;
         String entries = "";
         int aktuellerTag;
+        int aktuellerMonat;
+        int aktuellesJahr;
         int count = 0;
 
-        aktuellerTag =Integer.valueOf(sdf.format(new Date()));
-        Log.d(TAG,"aktueller Tag: "+aktuellerTag);
+        //aktuellen Tag festellen.
+        aktuellerTag = Integer.valueOf(sdf.format(new Date()));
+        //aktuelles Monat feststellen.
+        aktuellerMonat = Integer.valueOf(sdfm.format(new Date()));
+        //aktuelles Jahr feststellen.
+        aktuellesJahr = Integer.valueOf(sdfy.format(new Date()));
 
         List<MonthlyEntry> entryList = new LinkedList<>();
         entryList.addAll(getMonthlyEntries());
 
-        Iterator<MonthlyEntry> i = entryList.iterator();
+        Iterator<MonthlyEntry> i = entryList.iterator();//Die Liste der monatlichen Einträge durchgehen.
         Log.d(TAG,"Anzahl monatlicher Einträge: "+entryList.size());
         while(i.hasNext()) {//Für jeden Eintrag
             MonthlyEntry e = i.next();
             Log.d(TAG,"Tag des Eintrags: "+e.getTag());
-            if(e.getTag()==aktuellerTag)
+            if(e.getTag() == aktuellerTag)//Wenn Tag genau der Tag des Monats ist.
             {
                 //Eintragen
                 Log.d(TAG,"Monatlicher Eintrag eingetragen: "+e.getTitle());
@@ -344,9 +352,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 entries = entries+e.getTitle()+"\n ";
 
             }
+            //Wenn der Monat nur 30 Tage hat, werden die Einträge die am 31 gebucht werden schon am 30 gebucht.
+            if(aktuellerTag==30&&(e.getTag()==31 && aktuellerMonat == 4)||(e.getTag()==31 && aktuellerMonat == 6)||(e.getTag()==31 && aktuellerMonat == 9)||(e.getTag()==31 && aktuellerMonat == 11))
+            {
+                //Eintragen
+                Log.d(TAG,"Monatlicher Eintrag eingetragen(Monat hat nur 30Tage): "+e.getTitle());
+                strDate = sdft.format(new Date());
+                addEntry(e.getAmount(),e.getTitle(),null,e.getCategory(),strDate);
+                count++;
+                entries = entries+e.getTitle()+"\n ";
+            }
+
+            //Wenn Februar ist, kein Schaltjahr ist, Buchungen vom 31,30 und 29 schon am 28 durchführen.
+            if(aktuellerMonat==2&&aktuellesJahr%4!=0&&aktuellerTag==28&&(e.getTag()==31||e.getTag()==30||e.getTag()==29))
+            {
+                //Eintragen
+                Log.d(TAG,"Monatlicher Eintrag eingetragen (Februar hat nur 28 Tage, kein Schaltjahr): "+e.getTitle());
+                strDate = sdft.format(new Date());
+                addEntry(e.getAmount(),e.getTitle(),null,e.getCategory(),strDate);
+                count++;
+                entries = entries+e.getTitle()+"\n ";
+            }
+
+            //Wenn Februar ist, Schaltjahr ist, Buchungen vom 31,30 schon am 29 durchführen.
+            if(aktuellerMonat==2&&aktuellesJahr%4==0&&aktuellerTag==29&&(e.getTag()==31||e.getTag()==30))
+            {
+                //Eintragen
+                Log.d(TAG,"Monatlicher Eintrag eingetragen (Februar hat nur 29 Tage, Schaltjahr): "+e.getTitle());
+                strDate = sdft.format(new Date());
+                addEntry(e.getAmount(),e.getTitle(),null,e.getCategory(),strDate);
+                count++;
+                entries = entries+e.getTitle()+"\n ";
+            }
         }
 
-        if(count>0){
+        if(count>0){//Wenn ein Eintrag gemacht wurde soll eine Benachrichtgung an den Benutzer erstellt werden.
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(context)
                             .setSmallIcon(R.drawable.notificationicon)
@@ -365,17 +405,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             mBuilder.setContentIntent(resultPendingIntent);
             mBuilder.setAutoCancel(true);
 
-            // Sets an ID for the notification
             int mNotificationId = 001;
-            // Gets an instance of the NotificationManager service
             NotificationManager mNotifyMgr =
                     (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-            // Builds the notification and issues it.
             mNotifyMgr.notify(mNotificationId, mBuilder.build());
-
         }
-
-
     }
 
     /**Diese Methode liefert alle monatlichen Entries als HashSet zurück*/
