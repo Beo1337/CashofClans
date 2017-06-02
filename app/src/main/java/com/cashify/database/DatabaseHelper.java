@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.cashify.category.Category;
 import com.cashify.MainActivity;
@@ -313,6 +314,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
     }
 
+    /**Diese Methode ändert den Eintrag der übergebenen ID.*/
+    public boolean changeEntry(int id,double betrag, String title, String foto, String kategorie, String date){
+
+        SQLiteDatabase db;
+        SQLiteDatabase dbr = this.getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("BETRAG", betrag);
+        values.put("TITEL",title);
+        values.put("FOTO",foto);
+
+        Cursor c = dbr.rawQuery("SELECT ID FROM category WHERE NAME = '"+kategorie+"'", null);
+        c.moveToNext();
+        values.put("KATEGORIE",c.getInt(0));
+        c.close();
+        dbr.close();
+        values.put("DATUM", date);
+        db = this.getWritableDatabase();
+        //In die Datenbank speichern
+        long changedRowId = db.update(TABLE_NAME_MAIN,values,"ID ="+id,null);
+
+        db.close();
+
+        if(changedRowId > 0) {
+            Log.d(TAG,"Eintrag geändert!!");
+            return true;
+        }
+        else
+            return false;
+
+    }
+
     /**Diese Methode checkt ob Einträge aus den monatlichen Einträgen heute eingetragen werden müssen.*/
     public void checkMonthlyEntries(Context context){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -472,5 +504,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         else
             return false;
+    }
+
+    public boolean changeMonthlyEntry (int id, double betrag, String titel, String kategorie, int tag){
+        SQLiteDatabase db;
+        SQLiteDatabase dbr = this.getReadableDatabase();
+        ContentValues values = new ContentValues();
+        long changedRowId;
+
+        values.put("BETRAG", betrag);
+        values.put("TITEL",titel);
+
+        Cursor c = dbr.rawQuery("SELECT ID FROM category WHERE NAME = '"+kategorie+"'", null);
+        c.moveToNext();
+        values.put("KATEGORIE",c.getInt(0));
+        dbr.close();
+
+        values.put("TAG",tag);
+
+        db = this.getWritableDatabase();
+
+        changedRowId = db.update(TABLE_NAME_REPEAT_ENTRY,values,"ID ="+id,null);
+        db.close();
+
+        if(changedRowId > 0) {
+            Log.i(TAG,"montatlicher Eintrag geändert!!!");
+            return true;
+        }
+        else
+            return false;
+
     }
 }

@@ -60,4 +60,13 @@ public class OverviewManager {
         if (success) this.reloadFromDb();
         return success;
     }
+
+    public boolean changeEntry(int id,double betrag, String title, String foto, String kategorie, String date){
+        boolean success = this.dbHelper.changeEntry(id,betrag,title,foto,kategorie,date);
+        if (success) {
+            this.reloadFromDb();
+            return success;
+        }
+        return false;
+    }
 }

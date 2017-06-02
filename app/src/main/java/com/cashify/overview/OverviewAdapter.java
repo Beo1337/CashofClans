@@ -1,10 +1,12 @@
 package com.cashify.overview;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,12 +94,21 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
 
 
                                     } else if (item == 2) {//Bearbeiten
-                                        //TODO Bearbeiten
+                                        Intent i = new Intent(holder.view.getContext(), ChangeEntryActivity.class);
+                                        i.putExtra("id",""+ent.getId());
+                                        i.putExtra("titel", ent.getTitle());
+                                        i.putExtra("betrag", ""+ent.getAmount());
+                                        i.putExtra("datum", ""+ent.getDatum());
+                                        i.putExtra("kategorie", ent.getCategory());
+                                        i.putExtra("foto",ent.getFoto());
+                                        holder.view.getContext().startActivity(i);
+                                        notifyDataSetChanged();
 
 
                                     } else if (item == 3) {//Löschen
-                                        manager.removeEntry(ent.getId());
-                                        notifyDataSetChanged();
+
+                                        AlertDialog diaBox = AskOption(holder.view.getContext(),ent);
+                                        diaBox.show();
                                     }
 
                                 }
@@ -111,12 +122,22 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
                                     item++;
 
                                     if (item == 1) {//Bearbeiten
-                                        //TODO Bearbeiten
+                                        Log.d("OverviewAdapter","DATUM: "+ent.getDatum());
+                                        Intent i = new Intent(holder.view.getContext(), ChangeEntryActivity.class);
+                                        i.putExtra("id",""+ent.getId());
+                                        i.putExtra("titel", ent.getTitle());
+                                        i.putExtra("betrag", ""+ent.getAmount());
+                                        i.putExtra("datum", ""+ent.getDatum());
+                                        i.putExtra("kategorie", ent.getCategory());
+                                        i.putExtra("foto",ent.getFoto());
+                                        holder.view.getContext().startActivity(i);
+                                        notifyDataSetChanged();
 
 
                                     } else if (item == 2) {//Löschen
-                                        manager.removeEntry(ent.getId());
-                                        notifyDataSetChanged();
+
+                                        AlertDialog diaBox = AskOption(holder.view.getContext(),ent);
+                                        diaBox.show();
                                     }
 
                                 }
@@ -134,4 +155,35 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
     public int getItemCount() {
         return manager.getCount();
     }
+
+    /**Diese Methode liefert einen Abfragedialog bevor das Löschen durchgeführt wird.*/
+    private AlertDialog AskOption(Context context, Entry ent)
+    {
+        AlertDialog myQuittingDialogBox =new AlertDialog.Builder(context)
+                .setTitle("Löschen")
+                .setMessage("Wollen Sie wirklich löschen?")
+                .setIcon(R.drawable.delete_x)
+
+                .setPositiveButton("Löschen", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        manager.removeEntry(ent.getId());
+                        notifyDataSetChanged();
+                        dialog.dismiss();
+                    }
+                })
+
+                .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+                })
+                .create();
+        return myQuittingDialogBox;
+
+    }
+
+
 }

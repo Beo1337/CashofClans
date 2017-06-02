@@ -61,4 +61,5 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public int getItemCount() {
         return manager.getCount();
     }
+
 }

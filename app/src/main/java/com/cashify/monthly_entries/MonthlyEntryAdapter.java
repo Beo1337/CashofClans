@@ -1,6 +1,8 @@
 package com.cashify.monthly_entries;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.cashify.R;
 
 /**
@@ -77,12 +78,18 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapte
                             item++;
 
                             if (item == 1) {//Bearbeiten
-                                //TODO Bearbeiten
+                                Intent i = new Intent(holder.view.getContext(), ChangeMonthlyEntryActivity.class);
+                                i.putExtra("id",""+ent.getId());
+                                i.putExtra("titel", ent.getTitle());
+                                i.putExtra("betrag", ""+ent.getAmount());
+                                i.putExtra("tag", ""+ent.getTag());
+                                i.putExtra("kategorie", ent.getCategory());
+                                holder.view.getContext().startActivity(i);
 
 
                             } else if (item == 2) {//Löschen
-                                manager.removeMonthlyEntry(ent.getId());
-                                notifyDataSetChanged();
+                                AlertDialog diaBox = AskOption(holder.view.getContext(),ent);
+                                diaBox.show();
                             }
                         }
                     });
@@ -98,6 +105,36 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapte
     /**Diese Methode liefert die Anzahl an Items in dem Viewholder.*/
     public int getItemCount() {
         return manager.getCount();
+    }
+
+
+    /**Diese Methode liefert einen Abfragedialog bevor das Löschen durchgeführt wird.*/
+    private AlertDialog AskOption(Context context, MonthlyEntry ent)
+    {
+        AlertDialog myQuittingDialogBox =new AlertDialog.Builder(context)
+                .setTitle("Löschen")
+                .setMessage("Wollen Sie wirklich löschen?")
+                .setIcon(R.drawable.delete_x)
+
+                .setPositiveButton("Löschen", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        manager.removeMonthlyEntry(ent.getId());
+                        notifyDataSetChanged();
+                        dialog.dismiss();
+                    }
+                })
+
+                .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+                })
+                .create();
+        return myQuittingDialogBox;
+
     }
 
 }

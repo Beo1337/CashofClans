@@ -84,7 +84,9 @@
         <activity android:name=".database.ShowDataBaseActivity" />
         <activity android:name=".monthly_entries.MonthlyEntryActivity" />
         <activity android:name=".overview.PictureActivity" />
-        <activity android:name=".monthly_entries.AddMonthlyEntryActivity"></activity>
+        <activity android:name=".monthly_entries.AddMonthlyEntryActivity" />
+        <activity android:name=".monthly_entries.ChangeMonthlyEntryActivity" />
+        <activity android:name=".overview.ChangeEntryActivity"></activity>
     </application>
 
 </manifest>

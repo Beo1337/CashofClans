@@ -1,5 +1,4 @@
-package com.cashify.add;
-
+package com.cashify.overview;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -8,11 +7,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -24,26 +23,29 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.cashify.database.DatabaseHelper;
+
 import com.cashify.R;
+import com.cashify.add.AddActivity;
+import com.cashify.database.DatabaseHelper;
+
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-
 /**
- *
- * Diese Klasse wird verwendet um neue Einträge in die Überischtstabelle einzufügen.
- *
+ * Diese Klasse stellt die alten Werte eines Eintrags dar und schreibt die geänderten Werte zurück in die Datenbank
  * */
-public class AddActivity extends AppCompatActivity {
+public class ChangeEntryActivity extends AppCompatActivity {
 
     /**Der TAG wird für das Log verwendet um anzuzeigen von welcher Klasse der Logeintrag stammt.*/
     private static final String TAG = "AddActivity";
     /**In diesem Textfeld wird der aktuelle Kontostand angezeigt.*/
     private TextView betrag;
+    /**In diesem Textfeld wird der aktuelle Title angezeigt.*/
+    private EditText title;
     /**Wird benötigt um die gewählte Zahl in das Textfeld zu schreiben.*/
     private String s;
     /**Datenbank*/
@@ -62,28 +64,33 @@ public class AddActivity extends AppCompatActivity {
     private int mMonth = -1;
     /**Tag des Eintrags*/
     private int mDay = -1;
+    /**Wird benötigt um Werte die der Aktivity mitgegeben wurden auszulesen.*/
+    private Bundle bundle;
+    /**Format für ein Datum*/
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     static final int REQUEST_TAKE_PHOTO = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
+        setContentView(R.layout.activity_change_entry);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         betrag= (TextView) findViewById(R.id.Betrag);
+        title = (EditText) findViewById(R.id.title);
 
         myDb = new DatabaseHelper(this);
 
         //Über bundle können zusätzliche Infos aus dem Intent ausgelesen werden.
-        Bundle bundle = getIntent().getExtras();
+        bundle = getIntent().getExtras();
+
 
         Button commit = (Button)findViewById(R.id.ButtonCommit);
 
         //Cursor von der Kategorietabelle holen.
         Cursor c = myDb.getReadableDatabase().rawQuery("SELECT ID AS _id, NAME FROM category", null);
-        Log.i("AddActivity", "CURSOR COUNT: "+c.getCount());
         //Adapter aus dem Cursor erstellen.
         String[] from = new String[] {"NAME"};
         int[] to = new int[] {android.R.id.text1};
@@ -95,24 +102,25 @@ public class AddActivity extends AppCompatActivity {
         spin = (Spinner) this.findViewById(R.id.category);
         spin.setAdapter(sca);
 
+        betrag.setText(bundle.getString("betrag"));
+        selectValue(spin,bundle.getString("kategorie"));
+        title.setText(bundle.getString("titel"));
+        foto = bundle.getString("foto");
+        if(foto != null) {
+            ImageButton im = (ImageButton) findViewById(R.id.imageButton7);
+            im.setImageResource(R.drawable.cameracheckicon);
+        }
 
-        //Schauen ob hinzugefügt oder abgezogen wird
-        if(bundle.getString("mode")!= null)
-        {
-            if(bundle.getString("mode").equals("sub"))//Wenn abgezogen wird, Vorzeichen ändern.
-            {
-                vorzeichen = -1;//Wenn abgezogen wird, Vorzeichen ändern
-                commit.setBackgroundColor(Color.RED);
-            }
-            else
-                commit.setBackgroundColor(Color.GREEN);
 
-            if(bundle.getString("cat")!=null)//Wenn Shortcut gewählt wurde, ist Kategorie schon vorausgewählt.
-            {
-                Spinner cat = (Spinner) findViewById(R.id.category);
-                selectValue(cat,bundle.getString("cat"));
-                cat.setEnabled(false);
-            }
+        try {
+            Date date = sdf.parse(bundle.getString("datum"));
+            Log.d(TAG,"DATUM: "+bundle.getString("datum"));
+            mYear = Integer.valueOf(bundle.getString("datum").substring(0,4));
+            Log.d(TAG,"JAHR: "+mYear);
+            mMonth = date.getMonth();
+            mDay = date.getDay();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
 
@@ -217,8 +225,8 @@ public class AddActivity extends AppCompatActivity {
             Log.d(TAG,"Eingetragenes Datum: "+strDate);
 
             //addEntry(Betrag,Titel,Foto,Kategorie,Datum)
-            if(!myDb.addEntry(Double.valueOf(betrag.getText().toString()) * vorzeichen,title.getText().toString(),foto,s,strDate))
-                Toast.makeText(this, "Fehler beim Eintragen!", Toast.LENGTH_LONG).show();
+            if(!myDb.changeEntry(Integer.valueOf(bundle.getString("id")),Double.valueOf(betrag.getText().toString()) * vorzeichen,title.getText().toString(),foto,s,strDate))
+                Toast.makeText(this, "Fehler beim Ändern!", Toast.LENGTH_LONG).show();
             finish();
         }
     }
@@ -257,7 +265,7 @@ public class AddActivity extends AppCompatActivity {
             }
         }
         catch (Exception e1){//Falls irgend ein Fehler mit der Camera auftreten sollte, wird dieser gefangen.
-            Toast.makeText(AddActivity.this, "Foto aufnehmen nicht möglich!", Toast.LENGTH_LONG).show();
+            Toast.makeText(ChangeEntryActivity.this, "Foto aufnehmen nicht möglich!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -296,8 +304,8 @@ public class AddActivity extends AppCompatActivity {
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
         }
-        DatePickerDialog dialog = new DatePickerDialog(AddActivity.this,
-                new mDateSetListener(), mYear, mMonth, mDay);
+        DatePickerDialog dialog = new DatePickerDialog(ChangeEntryActivity.this,
+                new ChangeEntryActivity.mDateSetListener(), mYear, mMonth, mDay);
         dialog.show();
     }
 
@@ -316,8 +324,4 @@ public class AddActivity extends AppCompatActivity {
 
         }
     }
-
-
-
-
 }

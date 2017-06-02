@@ -1,8 +1,11 @@
 package com.cashify.monthly_entries;
 
+import android.widget.Toast;
+
 import com.cashify.database.DatabaseHelper;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,6 +29,12 @@ public class MonthlyEntryManager {
         if (entryList == null) entryList = new LinkedList<>();
         entryList.clear();
         entryList.addAll(dbHelper.getMonthlyEntries());
+        Collections.sort(entryList, new Comparator<MonthlyEntry>() {
+            @Override
+            public int compare(MonthlyEntry o1, MonthlyEntry o2) {
+                return o1.getTitle().compareTo(o2.getTitle());
+            }
+        });
     }
 
     /**Diese Methode liefert den monatlichen Eintrag der Liste mit dem übergebenen Index.*/
@@ -62,5 +71,14 @@ public class MonthlyEntryManager {
         if (success) this.reloadFromDb();
         return success;
 
+    }
+
+    public boolean changeMonthlyEntry(int id, double betrag, String titel, String kategorie, int tag){
+        boolean success = this.dbHelper.changeMonthlyEntry(id,betrag,titel,kategorie,tag);
+        if (success) {
+            this.reloadFromDb();
+            return success;
+        }
+        return false;
     }
 }
