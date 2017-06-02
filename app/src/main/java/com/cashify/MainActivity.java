@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         while(cursor.moveToNext())
         {
 
+
             if(time.equals("Alle"))
             {
                 summe += cursor.getDouble(1);

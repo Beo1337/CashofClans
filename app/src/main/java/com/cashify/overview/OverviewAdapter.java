@@ -55,13 +55,13 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
         //Felder befüllen
         Entry ent = manager.getEntryByIndex(position);
 
-        entryText.setText(ent.getTitel());
-        if(ent.getBetrag()<0)
+        entryText.setText(ent.getTitle());
+        if(ent.getAmount()<0)
             entryAmount.setTextColor(Color.RED);
         else
             entryAmount.setTextColor(Color.GREEN);
-        entryAmount.setText(""+ent.getBetrag()+"");
-        entryCategory.setText(ent.getKategorie());
+        entryAmount.setText(""+ent.getAmount()+"");
+        entryCategory.setText(ent.getCategory());
         entryDate.setText(ent.getDatum());
 
         if(ent.getFoto()!=null)//Wenn ein Foto mitgespeichert wurde, dann das durch ein kleines Icon anzeigen.

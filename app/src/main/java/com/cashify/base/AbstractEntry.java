@@ -1,5 +1,9 @@
 package com.cashify.base;
 
+/**
+ * Created by mhackl on 02.06.2017.
+ */
+
 // Entry and MonthlyEntry have a huge intersecting surface, gotta refactor this out
 
 public class AbstractEntry {
@@ -24,27 +28,27 @@ public class AbstractEntry {
         this.id = id;
     }
 
-    public double getBetrag() {
+    public double getAmount() {
         return betrag;
     }
 
-    public void setBetrag(double betrag) {
+    public void setAmount(double betrag) {
         this.betrag = betrag;
     }
 
-    public String getTitel() {
+    public String getTitle() {
         return titel;
     }
 
-    public void setTitel(String titel) {
+    public void setTitle(String titel) {
         this.titel = titel;
     }
 
-    public String getKategorie() {
+    public String getCategory() {
         return kategorie;
     }
 
-    public void setKategorie(String kategorie) {
+    public void setCategory(String kategorie) {
         this.kategorie = kategorie;
     }
 

@@ -2,8 +2,6 @@ package com.cashify.overview;
 
 import com.cashify.base.AbstractEntry;
 
-import java.util.Date;
-
 /**
  * Created by Beo on 30.05.2017.
  * Diese Klasse repräsentiert einen Geldeintrag in der Datenbank.
@@ -40,9 +38,9 @@ public class Entry extends AbstractEntry{
     public String toString() {
         return "Entry{" +
                 "id=" + super.getId() +
-                ", betrag=" + super.getBetrag() +
-                ", title='" + super.getTitel() + '\'' +
-                ", kategorie='" + super.getKategorie() + '\'' +
+                ", betrag=" + super.getAmount() +
+                ", title='" + super.getTitle() + '\'' +
+                ", kategorie='" + super.getCategory() + '\'' +
                 ", datum='" + datum + '\'' +
                 ", foto='" + foto + '\'' +
                 '}';

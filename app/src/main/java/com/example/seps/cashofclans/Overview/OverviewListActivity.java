@@ -98,7 +98,7 @@ public class OverviewListActivity extends AppCompatActivity {
             tv.setTextSize(16);
             tv.setPadding(5, 0, 5, 0);
 
-            tv.setText(String.valueOf(e.getBetrag()));
+            tv.setText(String.valueOf(e.getAmount()));
             row.addView(tv);
 
             TextView tv1 = new TextView(this);
@@ -107,7 +107,7 @@ public class OverviewListActivity extends AppCompatActivity {
             tv1.setTextSize(16);
             tv1.setPadding(5, 0, 5, 0);
 
-            tv1.setText(e.getTitel());
+            tv1.setText(e.getTitle());
             row.addView(tv1);
 
             TextView tv2 = new TextView(this);
@@ -116,7 +116,7 @@ public class OverviewListActivity extends AppCompatActivity {
             tv2.setTextSize(16);
             tv2.setPadding(5, 0, 5, 0);
 
-            tv2.setText(e.getKategorie());
+            tv2.setText(e.getCategory());
             row.addView(tv2);
 
             TextView tv3 = new TextView(this);

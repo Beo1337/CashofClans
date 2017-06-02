@@ -190,14 +190,14 @@ public class StatistikActivity extends AppCompatActivity {
         Iterator<com.cashify.overview.Entry> i1 = entryList.iterator();
         while(i1.hasNext()) {//Für jeden Eintrag
             com.cashify.overview.Entry e = i1.next();
-            if(e.getBetrag()<0)
+            if(e.getAmount()<0)
             {
 
                 if(time.equals("Alle"))
                 {
-                    double v = ((Double)value.get(e.getKategorie())).doubleValue();
-                    v += (e.getBetrag()*-1);
-                    value.put(e.getKategorie(),v);
+                    double v = ((Double)value.get(e.getCategory())).doubleValue();
+                    v += (e.getAmount()*-1);
+                    value.put(e.getCategory(),v);
                 }
                 else {
 
@@ -212,16 +212,16 @@ public class StatistikActivity extends AppCompatActivity {
                     }
                     if (time.equals("Monat")) {
                         if (d.getMonth() == a.getMonth()) {
-                            double v = ((Double) value.get(e.getKategorie())).doubleValue();
-                            v += (e.getBetrag() * -1);
-                            value.put(e.getKategorie(), v);
+                            double v = ((Double) value.get(e.getCategory())).doubleValue();
+                            v += (e.getAmount() * -1);
+                            value.put(e.getCategory(), v);
                         }
                     }
                     else if(time.equals("Jahr")){
                         if(d.getYear()==a.getYear()){
-                            double v = ((Double)value.get(e.getKategorie())).doubleValue();
-                            v += (e.getBetrag()*-1);
-                            value.put(e.getKategorie(),v);
+                            double v = ((Double)value.get(e.getCategory())).doubleValue();
+                            v += (e.getAmount()*-1);
+                            value.put(e.getCategory(),v);
                         }
                     }
                 }

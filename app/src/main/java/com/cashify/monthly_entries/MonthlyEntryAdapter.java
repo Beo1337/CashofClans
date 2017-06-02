@@ -55,13 +55,13 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapte
         //Felder befüllen
         MonthlyEntry ent = manager.getMonthlyEntryByIndex(position);
 
-        entryText.setText(ent.getTitel());
-        if(ent.getBetrag()<0)
+        entryText.setText(ent.getTitle());
+        if(ent.getAmount()<0)
             entryAmount.setTextColor(Color.RED);
         else
             entryAmount.setTextColor(Color.GREEN);
-        entryAmount.setText(""+ent.getBetrag()+"");
-        entryCategory.setText(ent.getKategorie());
+        entryAmount.setText(""+ent.getAmount()+"");
+        entryCategory.setText(ent.getCategory());
         entryDate.setText("Monatstag: "+ent.getTag());
 
         //Wenn lange auf einen Eintrag gedrückt wird

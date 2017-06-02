@@ -27,9 +27,9 @@ public class MonthlyEntry extends AbstractEntry {
     public String toString() {
         return "MonthlyEntry{" +
                 "id=" + super.getId() +
-                ", betrag=" + super.getBetrag() +
-                ", titel='" + super.getTitel() + '\'' +
-                ", kategorie='" + super.getKategorie() + '\'' +
+                ", betrag=" + super.getAmount() +
+                ", titel='" + super.getTitle() + '\'' +
+                ", kategorie='" + super.getCategory() + '\'' +
                 ", tag=" + tag +
                 '}';
     }
