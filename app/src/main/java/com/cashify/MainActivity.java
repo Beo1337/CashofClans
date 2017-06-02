@@ -31,6 +31,24 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
+
+    //TODO Tage überprüfen bei den monatlichen Einträgen
+    //TODO ändern von monatlichen Einträgen
+    //TODO ändern von Kategorien
+    //TODO ändern von Einträgen
+    //TODO Bilder der Kategorie anpassen (Nur Bierglas überall)
+    //TODO Dialogabfrage vor löschen bei Kategorie
+    //TODO Dialogabfrage vor löschen bei Einträgen
+    //TODO Dialogabfrage vor löschen bei monatlichen Einträgen
+    //TODO Diagramme Ausgaben vs. Einnahemn usw.
+    //TODO CSV Export
+    //TODO Anzeige je nach eingegebener Zeit
+    //TODO Methoden mit ID nicht Strings
+    //TODO Strings.xml
+    //TODO Prepared Statements
+
+
+
     DatabaseHelper myDb;
     TextView betrag;
 

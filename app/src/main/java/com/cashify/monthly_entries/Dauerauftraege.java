@@ -26,15 +26,23 @@ public class Dauerauftraege{
     public void setAlarm(Context context){
         Log.d(TAG,"Alarm gesetzt.");
         RegisterAlarmBroadcast(context);
-        // Set the alarm to start at 8:00 a.m.
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 5);
-        calendar.set(Calendar.SECOND,0);
-        Log.d(TAG,"Zeit: "+calendar.getTimeInMillis());
 
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND,0);
+        Log.d(TAG,"Zeit zwischen gerade und Auslösen:"+getTimeFromMilli(calendar.getTimeInMillis()+180000-System.currentTimeMillis()));
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis()+180000, AlarmManager.INTERVAL_DAY, pendingIntent);
+    }
+
+    /**Diese Methode rechnet Millisekunden in Stunden, Minuten und Sekunden um*/
+    private String getTimeFromMilli(long millies){
+
+        int stunde =(int) (millies / 3600000);
+        int minute =(int) ((millies % 3600000) / 60000);
+        int sekunde =(int) ((millies % 3600000) % 60000)/10000;
+
+        return ""+stunde+":"+minute+":"+sekunde;
     }
 
     public void cancelAlarm(Context context)
@@ -48,18 +56,15 @@ public class Dauerauftraege{
     private void RegisterAlarmBroadcast(Context context) {
         Log.d(TAG,"BroadcastReceiver registriert.");
         mReceiver = new BroadcastReceiver() {
-            // private static final String TAG = "Alarm Example Receiver";
+
             @Override
             public void onReceive(Context context, Intent intent) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(System.currentTimeMillis());
                 Log.d("mReceiver","Name des Intents:   "+intent.getAction());
                 Log.d("mReceiver","ALARM Zeit zum Eintragen "+calendar.getTime());
-                //Toast.makeText(context, "Werte werden eingetragen!", Toast.LENGTH_LONG).show();
                 DatabaseHelper db = new DatabaseHelper(context);
                 db.checkMonthlyEntries(context);
-
-
             }
         };
 
