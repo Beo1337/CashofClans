@@ -107,7 +107,7 @@ public class OverviewListActivity extends AppCompatActivity {
             tv1.setTextSize(16);
             tv1.setPadding(5, 0, 5, 0);
 
-            tv1.setText(e.getTitle());
+            tv1.setText(e.getTitel());
             row.addView(tv1);
 
             TextView tv2 = new TextView(this);

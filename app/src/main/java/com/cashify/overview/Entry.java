@@ -1,5 +1,7 @@
 package com.cashify.overview;
 
+import com.cashify.base.AbstractEntry;
+
 import java.util.Date;
 
 /**
@@ -7,57 +9,18 @@ import java.util.Date;
  * Diese Klasse repräsentiert einen Geldeintrag in der Datenbank.
  */
 
-public class Entry {
+public class Entry extends AbstractEntry{
 
-    private int id;
-    private double betrag;
-    private String title;
-    private String kategorie;
     private String datum;
     private String foto;
 
     public Entry(int id, double betrag,String title, String kategorie, String datum, String foto) {
-        this.id = id;
-        this.betrag = Math.round(betrag*100)/100.0;;
-        this.title = title;
-        this.kategorie = kategorie;
+        super(id, betrag, title, kategorie);
         this.datum = datum;
         this.foto = foto;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public double getBetrag() {
-        return betrag;
-    }
-
-    public void setBetrag(double betrag) {
-        this.betrag = betrag;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getKategorie() {
-        return kategorie;
-    }
-
-    public void setKategorie(String kategorie) {
-        this.kategorie = kategorie;
-    }
-
-    public String getDatum() {
+       public String getDatum() {
         return datum;
     }
 
@@ -76,10 +39,10 @@ public class Entry {
     @Override
     public String toString() {
         return "Entry{" +
-                "id=" + id +
-                ", betrag=" + betrag +
-                ", title='" + title + '\'' +
-                ", kategorie='" + kategorie + '\'' +
+                "id=" + super.getId() +
+                ", betrag=" + super.getBetrag() +
+                ", title='" + super.getTitel() + '\'' +
+                ", kategorie='" + super.getKategorie() + '\'' +
                 ", datum='" + datum + '\'' +
                 ", foto='" + foto + '\'' +
                 '}';

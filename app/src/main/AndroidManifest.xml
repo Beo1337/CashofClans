@@ -78,7 +78,7 @@
             android:label="@string/title_activity_category_detail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".overview.password.PasswordActivity"
+            android:name=".password.PasswordActivity"
             android:label="@string/title_activity_category"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".database.ShowDataBaseActivity" />

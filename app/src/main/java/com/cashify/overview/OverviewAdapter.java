@@ -55,7 +55,7 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
         //Felder befüllen
         Entry ent = manager.getEntryByIndex(position);
 
-        entryText.setText(ent.getTitle());
+        entryText.setText(ent.getTitel());
         if(ent.getBetrag()<0)
             entryAmount.setTextColor(Color.RED);
         else
