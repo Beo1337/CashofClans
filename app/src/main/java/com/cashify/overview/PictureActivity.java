@@ -14,7 +14,7 @@ import com.cashify.R;
  * Der Speicherort des Bildes wird dem Intent als Extra übergeben
  * Aufruf:
  *  Intent pic = new Intent(v.getContext(),PictureActivity.class);
- *  pic.putExtra("name_des_Fotos",(String)v.getDay());
+ *  pic.putExtra("name_des_Fotos",(String)v.getTag());
  *  startActivity(pic);
  */
 public class PictureActivity extends AppCompatActivity {

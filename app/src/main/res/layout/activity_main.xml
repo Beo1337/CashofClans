@@ -84,7 +84,7 @@
             android:background="@android:color/transparent"
             android:onClick="shortcut"
             android:scaleType="centerCrop"
-            android:day="Lebensmittel"
+            android:tag="Lebensmittel"
             app:srcCompat="@drawable/icon_shoppingcart" />
 
         <ImageButton
@@ -96,7 +96,7 @@
             android:background="@android:color/transparent"
             android:onClick="shortcut"
             android:scaleType="fitStart"
-            android:day="Bar"
+            android:tag="Bar"
             app:srcCompat="@drawable/icon_beer" />
 
         <ImageButton
@@ -108,7 +108,7 @@
             android:background="@android:color/transparent"
             android:onClick="shortcut"
             android:scaleType="fitCenter"
-            android:day="Sport"
+            android:tag="Sport"
             app:srcCompat="@drawable/icon_sport" />
 
         <ImageButton
@@ -120,7 +120,7 @@
             android:background="@android:color/transparent"
             android:onClick="shortcut"
             android:scaleType="fitEnd"
-            android:day="Kleidung"
+            android:tag="Kleidung"
             app:srcCompat="@drawable/icon_clothes" />
 
         <ImageButton
@@ -133,7 +133,7 @@
             android:elevation="1dp"
             android:onClick="shortcut"
             android:scaleType="fitEnd"
-            android:day="Bücher"
+            android:tag="Bücher"
             app:srcCompat="@drawable/icon_school" />
 
         <ImageButton
@@ -145,7 +145,7 @@
             android:background="@android:color/transparent"
             android:onClick="shortcut"
             android:scaleType="fitCenter"
-            android:day="Kino"
+            android:tag="Kino"
             app:srcCompat="@drawable/icon_movie" />
 
 
