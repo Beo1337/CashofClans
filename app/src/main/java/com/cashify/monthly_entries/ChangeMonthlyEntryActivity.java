@@ -84,15 +84,24 @@ public class ChangeMonthlyEntryActivity extends AppCompatActivity {
     public void eintragen(View v){
         boolean success;
 
-        if(!betrag.getText().toString().equals("")) {//Wenn kein Betrag eingeben wurde, wird kein Eintrag in der Datenbank erstellt.
-
-            title = (EditText) findViewById(R.id.title);
-            //Kategorie holen
-            String s = ((Cursor)spin.getSelectedItem()).getString(1);
+        //Wenn kein Betrag eingeben wurde, wird kein Eintrag in der Datenbank erstellt.
+        if(!betrag.getText().toString().equals("")) {
 
             MonthlyEntryManager manager = new MonthlyEntryManager(myDb);
 
-            success = manager.changeMonthlyEntry(Integer.valueOf(bundle.getString("id")),Double.valueOf(betrag.getText().toString()),title.getText().toString(),s,np.getValue());
+            title = (EditText) findViewById(R.id.title);
+
+            //Kategorie holen
+            String catStr = ((Cursor)spin.getSelectedItem()).getString(1);
+
+            success = manager.changeMonthlyEntry(
+                    Integer.valueOf(bundle.getString("id")),
+                    Double.valueOf(betrag.getText().toString()),
+                    title.getText().toString(),
+                    catStr,
+                    np.getValue()
+            );
+            
             if(success)
                 Toast.makeText(this, "Eintrag geändert!!", Toast.LENGTH_LONG).show();
             else
@@ -100,8 +109,4 @@ public class ChangeMonthlyEntryActivity extends AppCompatActivity {
             finish();
         }
     }
-
-
-
-
 }

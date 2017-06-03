@@ -32,8 +32,6 @@ public class CategoryManager {
         });
     }
 
-
-
     // Return single category entry by list position
     public Category getCategoryByIndex(int index) {
         return categoryList.get(index);
@@ -41,7 +39,6 @@ public class CategoryManager {
 
     public Category getCategoryById(int id) {
         for(Category c : categoryList) if (c.getId() == id) return c;
-
         return new Category(Integer.MIN_VALUE, "Error", "");
     }
 

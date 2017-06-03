@@ -1,10 +1,6 @@
 package com.cashify.base;
 
-import android.app.Application;
-
 import com.cashify.category.Category;
-import com.cashify.category.CategoryManager;
-import com.cashify.database.DatabaseHelper;
 
 /**
  * Created by mhackl on 02.06.2017.
@@ -23,7 +19,7 @@ public class AbstractEntry {
     public AbstractEntry(int id, double betrag, String title, Category cat) {
         this.id = id;
         this.amount = betrag;
-        this.title = title;
+        this.title = title == null? "(null value?!)" : title;
         this.category = cat == null ? new Category(Integer.MIN_VALUE, "Error", "") : cat;
     }
 
