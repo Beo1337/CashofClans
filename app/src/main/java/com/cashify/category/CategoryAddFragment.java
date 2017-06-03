@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
 import android.widget.EditText;
-import android.widget.TextView;
 
 // CategoryAddFragment is a glorified input dialog, kinda like back in Windows 95
 

@@ -45,7 +45,6 @@ public class OverviewListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setTitle("CHANGE THIS");
-
     }
 
 }

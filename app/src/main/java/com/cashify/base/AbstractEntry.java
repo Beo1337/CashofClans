@@ -23,7 +23,6 @@ public class AbstractEntry {
         this.category = cat == null ? new Category(Integer.MIN_VALUE, "Error", "") : cat;
     }
 
-
     // Retrieve entry id
     public int getId() {
         return id;

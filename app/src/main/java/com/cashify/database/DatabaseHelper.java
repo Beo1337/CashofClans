@@ -248,22 +248,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**Diese Methode liefert alle Kategorien als HashSet zurück.*/
-    private Set<Category> getCategoriesReuse(boolean close){
+    private Set<Category> getCategoriesReuse(boolean keepOpen){
         SQLiteDatabase db = this.getReadableDatabase();
         Set<Category> allCategories = new HashSet<Category>();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM category", null);
-        while(cursor.moveToNext())
-        {
-            Category c = new Category(cursor.getInt(0),cursor.getString(1),cursor.getString(2));
-            allCategories.add(c);
-        }
+        Cursor c = db.query(
+                TABLE_NAME_CATEGORY, // Category table
+                null, // All columns
+                null, // no selection
+                null, // no selection args
+                null, // no grouping
+                null, // no having
+                null // no order
+        );
+        
+        while(c.moveToNext()) allCategories.add(
+                new Category(c.getInt(0), c .getString(1), c.getString(2))
+        );
+
         Log.i(TAG,"The list is:");
-        Iterator<Category> i = allCategories.iterator();
-        while(i.hasNext())
-            Log.i(TAG,i.next().toString());
-        cursor.close();
-        if (!close) db.close();
+        for(Category cat : allCategories) Log.i(TAG, cat.toString());
+
+        c.close();
+        if (!keepOpen) db.close();
         return allCategories;
     }
 

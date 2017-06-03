@@ -37,7 +37,6 @@ public class CategoryDetailActivity extends AppCompatActivity {
                 this.finish();
             });
 
-
         } catch (Exception e) {
 
         }

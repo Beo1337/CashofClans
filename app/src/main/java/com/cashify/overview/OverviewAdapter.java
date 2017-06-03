@@ -78,7 +78,6 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
 
                 AlertDialog.Builder optionsDialog = new AlertDialog.Builder(holder.view.getContext());
 
-
                 optionsDialog.setTitle("Bitte Option auswählen").setItems(
                         ent.getFoto() != null ? R.array.options : R.array.options_without_pic,
                         new DialogInterface.OnClickListener() {
