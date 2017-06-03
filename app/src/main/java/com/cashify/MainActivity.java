@@ -37,9 +37,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     //TODO ändern von Kategorien
-    //TODO ändern von Einträgen
     //TODO Bilder der Kategorie anpassen (Nur Bierglas überall)
     //TODO Dialogabfrage vor löschen bei Kategorie
+
     //TODO Diagramme Ausgaben vs. Einnahemn usw.
     //TODO CSV Export
     //TODO Anzeige je nach eingegebener Zeit

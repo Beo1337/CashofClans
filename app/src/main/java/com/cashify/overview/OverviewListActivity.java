@@ -7,6 +7,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.cashify.database.DatabaseHelper;
 import com.cashify.R;
@@ -45,6 +46,14 @@ public class OverviewListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setTitle("CHANGE THIS");
+    }
+
+    /**Wird die Aktivity aus dem Hintergrund wieder in den Vordergrund gebarcht, soll der Adapter aktualisert werden da Änderungen an den Datensätzen vorgenommen werden konnten.*/
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        Log.d("OverviewListActivity","DataSetChanged");
+        adapter.notifyDataSetChanged();
     }
 
 }

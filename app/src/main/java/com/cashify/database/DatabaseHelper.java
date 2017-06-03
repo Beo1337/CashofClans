@@ -227,7 +227,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int del;
         try {
 
-            del = db.delete(TABLE_NAME_CATEGORY,"id = "+id+" AND NOT EXISTS (SELECT KATEGORIE FROM "+TABLE_NAME_MAIN+" WHERE KATEGORIE = (SELECT ID FROM "+TABLE_NAME_CATEGORY+" WHERE id = "+id+"))",null);
+            del = db.delete(TABLE_NAME_CATEGORY,"id = "+id+" AND NOT EXISTS (SELECT KATEGORIE FROM "+TABLE_NAME_MAIN+" WHERE KATEGORIE = (SELECT ID FROM "+TABLE_NAME_CATEGORY+" WHERE id = "+id+") AND NOT EXISTS (SELECT KATEGORIE FROM "+TABLE_NAME_REPEAT_ENTRY+" WHERE KATEGORIE = (SELECT ID FROM "+TABLE_NAME_CATEGORY+" WHERE id = "+id+"))",null);
             Log.i("DataBaseHelper","Kategorie gelöscht!!!  "+ del);
         }
         catch(SQLiteException e){
@@ -300,7 +300,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**Diese Methode fügt einen Eintrag in die Übersichtstabelle ein.*/
     public boolean addEntry(double betrag, String title, String foto, String kategorie, String date){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db;
         SQLiteDatabase dbr = this.getReadableDatabase();
         ContentValues values = new ContentValues();
         values.put("DATUM", date);
@@ -322,7 +322,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("KATEGORIE",c.getInt(0));
         c.close();
         dbr.close();
-
+        db = this.getWritableDatabase();
 
         //In die Datenbank speichern
         long newRowId = db.insert("uebersicht", null, values);

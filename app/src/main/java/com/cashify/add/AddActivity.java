@@ -43,7 +43,7 @@ public class AddActivity extends AppCompatActivity {
     /**Der TAG wird für das Log verwendet um anzuzeigen von welcher Klasse der Logeintrag stammt.*/
     private static final String TAG = "AddActivity";
     /**In diesem Textfeld wird der aktuelle Kontostand angezeigt.*/
-    private TextView betrag;
+    private EditText betrag;
     /**Wird benötigt um die gewählte Zahl in das Textfeld zu schreiben.*/
     private String s;
     /**Datenbank*/
@@ -72,7 +72,7 @@ public class AddActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        betrag= (TextView) findViewById(R.id.Betrag);
+        betrag= (EditText) findViewById(R.id.Betrag);
 
         myDb = new DatabaseHelper(this);
 
@@ -128,61 +128,6 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
-    /**Nummern in das Betragfeld schreiben.*/
-    public void add1(View v) {
-        s = betrag.getText().toString();
-        betrag.setText(s+"1");
-    }
-
-    public void add2(View v) {
-        s = betrag.getText().toString();
-        betrag.setText(s+"2");
-    }
-
-    public void add3(View v) {
-        s = betrag.getText().toString();
-        betrag.setText(s+"3");
-    }
-
-    public void add4(View v) {
-        s = betrag.getText().toString();
-        betrag.setText(s+"4");
-    }
-
-    public void add5(View v) {
-        s = betrag.getText().toString();
-        betrag.setText(s+"5");
-    }
-
-    public void add6(View v) {
-        s = betrag.getText().toString();
-        betrag.setText(s+"6");
-    }
-
-    public void add7(View v) {
-        s = betrag.getText().toString();
-        betrag.setText(s+"7");
-    }
-
-    public void add8(View v) {
-        s = betrag.getText().toString();
-        betrag.setText(s+"8");
-    }
-
-    public void add9(View v) {
-        s = betrag.getText().toString();
-        betrag.setText(s+"9");
-    }
-
-    public void add0(View v) {
-        s = betrag.getText().toString();
-        betrag.setText(s+"0");
-    }
-
-    public void addDot(View v) {
-        s = betrag.getText().toString();
-        betrag.setText(s+".");
-    }
 
     /**Diese Methode speichert die eingegebenen Werte in die Datenbank.*/
     public void eintragen(View v){
@@ -221,14 +166,6 @@ public class AddActivity extends AppCompatActivity {
                 Toast.makeText(this, "Fehler beim Eintragen!", Toast.LENGTH_LONG).show();
             finish();
         }
-    }
-
-    /**Diese Methode löscht die letzte Stelle des Betragfelds.*/
-    public void del(View v){
-        s = betrag.getText().toString();
-        if(s.length()>0)
-            s = s.substring(0,s.length()-1);
-        betrag.setText(s);
     }
 
     /**Diese Methode macht ein Foto welches zum Eintrag hinzugefügt wird*/

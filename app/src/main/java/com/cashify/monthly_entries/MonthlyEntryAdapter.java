@@ -60,7 +60,7 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapte
             entryAmount.setTextColor(Color.RED);
         else
             entryAmount.setTextColor(Color.GREEN);
-        entryAmount.setText(""+ent.getAmount()+"");
+        entryAmount.setText(""+Math.round(ent.getAmount()*100)/100.0+"");
         entryCategory.setText(ent.getCategory().getName());
         entryDate.setText("Monatstag: "+ent.getTag());
 

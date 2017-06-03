@@ -53,6 +53,8 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
         TextView entryAmount = (TextView) holder.view.findViewById(R.id.entry_amount);
         TextView entryCategory = (TextView) holder.view.findViewById(R.id.entry_category);
         TextView entryDate = (TextView) holder.view.findViewById(R.id.entry_date);
+        ImageView cam = (ImageView) holder.view.findViewById(R.id.entry_cam_icon);
+        cam.setVisibility(View.INVISIBLE);
 
         //Felder befüllen
         Entry ent = manager.getEntryByIndex(position);
@@ -62,15 +64,13 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
             entryAmount.setTextColor(Color.RED);
         else
             entryAmount.setTextColor(Color.GREEN);
-        entryAmount.setText(""+ent.getAmount()+"");
+        entryAmount.setText(""+Math.round(ent.getAmount()*100)/100.0+"");
         entryCategory.setText(ent.getCategory().getName());
         entryDate.setText(ent.getDatum());
 
         if(ent.getFoto()!=null)//Wenn ein Foto mitgespeichert wurde, dann das durch ein kleines Icon anzeigen.
-        {
-            ImageView cam = (ImageView) holder.view.findViewById(R.id.entry_cam_icon);
             cam.setVisibility(View.VISIBLE);
-        }
+
 
         //Wenn lange auf einen Eintrag gedrückt wird
         holder.view.setOnLongClickListener(new View.OnLongClickListener() {
@@ -98,10 +98,9 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
                                         i.putExtra("titel", ent.getTitle());
                                         i.putExtra("betrag", ""+ent.getAmount());
                                         i.putExtra("datum", ""+ent.getDatum());
-                                        i.putExtra("kategorie", ent.getCategory().getId());
+                                        i.putExtra("kategorie", ent.getCategory().getName());
                                         i.putExtra("foto",ent.getFoto());
                                         holder.view.getContext().startActivity(i);
-                                        notifyDataSetChanged();
                                         break;
                                     case 2:
                                         AlertDialog diaBox = AskOption(holder.view.getContext(),ent);
