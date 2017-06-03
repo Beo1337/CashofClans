@@ -85,18 +85,15 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
                             @Override
                             public void onClick(DialogInterface dialog, int item) {
 
-                               if (ent.getFoto() == null)
-                                   item += 1;
-                               else
-                                   item += 2;
+                               if (ent.getFoto() != null) item += 1;
 
                                 switch (item) {
-                                    case 1:
+                                    case 0:
                                         Intent pic = new Intent(holder.view.getContext(),PictureActivity.class);
                                         pic.putExtra("picture",ent.getFoto());
                                         holder.view.getContext().startActivity(pic);
                                         break;
-                                    case 2:
+                                    case 1:
                                         Intent i = new Intent(holder.view.getContext(), ChangeEntryActivity.class);
                                         i.putExtra("id",""+ent.getId());
                                         i.putExtra("titel", ent.getTitle());
@@ -107,7 +104,7 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
                                         holder.view.getContext().startActivity(i);
                                         notifyDataSetChanged();
                                         break;
-                                    case 3:
+                                    case 2:
                                         AlertDialog diaBox = AskOption(holder.view.getContext(),ent);
                                         diaBox.show();
                                         break;
