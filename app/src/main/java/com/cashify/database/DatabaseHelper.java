@@ -49,6 +49,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**Name der Tabelle welche die monatlich wiederholten Aufträge speichert.*/
     public static final String TABLE_NAME_REPEAT_ENTRY = "REPEAT_ENTRY";
 
+    public static final SimpleDateFormat sdf = new SimpleDateFormat("dd");
+    public static final SimpleDateFormat sdfm = new SimpleDateFormat("MM");
+    public static final SimpleDateFormat sdfy = new SimpleDateFormat("yyyy");
+    public static final SimpleDateFormat sdft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
@@ -348,10 +353,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**Diese Methode checkt ob Einträge aus den monatlichen Einträgen heute eingetragen werden müssen.*/
     public void checkMonthlyEntries(Context context){
         SQLiteDatabase db = this.getWritableDatabase();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd");
-        SimpleDateFormat sdfm = new SimpleDateFormat("MM");
-        SimpleDateFormat sdfy = new SimpleDateFormat("yyyy");
-        SimpleDateFormat sdft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String strDate;
         String entries = "";
         int aktuellerTag;
