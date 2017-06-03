@@ -11,7 +11,6 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.cashify.category.Category;
 import com.cashify.MainActivity;
@@ -48,6 +47,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME_CATEGORY = "category";
     /**Name der Tabelle welche die monatlich wiederholten Aufträge speichert.*/
     public static final String TABLE_NAME_REPEAT_ENTRY = "REPEAT_ENTRY";
+
+
+    public static final SimpleDateFormat sdf = new SimpleDateFormat("dd");
+    public static final SimpleDateFormat sdfm = new SimpleDateFormat("MM");
+    public static final SimpleDateFormat sdfy = new SimpleDateFormat("yyyy");
+    public static final SimpleDateFormat sdft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -348,15 +353,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**Diese Methode checkt ob Einträge aus den monatlichen Einträgen heute eingetragen werden müssen.*/
     public void checkMonthlyEntries(Context context){
         SQLiteDatabase db = this.getWritableDatabase();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd");
-        SimpleDateFormat sdfm = new SimpleDateFormat("MM");
-        SimpleDateFormat sdfy = new SimpleDateFormat("yyyy");
-        SimpleDateFormat sdft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
         String strDate;
         String entries = "";
-        int aktuellerTag;
-        int aktuellerMonat;
-        int aktuellesJahr;
+
+        int aktuellerTag, aktuellerMonat, aktuellesJahr;
         int count = 0;
 
         //aktuellen Tag festellen.
@@ -373,8 +374,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d(TAG,"Anzahl monatlicher Einträge: "+entryList.size());
         while(i.hasNext()) {//Für jeden Eintrag
             MonthlyEntry e = i.next();
-            Log.d(TAG,"Tag des Eintrags: "+e.getTag());
-            if(e.getTag() == aktuellerTag)//Wenn Tag genau der Tag des Monats ist.
+            Log.d(TAG,"Tag des Eintrags: "+e.getDay());
+            if(e.getDay() == aktuellerTag)//Wenn Tag genau der Tag des Monats ist.
             {
                 //Eintragen
                 Log.d(TAG,"Monatlicher Eintrag eingetragen: "+e.getTitle());
@@ -385,7 +386,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             }
             //Wenn der Monat nur 30 Tage hat, werden die Einträge die am 31 gebucht werden schon am 30 gebucht.
-            if(aktuellerTag==30&&(e.getTag()==31 && aktuellerMonat == 4)||(e.getTag()==31 && aktuellerMonat == 6)||(e.getTag()==31 && aktuellerMonat == 9)||(e.getTag()==31 && aktuellerMonat == 11))
+            if(aktuellerTag==30&&(e.getDay()==31 && aktuellerMonat == 4)||(e.getDay()==31 && aktuellerMonat == 6)||(e.getDay()==31 && aktuellerMonat == 9)||(e.getDay()==31 && aktuellerMonat == 11))
             {
                 //Eintragen
                 Log.d(TAG,"Monatlicher Eintrag eingetragen(Monat hat nur 30Tage): "+e.getTitle());
@@ -396,7 +397,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
 
             //Wenn Februar ist, kein Schaltjahr ist, Buchungen vom 31,30 und 29 schon am 28 durchführen.
-            if(aktuellerMonat==2&&aktuellesJahr%4!=0&&aktuellerTag==28&&(e.getTag()==31||e.getTag()==30||e.getTag()==29))
+            if(aktuellerMonat==2&&aktuellesJahr%4!=0&&aktuellerTag==28&&(e.getDay()==31||e.getDay()==30||e.getDay()==29))
             {
                 //Eintragen
                 Log.d(TAG,"Monatlicher Eintrag eingetragen (Februar hat nur 28 Tage, kein Schaltjahr): "+e.getTitle());
@@ -407,7 +408,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
 
             //Wenn Februar ist, Schaltjahr ist, Buchungen vom 31,30 schon am 29 durchführen.
-            if(aktuellerMonat==2&&aktuellesJahr%4==0&&aktuellerTag==29&&(e.getTag()==31||e.getTag()==30))
+            if(aktuellerMonat==2&&aktuellesJahr%4==0&&aktuellerTag==29&&(e.getDay()==31||e.getDay()==30))
             {
                 //Eintragen
                 Log.d(TAG,"Monatlicher Eintrag eingetragen (Februar hat nur 29 Tage, Schaltjahr): "+e.getTitle());

@@ -65,7 +65,7 @@ public class ChangeMonthlyEntryActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
 
         betrag.setText(bundle.getString("betrag"));
-        np.setValue(Integer.valueOf(bundle.getString("tag")));
+        np.setValue(Integer.valueOf(bundle.getString("day")));
         selectValue(spin,bundle.getString("kategorie"));
         title.setText(bundle.getString("titel"));
     }

@@ -7,19 +7,19 @@ import com.cashify.base.AbstractEntry;
  */
 public class MonthlyEntry extends AbstractEntry {
 
-    int tag;
+    int day;
 
-    public MonthlyEntry(int id, double betrag, String titel, String kategorie, int tag) {
+    public MonthlyEntry(int id, double betrag, String titel, String kategorie, int day) {
         super(id, betrag, titel, kategorie);
-        this.tag = tag;
+        this.day = day;
     }
 
-    public int getTag() {
-        return tag;
+    public int getDay() {
+        return day;
     }
 
-    public void setTag(int tag) {
-        this.tag = tag;
+    public void setDay(int day) {
+        this.day = day;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class MonthlyEntry extends AbstractEntry {
                 ", betrag=" + super.getAmount() +
                 ", titel='" + super.getTitle() + '\'' +
                 ", kategorie='" + super.getCategory() + '\'' +
-                ", tag=" + tag +
+                ", day=" + day +
                 '}';
     }
 }
