@@ -261,7 +261,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null, // no having
                 null // no order
         );
-        
+
         while(c.moveToNext()) allCategories.add(
                 new Category(c.getInt(0), c .getString(1), c.getString(2))
         );
@@ -300,30 +300,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**Diese Methode fügt einen Eintrag in die Übersichtstabelle ein.*/
     public boolean addEntry(double betrag, String title, String foto, String kategorie, String date){
-        SQLiteDatabase db;
+        SQLiteDatabase db = this.getWritableDatabase();
         SQLiteDatabase dbr = this.getReadableDatabase();
         ContentValues values = new ContentValues();
+        values.put("DATUM", date);
         values.put("BETRAG", betrag);
         values.put("TITEL",title);
         values.put("FOTO",foto);
 
-        Cursor c = dbr.rawQuery("SELECT ID FROM category WHERE NAME = '"+kategorie+"'", null);
+        Cursor c = dbr.query(
+                TABLE_NAME_CATEGORY, // Category table
+                new String[]{"ID"}, // column ID
+                "NAME = ?", // where name = kategorie
+                new String[]{kategorie}, // see above
+                null, // no grouping
+                null, // no having
+                null // no order
+        );
         c.moveToNext();
+
         values.put("KATEGORIE",c.getInt(0));
         c.close();
         dbr.close();
-        values.put("DATUM", date);
-        db = this.getWritableDatabase();
+
+
         //In die Datenbank speichern
         long newRowId = db.insert("uebersicht", null, values);
         Log.i(TAG, "Eingefügt " + newRowId);
 
         db.close();
 
-        if(newRowId > 0)
-            return true;
-        else
-            return false;
+        return newRowId > 0;
     }
 
     /**Diese Methode löscht den Eintrag mit der übergegenen ID aus der Datenbank.*/
