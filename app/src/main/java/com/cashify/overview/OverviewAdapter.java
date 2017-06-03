@@ -85,7 +85,7 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
                             @Override
                             public void onClick(DialogInterface dialog, int item) {
 
-                               if (ent.getFoto() != null) item += 1;
+                               if (ent.getFoto() == null) item += 1;
 
                                 switch (item) {
                                     case 0:
