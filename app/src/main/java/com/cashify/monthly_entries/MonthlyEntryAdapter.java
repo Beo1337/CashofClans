@@ -61,7 +61,7 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapte
         else
             entryAmount.setTextColor(Color.GREEN);
         entryAmount.setText(""+ent.getAmount()+"");
-        entryCategory.setText(ent.getCategory());
+        entryCategory.setText(ent.getCategory().getName());
         entryDate.setText("Monatstag: "+ent.getTag());
 
         //Wenn lange auf einen Eintrag gedrückt wird
@@ -83,7 +83,7 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapte
                                 i.putExtra("titel", ent.getTitle());
                                 i.putExtra("betrag", ""+ent.getAmount());
                                 i.putExtra("tag", ""+ent.getTag());
-                                i.putExtra("kategorie", ent.getCategory());
+                                i.putExtra("kategorie", ent.getCategory().getId());
                                 holder.view.getContext().startActivity(i);
 
 

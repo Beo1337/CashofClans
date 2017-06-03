@@ -33,7 +33,7 @@ public class CategoryDetailActivity extends AppCompatActivity {
 
             delButton = (Button) findViewById(R.id.category_detail_delete);
             delButton.setOnClickListener(l -> {
-                catManager.removeCategory(category.getName());
+                catManager.removeCategory(category);
                 this.finish();
             });
 

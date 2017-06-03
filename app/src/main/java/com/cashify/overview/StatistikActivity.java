@@ -195,7 +195,7 @@ public class StatistikActivity extends AppCompatActivity {
                 {
                     double v = ((Double)value.get(e.getCategory())).doubleValue();
                     v += (e.getAmount()*-1);
-                    value.put(e.getCategory(),v);
+                    value.put(e.getCategory().getName(),v);
                 }
                 else {
 
@@ -210,16 +210,16 @@ public class StatistikActivity extends AppCompatActivity {
                     }
                     if (time.equals("Monat")) {
                         if (d.getMonth() == a.getMonth()) {
-                            double v = ((Double) value.get(e.getCategory())).doubleValue();
+                            double v = (Double) value.get(e.getCategory());
                             v += (e.getAmount() * -1);
-                            value.put(e.getCategory(), v);
+                            value.put(e.getCategory().getName(), v);
                         }
                     }
                     else if(time.equals("Jahr")){
                         if(d.getYear()==a.getYear()){
-                            double v = ((Double)value.get(e.getCategory())).doubleValue();
+                            double v = (Double) value.get(e.getCategory());
                             v += (e.getAmount()*-1);
-                            value.put(e.getCategory(),v);
+                            value.put(e.getCategory().getName(),v);
                         }
                     }
                 }

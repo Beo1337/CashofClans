@@ -15,17 +15,21 @@ import android.widget.Toast;
 
 import com.cashify.category.Category;
 import com.cashify.MainActivity;
+import com.cashify.category.CategoryManager;
 import com.cashify.monthly_entries.MonthlyEntry;
 import com.cashify.overview.Entry;
 import com.cashify.R;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
@@ -218,12 +222,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**Diese Methode löscht eine Kategorie aus der Datenbank.*/
-    public boolean deleteCategory (String name){
+    public boolean deleteCategory (int id){
         SQLiteDatabase db = this.getWritableDatabase();
         int del;
         try {
 
-            del = db.delete(TABLE_NAME_CATEGORY,"name LIKE '"+name+"' AND NOT EXISTS (SELECT KATEGORIE FROM "+TABLE_NAME_MAIN+" WHERE KATEGORIE = (SELECT ID FROM "+TABLE_NAME_CATEGORY+" WHERE name LIKE '"+name+"'))",null);
+            del = db.delete(TABLE_NAME_CATEGORY,"id = "+id+" AND NOT EXISTS (SELECT KATEGORIE FROM "+TABLE_NAME_MAIN+" WHERE KATEGORIE = (SELECT ID FROM "+TABLE_NAME_CATEGORY+" WHERE id = "+id+"))",null);
             Log.i("DataBaseHelper","Kategorie gelöscht!!!  "+ del);
         }
         catch(SQLiteException e){
@@ -240,6 +244,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**Diese Methode liefert alle Kategorien als HashSet zurück.*/
     public Set<Category> getCategories(){
+        return this.getCategoriesReuse(false);
+    }
+
+    /**Diese Methode liefert alle Kategorien als HashSet zurück.*/
+    private Set<Category> getCategoriesReuse(boolean close){
         SQLiteDatabase db = this.getReadableDatabase();
         Set<Category> allCategories = new HashSet<Category>();
 
@@ -254,7 +263,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         while(i.hasNext())
             Log.i(TAG,i.next().toString());
         cursor.close();
-        db.close();
+        if (!close) db.close();
         return allCategories;
     }
 
@@ -262,12 +271,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Set<Entry> getEntries(){
         SQLiteDatabase db = this.getReadableDatabase();
         Set<Entry> allEntries = new HashSet<Entry>();
+        Map<Integer,Category> catMap = new TreeMap<>();
 
-        Cursor cursor = db.rawQuery("SELECT u.ID,u.BETRAG,u.TITEL,u.DATUM,U.FOTO,c.NAME FROM "+TABLE_NAME_MAIN+" u JOIN "+TABLE_NAME_CATEGORY+" c ON u.KATEGORIE = c.ID", null);
+        for(Category c : getCategoriesReuse(true)) catMap.put(c.getId(), c);
+
+        Cursor cursor = db.rawQuery("SELECT u.ID,u.BETRAG,u.TITEL,u.DATUM,U.FOTO,c.ID FROM "+TABLE_NAME_MAIN+" u JOIN "+TABLE_NAME_CATEGORY+" c ON u.KATEGORIE = c.ID", null);
         while(cursor.moveToNext())
         {
             //Log.d("DatabaseHelper"," "+cursor.getInt(0));
-            Entry e = new Entry(cursor.getInt(0),cursor.getDouble(1),cursor.getString(2),cursor.getString(5),cursor.getString(3),cursor.getString(4));
+            Entry e = new Entry(cursor.getInt(0),cursor.getDouble(1),cursor.getString(2),catMap.get(cursor.getInt(5)),cursor.getString(3),cursor.getString(4));
             allEntries.add(e);
         }
         Log.i(TAG,"The list is:");
@@ -380,7 +392,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 //Eintragen
                 Log.d(TAG,"Monatlicher Eintrag eingetragen: "+e.getTitle());
                 strDate = sdft.format(new Date());
-                addEntry(e.getAmount(),e.getTitle(),null,e.getCategory(),strDate);
+                addEntry(e.getAmount(),e.getTitle(),null,e.getCategory().getName(),strDate);
                 count++;
                 entries = entries+e.getTitle()+"\n ";
 
@@ -391,7 +403,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 //Eintragen
                 Log.d(TAG,"Monatlicher Eintrag eingetragen(Monat hat nur 30Tage): "+e.getTitle());
                 strDate = sdft.format(new Date());
-                addEntry(e.getAmount(),e.getTitle(),null,e.getCategory(),strDate);
+                addEntry(e.getAmount(),e.getTitle(),null,e.getCategory().getName(),strDate);
                 count++;
                 entries = entries+e.getTitle()+"\n ";
             }
@@ -402,7 +414,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 //Eintragen
                 Log.d(TAG,"Monatlicher Eintrag eingetragen (Februar hat nur 28 Tage, kein Schaltjahr): "+e.getTitle());
                 strDate = sdft.format(new Date());
-                addEntry(e.getAmount(),e.getTitle(),null,e.getCategory(),strDate);
+                addEntry(e.getAmount(),e.getTitle(),null,e.getCategory().getName(),strDate);
                 count++;
                 entries = entries+e.getTitle()+"\n ";
             }
@@ -413,7 +425,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 //Eintragen
                 Log.d(TAG,"Monatlicher Eintrag eingetragen (Februar hat nur 29 Tage, Schaltjahr): "+e.getTitle());
                 strDate = sdft.format(new Date());
-                addEntry(e.getAmount(),e.getTitle(),null,e.getCategory(),strDate);
+                addEntry(e.getAmount(),e.getTitle(),null,e.getCategory().getName(),strDate);
                 count++;
                 entries = entries+e.getTitle()+"\n ";
             }
@@ -449,12 +461,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Set<MonthlyEntry> getMonthlyEntries() {
         SQLiteDatabase db = this.getReadableDatabase();
         Set<MonthlyEntry> allEntries = new HashSet<MonthlyEntry>();
+        Map<Integer,Category> catMap = new TreeMap<>();
 
-        Cursor cursor = db.rawQuery("SELECT u.ID,u.BETRAG,u.TITEL,u.TAG,c.NAME FROM "+TABLE_NAME_REPEAT_ENTRY+" u JOIN "+TABLE_NAME_CATEGORY+" c ON u.KATEGORIE = c.ID", null);
+        for(Category c : getCategoriesReuse(true)) catMap.put(c.getId(), c);
+
+        Cursor cursor = db.rawQuery("SELECT u.ID,u.BETRAG,u.TITEL,u.TAG,c.ID FROM "+TABLE_NAME_REPEAT_ENTRY+" u JOIN "+TABLE_NAME_CATEGORY+" c ON u.KATEGORIE = c.ID", null);
         while(cursor.moveToNext())
         {
             //Log.d("DatabaseHelper"," "+cursor.getInt(0));
-            MonthlyEntry e = new MonthlyEntry(cursor.getInt(0),cursor.getDouble(1),cursor.getString(2),cursor.getString(4),cursor.getInt(3));
+            MonthlyEntry e = new MonthlyEntry(cursor.getInt(0),cursor.getDouble(1),cursor.getString(2),catMap.get(cursor.getInt(4)),cursor.getInt(3));
             allEntries.add(e);
         }
         Log.i(TAG,"The list is:");

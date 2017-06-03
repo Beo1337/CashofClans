@@ -1,6 +1,7 @@
 package com.cashify.monthly_entries;
 
 import com.cashify.base.AbstractEntry;
+import com.cashify.category.Category;
 
 /**
  * Diese Klasse repräsentiert einen monatlichen Eintrag.
@@ -9,8 +10,8 @@ public class MonthlyEntry extends AbstractEntry {
 
     int tag;
 
-    public MonthlyEntry(int id, double betrag, String titel, String kategorie, int tag) {
-        super(id, betrag, titel, kategorie);
+    public MonthlyEntry(int id, double betrag, String titel, Category cat, int tag) {
+        super(id, betrag, titel, cat);
         this.tag = tag;
     }
 

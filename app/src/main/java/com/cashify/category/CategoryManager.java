@@ -4,6 +4,7 @@ import com.cashify.database.DatabaseHelper;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,14 +32,17 @@ public class CategoryManager {
         });
     }
 
+
+
     // Return single category entry by list position
     public Category getCategoryByIndex(int index) {
         return categoryList.get(index);
     }
 
-    public Category getCategoryById(int id) throws Exception {
+    public Category getCategoryById(int id) {
         for(Category c : categoryList) if (c.getId() == id) return c;
-        throw new Exception("Cat id not found");
+
+        return new Category(Integer.MIN_VALUE, "Error", "");
     }
 
     // Return list of all elements (unmodifiable)
@@ -57,8 +61,8 @@ public class CategoryManager {
         return success;
     }
 
-    public boolean removeCategory(String name) {
-        boolean success = this.dbHelper.deleteCategory(name);
+    public boolean removeCategory(Category c) {
+        boolean success = this.dbHelper.deleteCategory(c.getId());
         if (success) this.reloadFromDb();
         return success;
     }

@@ -1,6 +1,7 @@
 package com.cashify.overview;
 
 import com.cashify.base.AbstractEntry;
+import com.cashify.category.Category;
 
 /**
  * Diese Klasse repräsentiert einen Geldeintrag in der Datenbank.
@@ -10,8 +11,8 @@ public class Entry extends AbstractEntry{
     private String datum;
     private String foto;
 
-    public Entry(int id, double betrag,String title, String kategorie, String datum, String foto) {
-        super(id, betrag, title, kategorie);
+    public Entry(int id, double betrag, String title, Category cat, String datum, String foto) {
+        super(id, betrag, title, cat);
         this.datum = datum;
         this.foto = foto;
     }

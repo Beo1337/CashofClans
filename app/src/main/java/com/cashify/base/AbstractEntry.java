@@ -1,64 +1,76 @@
 package com.cashify.base;
 
+import android.app.Application;
+
+import com.cashify.category.Category;
+import com.cashify.category.CategoryManager;
+import com.cashify.database.DatabaseHelper;
+
 /**
  * Created by mhackl on 02.06.2017.
  */
 
 // Entry and MonthlyEntry have a huge intersecting surface, gotta refactor this out
 
+
 public class AbstractEntry {
 
-    int id;
-    double betrag;
-    String titel;
-    String kategorie;
+    private final int id;             // Database id for entry
+    private double amount;          // Amount of money spent
+    private String title;           // Description
+    private Category category;      // Category
 
-    public AbstractEntry(int id, double betrag, String titel, String kategorie) {
+    public AbstractEntry(int id, double betrag, String title, Category cat) {
         this.id = id;
-        this.betrag = betrag;
-        this.titel = titel;
-        this.kategorie = kategorie;
+        this.amount = betrag;
+        this.title = title;
+        this.category = cat == null ? new Category(Integer.MIN_VALUE, "Error", "") : cat;
     }
 
+
+    // Retrieve entry id
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    // Retrieve amount of money spent
     public double getAmount() {
-        return betrag;
+        return amount;
     }
 
+    // Set amount of money spent
     public void setAmount(double betrag) {
-        this.betrag = betrag;
+        this.amount = betrag;
     }
 
+    // Retrieve description
     public String getTitle() {
-        return titel;
+        return title;
     }
 
+    // Set description
     public void setTitle(String titel) {
-        this.titel = titel;
+        this.title = titel;
     }
 
-    public String getCategory() {
-        return kategorie;
+    // Get category object
+    public Category getCategory() {
+
+        return category;
     }
 
-    public void setCategory(String kategorie) {
-        this.kategorie = kategorie;
+    // Set category
+    public void setCategory(Category kategorie) {
+        this.category = kategorie;
     }
 
     @Override
     public String toString() {
         return "MonthlyEntry{" +
                 "id=" + id +
-                ", betrag=" + betrag +
-                ", titel='" + titel + '\'' +
-                ", kategorie='" + kategorie + '\'' +
+                ", amount=" + amount +
+                ", title='" + title + '\'' +
+                ", category='" + category.toString() + '\'' +
                 '}';
     }
 }

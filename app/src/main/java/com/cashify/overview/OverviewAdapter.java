@@ -63,7 +63,7 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
         else
             entryAmount.setTextColor(Color.GREEN);
         entryAmount.setText(""+ent.getAmount()+"");
-        entryCategory.setText(ent.getCategory());
+        entryCategory.setText(ent.getCategory().getName());
         entryDate.setText(ent.getDatum());
 
         if(ent.getFoto()!=null)//Wenn ein Foto mitgespeichert wurde, dann das durch ein kleines Icon anzeigen.
@@ -78,70 +78,40 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
 
                 AlertDialog.Builder optionsDialog = new AlertDialog.Builder(holder.view.getContext());
 
+                optionsDialog.setTitle("Bitte Option auswählen").setItems(
+                        R.array.options, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int item) {
 
-                if(ent.getFoto()!=null)//Optionsmenü mit Foto öffen
-                    optionsDialog.setTitle("Bitte Option auswählen").setItems(
-                            R.array.options, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int item) {
+                               if (ent.getFoto() == null)
+                                   item += 1;
+                               else
+                                   item += 2;
 
-                                    item++;
-
-                                    if (item == 1) {//Foto ansehen
+                                switch (item) {
+                                    case 1:
                                         Intent pic = new Intent(holder.view.getContext(),PictureActivity.class);
                                         pic.putExtra("picture",ent.getFoto());
                                         holder.view.getContext().startActivity(pic);
-
-
-                                    } else if (item == 2) {//Bearbeiten
+                                        break;
+                                    case 2:
                                         Intent i = new Intent(holder.view.getContext(), ChangeEntryActivity.class);
                                         i.putExtra("id",""+ent.getId());
                                         i.putExtra("titel", ent.getTitle());
                                         i.putExtra("betrag", ""+ent.getAmount());
                                         i.putExtra("datum", ""+ent.getDatum());
-                                        i.putExtra("kategorie", ent.getCategory());
+                                        i.putExtra("kategorie", ent.getCategory().getId());
                                         i.putExtra("foto",ent.getFoto());
                                         holder.view.getContext().startActivity(i);
                                         notifyDataSetChanged();
-
-
-                                    } else if (item == 3) {//Löschen
-
+                                        break;
+                                    case 3:
                                         AlertDialog diaBox = AskOption(holder.view.getContext(),ent);
                                         diaBox.show();
-                                    }
-
+                                        break;
                                 }
-                            });
-                else//Optionsmenü ohne Foto öffen
-                    optionsDialog.setTitle("Bitte Option auswählen").setItems(
-                            R.array.options_without_pic, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int item) {
-
-                                    item++;
-
-                                    if (item == 1) {//Bearbeiten
-                                        Log.d("OverviewAdapter","DATUM: "+ent.getDatum());
-                                        Intent i = new Intent(holder.view.getContext(), ChangeEntryActivity.class);
-                                        i.putExtra("id",""+ent.getId());
-                                        i.putExtra("titel", ent.getTitle());
-                                        i.putExtra("betrag", ""+ent.getAmount());
-                                        i.putExtra("datum", ""+ent.getDatum());
-                                        i.putExtra("kategorie", ent.getCategory());
-                                        i.putExtra("foto",ent.getFoto());
-                                        holder.view.getContext().startActivity(i);
-                                        notifyDataSetChanged();
-
-
-                                    } else if (item == 2) {//Löschen
-
-                                        AlertDialog diaBox = AskOption(holder.view.getContext(),ent);
-                                        diaBox.show();
-                                    }
-
-                                }
-                            });
+                            }
+                        });
 
                 optionsDialog.create();
                 optionsDialog.show();
