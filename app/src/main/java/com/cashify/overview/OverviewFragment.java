@@ -110,18 +110,18 @@ public class OverviewFragment extends Fragment {
             }
         }
 
-        for(Category cat : categoryList) {
-            double val = (double) sumMap.get(cat.getName());
+        for(String catName : sumMap.keySet()) {
+            double val = (double) sumMap.get(catName);
             if(val>0.0) {
-                Log.d(TAG,"Kategorie: "+cat.getName()+" Wert: "+val);
+                Log.d(TAG,"Kategorie: "+catName+" Wert: "+val);
                 entries.add(new BarEntry(
                         (int) val,
                         counter++
                 ));
-                PieEntryLabels.add(cat.getName());
+                PieEntryLabels.add(catName);
             }
             else
-                sumMap.remove(cat.getName());
+                sumMap.remove(catName);
         }
 
         PieDataSet pieDataSet = new PieDataSet(entries, "");
