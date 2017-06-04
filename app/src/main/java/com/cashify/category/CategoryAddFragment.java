@@ -15,7 +15,7 @@ public class CategoryAddFragment extends DialogFragment {
 
     // Necessary to pass the dialog input back to the activity that created the dialog
     public interface Listener {
-        public void onCategoryAdd(String categoryName);
+        public void onCategoryAdd(String catName);
     }
 
     private Listener listener;

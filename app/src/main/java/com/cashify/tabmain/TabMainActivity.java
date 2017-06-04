@@ -13,7 +13,7 @@ public class TabMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_wtab);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new TestFragmentAdapter(getSupportFragmentManager(), TabMainActivity.this));
+        viewPager.setAdapter(new MainFragmentsAdapter(getSupportFragmentManager(), TabMainActivity.this));
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);

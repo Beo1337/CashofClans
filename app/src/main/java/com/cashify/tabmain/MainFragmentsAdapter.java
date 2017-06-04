@@ -5,12 +5,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-public class TestFragmentAdapter extends FragmentPagerAdapter {
+import com.cashify.overview.OverviewFragment;
+
+public class MainFragmentsAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 3;
-    private String tabTitles[] = new String[] { "Tab1", "Tab2", "Tab3" };
+    private String tabTitles[] = new String[] { "Main", "Overview", "Tab3" };
     private Context context;
 
-    public TestFragmentAdapter(FragmentManager fm, Context context) {
+    public MainFragmentsAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
     }
@@ -22,6 +24,8 @@ public class TestFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        if (position == 0) return new MainFragment();
+        if (position == 1) return new OverviewFragment();
         return TestFragment.newInstance(position + 1);
     }
 
