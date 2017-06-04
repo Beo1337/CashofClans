@@ -10,26 +10,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.cashify.R;
 
 /**
  * Diese Klasse befüllt den Viewholder mit den einzelnen Einträgen aus der Datenbank.
  */
-public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapter.ViewHolder>{
+public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapter.ViewHolder> {
 
-    /**Über den Manager können die monatlichen Einträge aus der Datenbank geholt werden. */
+    /**
+     * Über den Manager können die monatlichen Einträge aus der Datenbank geholt werden.
+     */
     private MonthlyEntryManager manager;
 
-    /**Diese Methode liefert den ViewHolder welcher mit den Daten aus der Datenbank befüllt wurde*/
+    /**
+     * Diese Methode liefert den ViewHolder welcher mit den Daten aus der Datenbank befüllt wurde
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private View view;
+
         public ViewHolder(View v) {
             super(v);
             view = v;
         }
     }
 
-    public MonthlyEntryAdapter(MonthlyEntryManager manager) {this.manager = manager;}
+    public MonthlyEntryAdapter(MonthlyEntryManager manager) {
+        this.manager = manager;
+    }
 
 
     // Generates a new ViewHolder and preloads a layout
@@ -56,13 +64,13 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapte
         final MonthlyEntry ent = manager.getMonthlyEntryByIndex(position);
 
         entryText.setText(ent.getTitle());
-        if(ent.getAmount()<0)
+        if (ent.getAmount() < 0)
             entryAmount.setTextColor(Color.RED);
         else
             entryAmount.setTextColor(Color.GREEN);
-        entryAmount.setText(""+Math.round(ent.getAmount()*100)/100.0+"");
+        entryAmount.setText("" + Math.round(ent.getAmount() * 100) / 100.0 + "");
         entryCategory.setText(ent.getCategory().getName());
-        entryDate.setText("Monatstag: "+ent.getTag());
+        entryDate.setText("Monatstag: " + ent.getTag());
 
         //Wenn lange auf einen Eintrag gedrückt wird
         holder.view.setOnLongClickListener(new View.OnLongClickListener() {
@@ -71,28 +79,28 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapte
                 //Es wird ein Dialog mit den
                 AlertDialog.Builder optionsDialog = new AlertDialog.Builder(holder.view.getContext());
                 optionsDialog.setTitle("Bitte Option auswählen").setItems(
-                    R.array.options_without_pic, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int item) {
+                        R.array.options_without_pic, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int item) {
 
-                            item++;
+                                item++;
 
-                            if (item == 1) {//Bearbeiten
-                                Intent i = new Intent(holder.view.getContext(), ChangeMonthlyEntryActivity.class);
-                                i.putExtra("id",""+ent.getId());
-                                i.putExtra("titel", ent.getTitle());
-                                i.putExtra("betrag", ""+ent.getAmount());
-                                i.putExtra("tag", ""+ent.getTag());
-                                i.putExtra("kategorie", ent.getCategory().getId());
-                                holder.view.getContext().startActivity(i);
+                                if (item == 1) {//Bearbeiten
+                                    Intent i = new Intent(holder.view.getContext(), ChangeMonthlyEntryActivity.class);
+                                    i.putExtra("id", "" + ent.getId());
+                                    i.putExtra("titel", ent.getTitle());
+                                    i.putExtra("betrag", "" + ent.getAmount());
+                                    i.putExtra("tag", "" + ent.getTag());
+                                    i.putExtra("kategorie", ent.getCategory().getId());
+                                    holder.view.getContext().startActivity(i);
 
 
-                            } else if (item == 2) {//Löschen
-                                AlertDialog diaBox = AskOption(holder.view.getContext(),ent);
-                                diaBox.show();
+                                } else if (item == 2) {//Löschen
+                                    AlertDialog diaBox = AskOption(holder.view.getContext(), ent);
+                                    diaBox.show();
+                                }
                             }
-                        }
-                    });
+                        });
 
                 optionsDialog.create();
                 optionsDialog.show();
@@ -102,16 +110,19 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapte
         });
     }
 
-    /**Diese Methode liefert die Anzahl an Items in dem Viewholder.*/
+    /**
+     * Diese Methode liefert die Anzahl an Items in dem Viewholder.
+     */
     public int getItemCount() {
         return manager.getCount();
     }
 
 
-    /**Diese Methode liefert einen Abfragedialog bevor das Löschen durchgeführt wird.*/
-    private AlertDialog AskOption(Context context, final MonthlyEntry ent)
-    {
-        AlertDialog myQuittingDialogBox =new AlertDialog.Builder(context)
+    /**
+     * Diese Methode liefert einen Abfragedialog bevor das Löschen durchgeführt wird.
+     */
+    private AlertDialog AskOption(Context context, final MonthlyEntry ent) {
+        AlertDialog myQuittingDialogBox = new AlertDialog.Builder(context)
                 .setTitle("Löschen")
                 .setMessage("Wollen Sie wirklich löschen?")
                 .setIcon(R.drawable.delete_x)

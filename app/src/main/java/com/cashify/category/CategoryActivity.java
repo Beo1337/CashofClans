@@ -1,7 +1,7 @@
 package com.cashify.category;
 
-import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -13,8 +13,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.cashify.database.DatabaseHelper;
 import com.cashify.R;
+import com.cashify.database.DatabaseHelper;
 
 // CategoryActivity
 // primarily provides a scrolling list of all categories.

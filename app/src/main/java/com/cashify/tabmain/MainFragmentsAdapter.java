@@ -2,15 +2,12 @@ package com.cashify.tabmain;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.media.audiofx.BassBoost;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
 
 import com.cashify.R;
@@ -42,11 +39,15 @@ public class MainFragmentsAdapter extends FragmentPagerAdapter {
     // This is where we decide what do to for each tab
     @Override
     public Fragment getItem(int position) {
-        switch (position){
-            case 0: return new MainFragment();
-            case 1: return new OverviewFragment();
-            case 2: return (Fragment) new SettingsFragment();
-            default: return TestFragment.newInstance(position + 1);
+        switch (position) {
+            case 0:
+                return new MainFragment();
+            case 1:
+                return new OverviewFragment();
+            case 2:
+                return (Fragment) new SettingsFragment();
+            default:
+                return TestFragment.newInstance(position + 1);
         }
     }
 

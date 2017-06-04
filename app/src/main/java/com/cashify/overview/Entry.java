@@ -6,7 +6,7 @@ import com.cashify.category.Category;
 /**
  * Diese Klasse repräsentiert einen Geldeintrag in der Datenbank.
  */
-public class Entry extends AbstractEntry{
+public class Entry extends AbstractEntry {
 
     private String datum;
     private String foto;
@@ -17,7 +17,7 @@ public class Entry extends AbstractEntry{
         this.foto = foto;
     }
 
-       public String getDatum() {
+    public String getDatum() {
         return datum;
     }
 

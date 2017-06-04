@@ -45,7 +45,7 @@ public class MainFragment extends Fragment {
     private void refresh() {
         double amount = Money.count(sharedPref, dbHelper);
         totalAmountView = (TextView) getActivity().findViewById(R.id.total_amount);
-        totalAmountView.setText(String.valueOf(amount)+ "€");
+        totalAmountView.setText(String.valueOf(amount) + "€");
         if (amount < 0)
             totalAmountView.setTextColor(Color.RED);
         else

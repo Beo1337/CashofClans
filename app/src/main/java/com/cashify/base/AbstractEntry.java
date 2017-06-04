@@ -19,7 +19,7 @@ public class AbstractEntry {
     public AbstractEntry(int id, double betrag, String title, Category cat) {
         this.id = id;
         this.amount = betrag;
-        this.title = title == null? "(null value?!)" : title;
+        this.title = title == null ? "(null value?!)" : title;
         this.category = cat == null ? new Category(Integer.MIN_VALUE, "Error", "") : cat;
     }
 

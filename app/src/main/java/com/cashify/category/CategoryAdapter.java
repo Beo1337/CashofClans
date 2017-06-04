@@ -24,6 +24,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     // we only needs this because RecyclerView.ViewHolder is abstract
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private View view;
+
         public ViewHolder(View v) {
             super(v);
             view = v;

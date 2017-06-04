@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,13 +26,16 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
     // we only need this because RecyclerView.ViewHolder is abstract
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private View view;
+
         public ViewHolder(View v) {
             super(v);
             view = v;
         }
     }
 
-    public OverviewAdapter(OverviewManager manager) {this.manager = manager;}
+    public OverviewAdapter(OverviewManager manager) {
+        this.manager = manager;
+    }
 
 
     // Generates a new ViewHolder and preloads a layout
@@ -60,15 +62,15 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
         final Entry ent = manager.getEntryByIndex(position);
 
         entryText.setText(ent.getTitle());
-        if(ent.getAmount()<0)
+        if (ent.getAmount() < 0)
             entryAmount.setTextColor(Color.RED);
         else
             entryAmount.setTextColor(Color.GREEN);
-        entryAmount.setText(""+Math.round(ent.getAmount()*100)/100.0+"");
+        entryAmount.setText("" + Math.round(ent.getAmount() * 100) / 100.0 + "");
         entryCategory.setText(ent.getCategory().getName());
         entryDate.setText(ent.getDatum());
 
-        if(ent.getFoto()!=null)//Wenn ein Foto mitgespeichert wurde, dann das durch ein kleines Icon anzeigen.
+        if (ent.getFoto() != null)//Wenn ein Foto mitgespeichert wurde, dann das durch ein kleines Icon anzeigen.
             cam.setVisibility(View.VISIBLE);
 
 
@@ -79,36 +81,36 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
                 AlertDialog.Builder optionsDialog = new AlertDialog.Builder(holder.view.getContext());
                 optionsDialog.setTitle("Bitte Option auswählen")
                         .setItems(
-                            ent.getFoto() != null ? R.array.options : R.array.options_without_pic,
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int item) {
+                                ent.getFoto() != null ? R.array.options : R.array.options_without_pic,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int item) {
 
-                                   if (ent.getFoto() == null) item += 1;
+                                        if (ent.getFoto() == null) item += 1;
 
-                                    switch (item) {
-                                        case 0:
-                                            Intent pic = new Intent(holder.view.getContext(),PictureActivity.class);
-                                            pic.putExtra("picture",ent.getFoto());
-                                            holder.view.getContext().startActivity(pic);
-                                            break;
-                                        case 1:
-                                            Intent i = new Intent(holder.view.getContext(), ChangeEntryActivity.class);
-                                            i.putExtra("id",""+ent.getId());
-                                            i.putExtra("titel", ent.getTitle());
-                                            i.putExtra("betrag", ""+ent.getAmount());
-                                            i.putExtra("datum", ""+ent.getDatum());
-                                            i.putExtra("kategorie", ent.getCategory().getName());
-                                            i.putExtra("foto",ent.getFoto());
-                                            holder.view.getContext().startActivity(i);
-                                            break;
-                                        case 2:
-                                            AlertDialog diaBox = AskOption(holder.view.getContext(),ent);
-                                            diaBox.show();
-                                            break;
+                                        switch (item) {
+                                            case 0:
+                                                Intent pic = new Intent(holder.view.getContext(), PictureActivity.class);
+                                                pic.putExtra("picture", ent.getFoto());
+                                                holder.view.getContext().startActivity(pic);
+                                                break;
+                                            case 1:
+                                                Intent i = new Intent(holder.view.getContext(), ChangeEntryActivity.class);
+                                                i.putExtra("id", "" + ent.getId());
+                                                i.putExtra("titel", ent.getTitle());
+                                                i.putExtra("betrag", "" + ent.getAmount());
+                                                i.putExtra("datum", "" + ent.getDatum());
+                                                i.putExtra("kategorie", ent.getCategory().getName());
+                                                i.putExtra("foto", ent.getFoto());
+                                                holder.view.getContext().startActivity(i);
+                                                break;
+                                            case 2:
+                                                AlertDialog diaBox = AskOption(holder.view.getContext(), ent);
+                                                diaBox.show();
+                                                break;
+                                        }
                                     }
-                                }
-                        })
+                                })
                         .create()
                         .show();
 
@@ -117,12 +119,16 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
         });
     }
 
-    /**Diese Methode liefert die Anzahl an Items in dem Viewholder.*/
+    /**
+     * Diese Methode liefert die Anzahl an Items in dem Viewholder.
+     */
     public int getItemCount() {
         return manager.getCount();
     }
 
-    /**Diese Methode liefert einen Abfragedialog bevor das Löschen durchgeführt wird.*/
+    /**
+     * Diese Methode liefert einen Abfragedialog bevor das Löschen durchgeführt wird.
+     */
     private AlertDialog AskOption(Context context, final Entry ent) {
         return new AlertDialog.Builder(context)
                 .setTitle(R.string.diag_title_entry_delete)

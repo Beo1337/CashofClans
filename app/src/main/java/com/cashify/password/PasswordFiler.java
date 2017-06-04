@@ -3,11 +3,8 @@ package com.cashify.password;
 import android.content.Context;
 import android.util.Log;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -30,8 +27,8 @@ public class PasswordFiler {
     }
 
     public boolean setPassword(String p) {
-            byte[] hash = sha256.digest(p.getBytes());
-            return writeFile(hash);
+        byte[] hash = sha256.digest(p.getBytes());
+        return writeFile(hash);
     }
 
     public boolean clearPassword(String p) {
@@ -39,15 +36,15 @@ public class PasswordFiler {
     }
 
     public boolean hasSetPassword() {
-        return readFile().length == 0;
-    }
+        return readFile().length != 0;
+    } // TODO: sha256 has fixed length
 
     public boolean checkPassword(String p) {
         byte[] hashFile = readFile();
         byte[] hashInput = p.getBytes();
 
         if (hashFile.length != hashInput.length) return false;
-        for(int i = 0; i < hashFile.length; i++) if (hashFile[i] != hashInput[i]) return false;
+        for (int i = 0; i < hashFile.length; i++) if (hashFile[i] != hashInput[i]) return false;
         return true;
     }
 

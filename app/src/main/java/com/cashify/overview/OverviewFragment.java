@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cashify.R;
@@ -24,16 +23,10 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -42,7 +35,7 @@ public class OverviewFragment extends Fragment {
     private static final String TAG = "StatistikActivity";
     private TextView totalAmountView;       // View that display combined sum of income and expenses
     private DatabaseHelper dbHelper;        // Database helper object to retrieve database entries
-    private SharedPreferences sharedPref;   // Shared preferences, do we really need these here?
+    private SharedPreferences sharedPref;   // Shared preferences
     private PieChart pieChart;              // Fancy pie chart!!
 
     // Context for Database helper (and others) provided through onAttach event
@@ -79,12 +72,12 @@ public class OverviewFragment extends Fragment {
         addChart();
     }
 
-    public void addChart(){
+    public void addChart() {
         List<Entry> entries = new ArrayList<>();
         List<String> PieEntryLabels = new ArrayList<String>();
         List<Category> categoryList = new LinkedList<>();
         List<com.cashify.overview.Entry> entryList = new LinkedList<>();
-        HashMap<String,Object> sumMap = new HashMap<String,Object>();
+        HashMap<String, Object> sumMap = new HashMap<String, Object>();
         int counter = 0;
 
         categoryList.addAll(dbHelper.getCategories());
@@ -97,36 +90,34 @@ public class OverviewFragment extends Fragment {
             }
         });
 
-        String time = sharedPref.getString("zeit","");
+        String time = sharedPref.getString("zeit", "");
 
-        for(com.cashify.overview.Entry e : entryList) {
-            if(e.getAmount()<0)
-            {
+        for (com.cashify.overview.Entry e : entryList) {
+            if (e.getAmount() < 0) {
                 String catName = e.getCategory().getName();
-                if(!sumMap.containsKey(catName)) sumMap.put(catName, 0.0);
+                if (!sumMap.containsKey(catName)) sumMap.put(catName, 0.0);
                 double v = (Double) sumMap.get(e.getCategory().getName());
-                v += (e.getAmount()*-1);
-                sumMap.put(e.getCategory().getName(),v);
+                v += (e.getAmount() * -1);
+                sumMap.put(e.getCategory().getName(), v);
             }
         }
 
-        for(String catName : sumMap.keySet()) {
+        for (String catName : sumMap.keySet()) {
             double val = (double) sumMap.get(catName);
-            if(val>0.0) {
-                Log.d(TAG,"Kategorie: "+catName+" Wert: "+val);
+            if (val > 0.0) {
+                Log.d(TAG, "Kategorie: " + catName + " Wert: " + val);
                 entries.add(new BarEntry(
                         (int) val,
                         counter++
                 ));
                 PieEntryLabels.add(catName);
-            }
-            else
+            } else
                 sumMap.remove(catName);
         }
 
         PieDataSet pieDataSet = new PieDataSet(entries, "");
         PieData pieData = new PieData(PieEntryLabels, pieDataSet);
-        pieDataSet.setColors(new int[] {
+        pieDataSet.setColors(new int[]{
                 Color.parseColor("#5c759a"),
                 Color.parseColor("#695c9a"),
                 Color.parseColor("#8e5c9a"),

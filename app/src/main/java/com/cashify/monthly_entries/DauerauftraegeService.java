@@ -10,30 +10,29 @@ import android.util.Log;
  */
 public class DauerauftraegeService extends Service {
 
-    /**In der diser Klasse wird die tägliche Überprüfung der monatlichen Einträge durchgeführt.*/
+    /**
+     * In der diser Klasse wird die tägliche Überprüfung der monatlichen Einträge durchgeführt.
+     */
     Dauerauftraege alarm = new Dauerauftraege();
-    public void onCreate()
-    {
-        Log.d("Dauerauftragservice","Service gestartet");
+
+    public void onCreate() {
+        Log.d("Dauerauftragservice", "Service gestartet");
         super.onCreate();
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId)
-    {
+    public int onStartCommand(Intent intent, int flags, int startId) {
         alarm.setAlarm(this);
         return START_STICKY;
     }
 
     @Override
-    public void onStart(Intent intent, int startId)
-    {
+    public void onStart(Intent intent, int startId) {
         alarm.setAlarm(this);
     }
 
     @Override
-    public IBinder onBind(Intent intent)
-    {
+    public IBinder onBind(Intent intent) {
         return null;
     }
 

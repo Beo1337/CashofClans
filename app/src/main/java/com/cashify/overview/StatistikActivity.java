@@ -10,16 +10,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.cashify.MainActivity;
+import com.cashify.R;
 import com.cashify.category.Category;
 import com.cashify.database.DatabaseHelper;
 import com.cashify.settings.EinstellungenActivity;
-import com.cashify.MainActivity;
-import com.cashify.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,11 +45,11 @@ public class StatistikActivity extends AppCompatActivity {
     EditText start_editText;
     EditText end_editText;
 
-    ArrayList<Entry> entries ;
-    ArrayList<String> PieEntryLabels ;
+    ArrayList<Entry> entries;
+    ArrayList<String> PieEntryLabels;
     PieChart pieChart;
-    PieDataSet pieDataSet ;
-    PieData pieData ;
+    PieDataSet pieDataSet;
+    PieData pieData;
 
 
     @Override
@@ -76,7 +78,6 @@ public class StatistikActivity extends AppCompatActivity {
         end_editText = (EditText) findViewById(R.id.end_editText);
 
 
-
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         /*------------------3 MONTHS------------------*/
@@ -88,7 +89,7 @@ public class StatistikActivity extends AppCompatActivity {
                 c.setTimeInMillis(System.currentTimeMillis());
 
                 String dateUntil = sdf.format(c.getTime());
-                c.add(Calendar.MONTH,-3);
+                c.add(Calendar.MONTH, -3);
                 String dateFrom = sdf.format(c.getTime());
 
                 start_editText.setText(dateFrom);
@@ -105,7 +106,7 @@ public class StatistikActivity extends AppCompatActivity {
                 c.setTimeInMillis(System.currentTimeMillis());
 
                 String dateUntil = sdf.format(c.getTime());
-                c.add(Calendar.MONTH,-6);
+                c.add(Calendar.MONTH, -6);
                 String dateFrom = sdf.format(c.getTime());
 
                 start_editText.setText(dateFrom);
@@ -122,7 +123,7 @@ public class StatistikActivity extends AppCompatActivity {
                 c.setTimeInMillis(System.currentTimeMillis());
 
                 String dateUntil = sdf.format(c.getTime());
-                c.add(Calendar.MONTH,-12);
+                c.add(Calendar.MONTH, -12);
                 String dateFrom = sdf.format(c.getTime());
 
                 start_editText.setText(dateFrom);
@@ -135,9 +136,9 @@ public class StatistikActivity extends AppCompatActivity {
 
     }
 
-    public void  main(View v){
-        Intent i = new Intent(v.getContext(),MainActivity.class);
-        startActivityForResult(i,0);
+    public void main(View v) {
+        Intent i = new Intent(v.getContext(), MainActivity.class);
+        startActivityForResult(i, 0);
     }
 
     public void einstellungen(View v) {
@@ -146,7 +147,7 @@ public class StatistikActivity extends AppCompatActivity {
     }
 
 
-    public void addChart(){
+    public void addChart() {
 
         DatabaseHelper myDb = new DatabaseHelper(this);
 
@@ -156,7 +157,7 @@ public class StatistikActivity extends AppCompatActivity {
 
         PieEntryLabels = new ArrayList<String>();
 
-        HashMap<String,Object> value = new HashMap<String,Object>();
+        HashMap<String, Object> value = new HashMap<String, Object>();
         List<Category> categoryList = new LinkedList<>();
         categoryList.clear();
         categoryList.addAll(myDb.getCategories());
@@ -167,9 +168,9 @@ public class StatistikActivity extends AppCompatActivity {
             }
         });
         Iterator<Category> i = categoryList.iterator();
-        while(i.hasNext()) {//Für jeden Eintrag
+        while (i.hasNext()) {//Für jeden Eintrag
             Category c = i.next();
-            value.put(c.getName(),0.0);
+            value.put(c.getName(), 0.0);
         }
         //Liste aller Einträge aus der Datenbank holen.
         List<com.cashify.overview.Entry> entryList = new LinkedList<>();
@@ -182,22 +183,19 @@ public class StatistikActivity extends AppCompatActivity {
         });
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String time = sharedPref.getString("zeit","");
+        String time = sharedPref.getString("zeit", "");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Iterator<com.cashify.overview.Entry> i1 = entryList.iterator();
-        while(i1.hasNext()) {//Für jeden Eintrag
+        while (i1.hasNext()) {//Für jeden Eintrag
             com.cashify.overview.Entry e = i1.next();
-            if(e.getAmount()<0)
-            {
+            if (e.getAmount() < 0) {
 
-                if(time.equals("Alle"))
-                {
-                    double v = ((Double)value.get(e.getCategory().getName())).doubleValue();
-                    v += (e.getAmount()*-1);
-                    value.put(e.getCategory().getName(),v);
-                }
-                else {
+                if (time.equals("Alle")) {
+                    double v = ((Double) value.get(e.getCategory().getName())).doubleValue();
+                    v += (e.getAmount() * -1);
+                    value.put(e.getCategory().getName(), v);
+                } else {
 
                     Date d = null;
                     Date a = null;
@@ -210,16 +208,15 @@ public class StatistikActivity extends AppCompatActivity {
                     }
                     if (time.equals("Monat")) {
                         if (d.getMonth() == a.getMonth()) {
-                            double v = ((Double)value.get(e.getCategory().getName())).doubleValue();
+                            double v = ((Double) value.get(e.getCategory().getName())).doubleValue();
                             v += (e.getAmount() * -1);
                             value.put(e.getCategory().getName(), v);
                         }
-                    }
-                    else if(time.equals("Jahr")){
-                        if(d.getYear()==a.getYear()){
-                            double v = ((Double)value.get(e.getCategory().getName())).doubleValue();
-                            v += (e.getAmount()*-1);
-                            value.put(e.getCategory().getName(),v);
+                    } else if (time.equals("Jahr")) {
+                        if (d.getYear() == a.getYear()) {
+                            double v = ((Double) value.get(e.getCategory().getName())).doubleValue();
+                            v += (e.getAmount() * -1);
+                            value.put(e.getCategory().getName(), v);
                         }
                     }
                 }
@@ -229,16 +226,15 @@ public class StatistikActivity extends AppCompatActivity {
 
         i = categoryList.iterator();
         int counter = 0;
-        while(i.hasNext()) {//Für jeden Eintrag
+        while (i.hasNext()) {//Für jeden Eintrag
             Category c = i.next();
 
-            int wert = ((Double)value.get(c.getName())).intValue();
-            if(wert>0) {
-                Log.d(TAG,"Kategorie: "+c.getName()+" Wert: "+wert);
+            int wert = ((Double) value.get(c.getName())).intValue();
+            if (wert > 0) {
+                Log.d(TAG, "Kategorie: " + c.getName() + " Wert: " + wert);
                 entries.add(new BarEntry(wert, counter));
                 PieEntryLabels.add(c.getName());
-            }
-            else
+            } else
                 value.remove(c.getName());
             counter++;
         }
@@ -247,7 +243,7 @@ public class StatistikActivity extends AppCompatActivity {
 
         pieData = new PieData(PieEntryLabels, pieDataSet);
 
-        pieDataSet.setColors(new int[] { Color.parseColor("#5c759a"), Color.parseColor("#695c9a"), Color.parseColor("#8e5c9a"), Color.parseColor("#9a5c82"),Color.parseColor("#9a5c5c"),Color.parseColor("#9a825c"),Color.parseColor("#8e9a5c"), Color.parseColor("#699a5c")});
+        pieDataSet.setColors(new int[]{Color.parseColor("#5c759a"), Color.parseColor("#695c9a"), Color.parseColor("#8e5c9a"), Color.parseColor("#9a5c82"), Color.parseColor("#9a5c5c"), Color.parseColor("#9a825c"), Color.parseColor("#8e9a5c"), Color.parseColor("#699a5c")});
         pieDataSet.setValueTextSize(16f);
 
         pieChart.setData(pieData);

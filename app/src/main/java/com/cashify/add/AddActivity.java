@@ -22,10 +22,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-import com.cashify.database.DatabaseHelper;
+
 import com.cashify.R;
+import com.cashify.database.DatabaseHelper;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -34,33 +35,53 @@ import java.util.Date;
 
 
 /**
- *
  * Diese Klasse wird verwendet um neue Einträge in die Überischtstabelle einzufügen.
- *
- * */
+ */
 public class AddActivity extends AppCompatActivity {
 
-    /**Der TAG wird für das Log verwendet um anzuzeigen von welcher Klasse der Logeintrag stammt.*/
+    /**
+     * Der TAG wird für das Log verwendet um anzuzeigen von welcher Klasse der Logeintrag stammt.
+     */
     private static final String TAG = "AddActivity";
-    /**In diesem Textfeld wird der aktuelle Kontostand angezeigt.*/
+    /**
+     * In diesem Textfeld wird der aktuelle Kontostand angezeigt.
+     */
     private EditText betrag;
-    /**Wird benötigt um die gewählte Zahl in das Textfeld zu schreiben.*/
+    /**
+     * Wird benötigt um die gewählte Zahl in das Textfeld zu schreiben.
+     */
     private String s;
-    /**Datenbank*/
+    /**
+     * Datenbank
+     */
     private DatabaseHelper myDb;
-    /**Wird benötigt um negative Einträge zu verbuchen*/
+    /**
+     * Wird benötigt um negative Einträge zu verbuchen
+     */
     private int vorzeichen = 1;
-    /**Speichert eine Auswahlliste der verfügbaren Kategorien.*/
+    /**
+     * Speichert eine Auswahlliste der verfügbaren Kategorien.
+     */
     private Spinner spin;
-    /**Speichername des Fotos*/
+    /**
+     * Speichername des Fotos
+     */
     private String foto = null;
-    /**File in dem das Foto gespeichert wird*/
+    /**
+     * File in dem das Foto gespeichert wird
+     */
     private File photoFile = null;
-    /**Jahr des Eintrags*/
+    /**
+     * Jahr des Eintrags
+     */
     private int mYear = -1;
-    /**Monat des Eintrags*/
+    /**
+     * Monat des Eintrags
+     */
     private int mMonth = -1;
-    /**Tag des Eintrags*/
+    /**
+     * Tag des Eintrags
+     */
     private int mDay = -1;
 
     static final int REQUEST_TAKE_PHOTO = 1;
@@ -72,21 +93,21 @@ public class AddActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        betrag= (EditText) findViewById(R.id.Betrag);
+        betrag = (EditText) findViewById(R.id.Betrag);
 
         myDb = new DatabaseHelper(this);
 
         //Über bundle können zusätzliche Infos aus dem Intent ausgelesen werden.
         Bundle bundle = getIntent().getExtras();
 
-        Button commit = (Button)findViewById(R.id.ButtonCommit);
+        Button commit = (Button) findViewById(R.id.ButtonCommit);
 
         //Cursor von der Kategorietabelle holen.
         Cursor c = myDb.getReadableDatabase().rawQuery("SELECT ID AS _id, NAME FROM category", null);
-        Log.i("AddActivity", "CURSOR COUNT: "+c.getCount());
+        Log.i("AddActivity", "CURSOR COUNT: " + c.getCount());
         //Adapter aus dem Cursor erstellen.
-        String[] from = new String[] {"NAME"};
-        int[] to = new int[] {android.R.id.text1};
+        String[] from = new String[]{"NAME"};
+        int[] to = new int[]{android.R.id.text1};
         SimpleCursorAdapter sca = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, c, from, to);
 
         //Vordefiniertes Layout dem Spinner zuweisen.
@@ -97,20 +118,18 @@ public class AddActivity extends AppCompatActivity {
 
 
         //Schauen ob hinzugefügt oder abgezogen wird
-        if(bundle.getString("mode")!= null)
-        {
-            if(bundle.getString("mode").equals("sub"))//Wenn abgezogen wird, Vorzeichen ändern.
+        if (bundle.getString("mode") != null) {
+            if (bundle.getString("mode").equals("sub"))//Wenn abgezogen wird, Vorzeichen ändern.
             {
                 vorzeichen = -1;//Wenn abgezogen wird, Vorzeichen ändern
                 commit.setBackgroundColor(Color.RED);
-            }
-            else
+            } else
                 commit.setBackgroundColor(Color.GREEN);
 
-            if(bundle.getString("cat")!=null)//Wenn Shortcut gewählt wurde, ist Kategorie schon vorausgewählt.
+            if (bundle.getString("cat") != null)//Wenn Shortcut gewählt wurde, ist Kategorie schon vorausgewählt.
             {
                 Spinner cat = (Spinner) findViewById(R.id.category);
-                selectValue(cat,bundle.getString("cat"));
+                selectValue(cat, bundle.getString("cat"));
                 cat.setEnabled(false);
             }
         }
@@ -118,10 +137,12 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
-    /** Diese Methode setzt den Spinner auf eine Kategorie.*/
+    /**
+     * Diese Methode setzt den Spinner auf eine Kategorie.
+     */
     private void selectValue(Spinner spinner, String value) {
         for (int i = 0; i < spinner.getCount(); i++) {
-            if (((Cursor)spinner.getItemAtPosition(i)).getString(1).equals(value)) {
+            if (((Cursor) spinner.getItemAtPosition(i)).getString(1).equals(value)) {
                 spinner.setSelection(i);
                 break;
             }
@@ -129,49 +150,52 @@ public class AddActivity extends AppCompatActivity {
     }
 
 
-    /**Diese Methode speichert die eingegebenen Werte in die Datenbank.*/
-    public void eintragen(View v){
+    /**
+     * Diese Methode speichert die eingegebenen Werte in die Datenbank.
+     */
+    public void eintragen(View v) {
 
-        if(!betrag.getText().toString().equals("")) {//Wenn kein Betrag eingeben wurde, wird kein Eintrag in der Datenbank erstellt.
+        if (!betrag.getText().toString().equals("")) {//Wenn kein Betrag eingeben wurde, wird kein Eintrag in der Datenbank erstellt.
 
             EditText title = (EditText) findViewById(R.id.title);
             //Kategorie holen
-            String s = ((Cursor)spin.getSelectedItem()).getString(1);
+            String s = ((Cursor) spin.getSelectedItem()).getString(1);
             //Datum festlegen
             String strDate;
-            if(mYear==-1) {//Wenn noch kein Datum vergeben wurde, nimm das jetztige Datum.
+            if (mYear == -1) {//Wenn noch kein Datum vergeben wurde, nimm das jetztige Datum.
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 strDate = sdf.format(new Date());
-            }
-            else{//Wenn ein Datum vergeben wurde, nimm dieses
+            } else {//Wenn ein Datum vergeben wurde, nimm dieses
                 String day;
 
-                if(mDay<10)
-                    day = "0"+mDay;
+                if (mDay < 10)
+                    day = "0" + mDay;
                 else
-                    day = ""+mDay;
+                    day = "" + mDay;
 
                 mMonth++;//Monat starte bei 0 daher vorher ++ und nacher --
-                if(mMonth<10)
-                    strDate = mYear+"-0"+mMonth+"-"+day+" 00:00:00";
+                if (mMonth < 10)
+                    strDate = mYear + "-0" + mMonth + "-" + day + " 00:00:00";
                 else
-                    strDate = mYear+"-"+mMonth+"-"+day+" 00:00:00";
+                    strDate = mYear + "-" + mMonth + "-" + day + " 00:00:00";
 
                 mMonth--;
             }
-            Log.d(TAG,"Eingetragenes Datum: "+strDate);
+            Log.d(TAG, "Eingetragenes Datum: " + strDate);
 
             //addEntry(Betrag,Titel,Foto,Kategorie,Datum)
-            if(!myDb.addEntry(Double.valueOf(betrag.getText().toString()) * vorzeichen,title.getText().toString(),foto,s,strDate))
+            if (!myDb.addEntry(Double.valueOf(betrag.getText().toString()) * vorzeichen, title.getText().toString(), foto, s, strDate))
                 Toast.makeText(this, "Fehler beim Eintragen!", Toast.LENGTH_LONG).show();
             finish();
         }
     }
 
-    /**Diese Methode macht ein Foto welches zum Eintrag hinzugefügt wird*/
-    public void cam(View v){
+    /**
+     * Diese Methode macht ein Foto welches zum Eintrag hinzugefügt wird
+     */
+    public void cam(View v) {
 
-        try{
+        try {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             //Wenn eine Kamera gefunden wurde:
             if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -180,7 +204,7 @@ public class AddActivity extends AppCompatActivity {
                     photoFile = createImageFile();
                     foto = photoFile.getAbsolutePath();
                 } catch (IOException ex) {
-                    Log.d(TAG,"Fehler beim Erstellen des Files.");
+                    Log.d(TAG, "Fehler beim Erstellen des Files.");
                     ex.printStackTrace();
                 }
                 //Wenn ein File für das Foto erstellt werden konnte:
@@ -192,26 +216,28 @@ public class AddActivity extends AppCompatActivity {
                     startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
                 }
             }
-        }
-        catch (Exception e1){//Falls irgend ein Fehler mit der Camera auftreten sollte, wird dieser gefangen.
+        } catch (Exception e1) {//Falls irgend ein Fehler mit der Camera auftreten sollte, wird dieser gefangen.
             Toast.makeText(AddActivity.this, "Foto aufnehmen nicht möglich!", Toast.LENGTH_LONG).show();
         }
     }
 
-    /**Diese Methode wird aufgerufen sobald das Foto gemacht wurde. Es wird der Fotobutton durch das Bild ersetzt.*/
+    /**
+     * Diese Methode wird aufgerufen sobald das Foto gemacht wurde. Es wird der Fotobutton durch das Bild ersetzt.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Bitmap myBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-        if(myBitmap != null) {
+        if (myBitmap != null) {
             Log.d(TAG, "Foto da");
             ImageButton im = (ImageButton) findViewById(R.id.imageButton7);
             im.setImageResource(R.drawable.cameracheckicon);
-        }
-        else
-            Log.d(TAG,"Foto nicht da!");
+        } else
+            Log.d(TAG, "Foto nicht da!");
     }
 
-    /**Diese Methode erstellt ein File in dem das Foto gespeichert wird und liefert dieses als Rückgabewert.*/
+    /**
+     * Diese Methode erstellt ein File in dem das Foto gespeichert wird und liefert dieses als Rückgabewert.
+     */
     private File createImageFile() throws IOException {
         //Ein neues File für ein Bild anlegen.
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -225,9 +251,11 @@ public class AddActivity extends AppCompatActivity {
         return image;
     }
 
-    /**Diese Methode ruft einen Auswahldialog für einen Datumspicker auf.*/
-    public void showStartDateDialog(View v){
-        if(mYear == -1) {//Wenn noch kein Tag gewählt wurde.
+    /**
+     * Diese Methode ruft einen Auswahldialog für einen Datumspicker auf.
+     */
+    public void showStartDateDialog(View v) {
+        if (mYear == -1) {//Wenn noch kein Tag gewählt wurde.
             Calendar c = Calendar.getInstance();
             mYear = c.get(Calendar.YEAR);
             mMonth = c.get(Calendar.MONTH);
@@ -238,7 +266,9 @@ public class AddActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    /**Dieser Listener reagiert auf Änderungen des Datumspickers und schreibt das geänderte Datum in die dafür vorgesehnen Felder*/
+    /**
+     * Dieser Listener reagiert auf Änderungen des Datumspickers und schreibt das geänderte Datum in die dafür vorgesehnen Felder
+     */
     class mDateSetListener implements DatePickerDialog.OnDateSetListener {
 
         @Override
@@ -248,13 +278,9 @@ public class AddActivity extends AppCompatActivity {
             mMonth = monthOfYear;
             mDay = dayOfMonth;
             StringBuilder date = new StringBuilder().append(mMonth + 1).append("/").append(mDay).append("/").append(mYear).append(" ");
-            Log.d(TAG,date.toString());
+            Log.d(TAG, date.toString());
 
 
         }
     }
-
-
-
-
 }

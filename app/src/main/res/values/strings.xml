@@ -11,6 +11,9 @@
     <string name="diag_title_entry_delete">Eintrag löschen</string>
     <string name="diag_text_entry_delete">Eintrag wirklich löschen?</string>
 
+    <string name="diag_title_category_delete">Kategorie löschen</string>
+    <string name="diag_text_category_delete">Kategorie wirklich löschen?</string>
+
     <string name="action_add">Hinzufügen</string>
     <string name="action_delete">Entfernen</string>
     <string name="action_cancel">Abbrechen</string>

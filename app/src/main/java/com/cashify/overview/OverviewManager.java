@@ -1,8 +1,6 @@
 package com.cashify.overview;
 
-import com.cashify.category.Category;
 import com.cashify.database.DatabaseHelper;
-
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -41,7 +39,7 @@ public class OverviewManager {
     }
 
     public Entry getEntryById(int id) throws Exception {
-        for(Entry c : entryList) if (c.getId() == id) return c;
+        for (Entry c : entryList) if (c.getId() == id) return c;
         return Entry.DefaultError();
     }
 
@@ -62,8 +60,8 @@ public class OverviewManager {
         return success;
     }
 
-    public boolean changeEntry(int id,double betrag, String title, String foto, String kategorie, String date){
-        boolean success = this.dbHelper.changeEntry(id,betrag,title,foto,kategorie,date);
+    public boolean changeEntry(int id, double betrag, String title, String foto, String kategorie, String date) {
+        boolean success = this.dbHelper.changeEntry(id, betrag, title, foto, kategorie, date);
         if (success) this.reloadFromDb();
         return success;
     }

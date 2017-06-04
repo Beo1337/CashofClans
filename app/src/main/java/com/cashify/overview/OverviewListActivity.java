@@ -9,8 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-import com.cashify.database.DatabaseHelper;
 import com.cashify.R;
+import com.cashify.database.DatabaseHelper;
 
 public class OverviewListActivity extends AppCompatActivity {
 
@@ -48,11 +48,13 @@ public class OverviewListActivity extends AppCompatActivity {
         actionbar.setTitle(R.string.title_activity_overview);
     }
 
-    /**Wird die Aktivity aus dem Hintergrund wieder in den Vordergrund gebarcht, soll der Adapter aktualisert werden da Änderungen an den Datensätzen vorgenommen werden konnten.*/
+    /**
+     * Wird die Aktivity aus dem Hintergrund wieder in den Vordergrund gebarcht, soll der Adapter aktualisert werden da Änderungen an den Datensätzen vorgenommen werden konnten.
+     */
     @Override
     public void onRestart() {
         super.onRestart();
-        Log.d("OverviewListActivity","DataSetChanged");
+        Log.d("OverviewListActivity", "DataSetChanged");
         adapter.notifyDataSetChanged();
     }
 

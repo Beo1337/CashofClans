@@ -1,29 +1,29 @@
 package com.cashify.settings;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.view.View;
 
-
-import com.cashify.overview.StatistikActivity;
-import com.cashify.MainActivity;
 import com.cashify.R;
 
 /**
  * Diese Klasse stellt die in den Einstelungen gemachten Werte dar und kümmert sich um Änderungen dieser.
- *
- * */
+ */
 public class EinstellungenActivity extends PreferenceActivity {
 
-    /**Über die sharedPreference können Einstellungen überall in der App gesetzt und ausglesen werden.*/
+    /**
+     * Über die sharedPreference können Einstellungen überall in der App gesetzt und ausglesen werden.
+     */
     private SharedPreferences sharedPref;
-    /**Dieser Listener hört auf Änderungen der Einstellungen.*/
+    /**
+     * Dieser Listener hört auf Änderungen der Einstellungen.
+     */
     private Preference.OnPreferenceChangeListener changeText;
-    /**Dieser String repräsentiert eine Zeitperiode.*/
+    /**
+     * Dieser String repräsentiert eine Zeitperiode.
+     */
     private String time;
 
     @Override
@@ -35,7 +35,7 @@ public class EinstellungenActivity extends PreferenceActivity {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         //Die Einstellung zeit aus den SharedPrefernces holen und in die View setzten.
-        this.time = sharedPref.getString("zeit","");
+        this.time = sharedPref.getString("zeit", "");
 
         final Preference prefer1 = findPreference("zeit");
 
