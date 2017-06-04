@@ -29,13 +29,13 @@ public class CategoryDetailActivity extends AppCompatActivity {
         int catId = getIntent().getExtras().getInt("categoryId");
         Log.i(TAG, "onCreate: " + catId);
 
-        CategoryManager catManager = new CategoryManager(new DatabaseHelper(this));
+        final CategoryManager catManager = new CategoryManager(new DatabaseHelper(this));
         try {
             category = catManager.getCategoryById(catId);
             catNameField = (EditText) findViewById(R.id.category_detail_name);
             catNameField.setText(category.getName());
 
-            CategoryDetailActivity parent = this;
+            final CategoryDetailActivity parent = this;
 
             delButton = (Button) findViewById(R.id.category_detail_delete);
 

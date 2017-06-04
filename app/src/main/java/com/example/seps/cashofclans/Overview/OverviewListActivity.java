@@ -53,7 +53,7 @@ public class OverviewListActivity extends AppCompatActivity {
         }*/
 
         // Create DatabaseHelper instance
-        DatabaseHelper myDb = new DatabaseHelper(this);
+        final DatabaseHelper myDb = new DatabaseHelper(this);
 
         // Reference to TableLayout
         TableLayout tableLayout = (TableLayout) findViewById(R.id.tableLayout);

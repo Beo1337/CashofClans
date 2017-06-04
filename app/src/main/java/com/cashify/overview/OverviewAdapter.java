@@ -47,7 +47,7 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
 
     // Once the ViewHolder is bound, populate the view it contains with data and event action code
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         //Felder des Eintrags holen
         TextView entryText = (TextView) holder.view.findViewById(R.id.entry_text);
         TextView entryAmount = (TextView) holder.view.findViewById(R.id.entry_amount);
@@ -57,7 +57,7 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
         cam.setVisibility(View.INVISIBLE);
 
         //Felder befüllen
-        Entry ent = manager.getEntryByIndex(position);
+        final Entry ent = manager.getEntryByIndex(position);
 
         entryText.setText(ent.getTitle());
         if(ent.getAmount()<0)
@@ -124,7 +124,7 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
     }
 
     /**Diese Methode liefert einen Abfragedialog bevor das Löschen durchgeführt wird.*/
-    private AlertDialog AskOption(Context context, Entry ent)
+    private AlertDialog AskOption(Context context, final Entry ent)
     {
         AlertDialog myQuittingDialogBox =new AlertDialog.Builder(context)
                 .setTitle("Löschen")

@@ -77,7 +77,7 @@ public class StatistikActivity extends AppCompatActivity {
 
 
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         /*------------------3 MONTHS------------------*/
         btn_3_months = (Button) findViewById(R.id.months_3_button);

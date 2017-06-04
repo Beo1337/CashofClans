@@ -56,22 +56,5 @@ public class EinstellungenActivity extends PreferenceActivity {
         prefer1.setOnPreferenceChangeListener(this.changeText);
     }
 
-    /**Funktionen für die Buttons der Toolbar*/
-    public void stats(View v) {
-        Intent i = new Intent(v.getContext(), StatistikActivity.class);
-        startActivityForResult(i, 0);
-    }
-
-    public void  main(View v){
-        Intent i = new Intent(v.getContext(),MainActivity.class);
-        startActivityForResult(i,0);
-    }
-
-    public void einstellungen(View v) {
-        Intent i = new Intent(v.getContext(), EinstellungenActivity.class);
-        startActivityForResult(i, 0);
-    }
-    /*****************************************/
-
 
 }

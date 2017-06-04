@@ -43,7 +43,7 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapte
 
     // Once the ViewHolder is bound, populate the view it contains with data and event action code
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
 
         //Felder des Eintrags holen
@@ -53,7 +53,7 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapte
         TextView entryDate = (TextView) holder.view.findViewById(R.id.entry_date);
 
         //Felder befüllen
-        MonthlyEntry ent = manager.getMonthlyEntryByIndex(position);
+        final MonthlyEntry ent = manager.getMonthlyEntryByIndex(position);
 
         entryText.setText(ent.getTitle());
         if(ent.getAmount()<0)
@@ -109,7 +109,7 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapte
 
 
     /**Diese Methode liefert einen Abfragedialog bevor das Löschen durchgeführt wird.*/
-    private AlertDialog AskOption(Context context, MonthlyEntry ent)
+    private AlertDialog AskOption(Context context, final MonthlyEntry ent)
     {
         AlertDialog myQuittingDialogBox =new AlertDialog.Builder(context)
                 .setTitle("Löschen")
