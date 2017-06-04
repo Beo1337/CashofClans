@@ -44,4 +44,15 @@ public class Entry extends AbstractEntry{
                 ", foto='" + foto + '\'' +
                 '}';
     }
+
+    // Provide a default object so that we do not need to except
+    public static Entry DefaultError() {
+        return new Entry(
+                Integer.MIN_VALUE,
+                0.0,
+                "Error",
+                Category.DefaultError(),
+                "01.01.1901",
+                "");
+    }
 }

@@ -1,5 +1,6 @@
 package com.cashify.overview;
 
+import com.cashify.category.Category;
 import com.cashify.database.DatabaseHelper;
 
 
@@ -41,7 +42,7 @@ public class OverviewManager {
 
     public Entry getEntryById(int id) throws Exception {
         for(Entry c : entryList) if (c.getId() == id) return c;
-        throw new Exception("Cat id not found");
+        return Entry.DefaultError();
     }
 
     // Return list of all elements (unmodifiable)
@@ -63,10 +64,7 @@ public class OverviewManager {
 
     public boolean changeEntry(int id,double betrag, String title, String foto, String kategorie, String date){
         boolean success = this.dbHelper.changeEntry(id,betrag,title,foto,kategorie,date);
-        if (success) {
-            this.reloadFromDb();
-            return success;
-        }
-        return false;
+        if (success) this.reloadFromDb();
+        return success;
     }
 }

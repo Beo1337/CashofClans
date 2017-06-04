@@ -45,7 +45,7 @@ public class OverviewListActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setTitle("CHANGE THIS");
+        actionbar.setTitle(R.string.title_activity_overview);
     }
 
     /**Wird die Aktivity aus dem Hintergrund wieder in den Vordergrund gebarcht, soll der Adapter aktualisert werden da Änderungen an den Datensätzen vorgenommen werden konnten.*/

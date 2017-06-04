@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.cashify.R;
 
+
+// Place holder fragment for activities that we haven't converted yet.
+
 public class TestFragment extends Fragment {
 
     public static final String ARG_PAGE = "ARG_PAGE";

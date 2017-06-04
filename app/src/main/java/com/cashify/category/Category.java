@@ -39,4 +39,9 @@ public class Category {
                 ", icon='" + icon + '\'' +
                 '}';
     }
+
+    // Provide a default object so that we do not need to except
+    public static Category DefaultError() {
+        return new Category(Integer.MIN_VALUE, "Fehler", "");
+    }
 }
