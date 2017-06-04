@@ -19,13 +19,15 @@ import com.cashify.settings.SettingsFragment;
 
 public class MainFragmentsAdapter extends FragmentPagerAdapter {
 
+    // Identify tabs by icon and position, no text needed
     private final int tabIcons[] = new int[]{
             R.drawable.home,
             R.drawable.chart_donut,
             R.drawable.settings,
             R.drawable.help_circle
     };
-    private Context context;
+
+    private final Context context;
 
     public MainFragmentsAdapter(FragmentManager fm, Context context) {
         super(fm);
@@ -37,6 +39,7 @@ public class MainFragmentsAdapter extends FragmentPagerAdapter {
         return tabIcons.length;
     }
 
+    // This is where we decide what do to for each tab
     @Override
     public Fragment getItem(int position) {
         switch (position){
@@ -47,6 +50,7 @@ public class MainFragmentsAdapter extends FragmentPagerAdapter {
         }
     }
 
+    // Set tab title - in our case set up a nice icon
     @Override
     public CharSequence getPageTitle(int position) {
         SpannableStringBuilder sbBuilder = new SpannableStringBuilder(" ");
