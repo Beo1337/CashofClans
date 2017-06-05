@@ -5,9 +5,9 @@
     <application
         android:allowBackup="true"
         android:background="#85a8e5"
-        android:icon="@drawable/piggyicon"
+        android:icon="@drawable/notificationicon"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/piggyicon"
+        android:roundIcon="@drawable/notificationicon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

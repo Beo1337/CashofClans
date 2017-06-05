@@ -85,7 +85,7 @@
             android:onClick="shortcut"
             android:scaleType="centerCrop"
             android:tag="Lebensmittel"
-            app:srcCompat="@drawable/foodicon" />
+            app:srcCompat="@drawable/icon_shoppingcart" />
 
         <ImageButton
             android:id="@+id/imageButton2"
@@ -97,7 +97,7 @@
             android:onClick="shortcut"
             android:scaleType="fitStart"
             android:tag="Bar"
-            app:srcCompat="@drawable/drinkicon" />
+            app:srcCompat="@drawable/icon_beer" />
 
         <ImageButton
             android:id="@+id/imageButton"
@@ -109,7 +109,7 @@
             android:onClick="shortcut"
             android:scaleType="fitCenter"
             android:tag="Sport"
-            app:srcCompat="@drawable/sporticon" />
+            app:srcCompat="@drawable/icon_sport" />
 
         <ImageButton
             android:id="@+id/imageButton4"
@@ -121,7 +121,7 @@
             android:onClick="shortcut"
             android:scaleType="fitEnd"
             android:tag="Kleidung"
-            app:srcCompat="@drawable/clothesicon" />
+            app:srcCompat="@drawable/icon_clothes" />
 
         <ImageButton
             android:id="@+id/imageButton5"
@@ -134,7 +134,7 @@
             android:onClick="shortcut"
             android:scaleType="fitEnd"
             android:tag="Bücher"
-            app:srcCompat="@drawable/homeicon" />
+            app:srcCompat="@drawable/icon_school" />
 
         <ImageButton
             android:id="@+id/imageButton6"
@@ -146,7 +146,7 @@
             android:onClick="shortcut"
             android:scaleType="fitCenter"
             android:tag="Kino"
-            app:srcCompat="@drawable/filmicon" />
+            app:srcCompat="@drawable/icon_movie" />
 
 
     </GridLayout>

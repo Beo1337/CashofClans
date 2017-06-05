@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.cashify.MainActivity;
 import com.cashify.R;
@@ -21,7 +23,11 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.opencsv.CSVWriter;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,6 +45,7 @@ public class StatistikActivity extends AppCompatActivity {
 
     private static final String TAG = "StatistikActivity";
     Button btn_list;
+    Button btn_export;
     Button btn_3_months;
     Button btn_6_months;
     Button btn_12_months;
@@ -50,6 +57,8 @@ public class StatistikActivity extends AppCompatActivity {
     PieChart pieChart;
     PieDataSet pieDataSet;
     PieData pieData;
+
+    File ordner;
 
 
     @Override
@@ -130,6 +139,62 @@ public class StatistikActivity extends AppCompatActivity {
                 end_editText.setText(dateUntil);
             }
         });
+
+        /*------------------Export Button------------------*/
+        btn_export = (Button) findViewById(R.id.export_button);
+        btn_export.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exportData();
+            }
+        });
+    }
+
+    public void exportData() {
+        DatabaseHelper myDb = new DatabaseHelper(this);
+
+        ordner = new File(Environment.getRootDirectory() + "/Cashify Exports/");
+        if (!ordner.exists()) {
+            ordner.mkdir();
+        }
+        ordner.setReadable(true);
+        File file = new File(ordner, "Filename.csv");
+        file.setReadable(true);
+
+        try {
+            file.createNewFile();
+
+            CSVWriter csvWrite = new CSVWriter(new FileWriter(file),CSVWriter.DEFAULT_SEPARATOR,CSVWriter.NO_QUOTE_CHARACTER);
+
+            List<com.cashify.overview.Entry> entryList = new LinkedList<>();
+            entryList.addAll(myDb.getEntries());
+
+            Collections.sort(entryList, new Comparator<com.cashify.overview.Entry>() {//Sortiert nach Datum
+                @Override
+                public int compare(com.cashify.overview.Entry o1, com.cashify.overview.Entry o2) {
+                    return o1.getDatum().compareTo(o2.getDatum());
+                }
+            });
+
+            String header[] = {"ID", "Titel", "Betrag", "Kategorie", "Datum"};
+            csvWrite.writeNext(header);
+
+            List<String[]> rows = new ArrayList<>();
+
+            Iterator<com.cashify.overview.Entry> il = entryList.iterator();
+            while (il.hasNext()) {
+                com.cashify.overview.Entry e = il.next();
+                String [] text = {String.valueOf(e.getId()), e.getTitle(), String.valueOf(e.getAmount()), e.getCategory().getName(), e.getDatum()};
+                rows.add(text);
+            }
+            csvWrite.writeAll(rows);
+
+            Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+            csvWrite.close();
+        } catch (IOException e) {
+            Log.e("MainActivity", e.getMessage(), e);
+            Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void stats(View v) {

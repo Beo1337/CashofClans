@@ -141,7 +141,7 @@
         tools:layout_constraintRight_creator="1" />
 
     <Button
-        android:id="@+id/pdf_button"
+        android:id="@+id/export_button"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="123dp"
