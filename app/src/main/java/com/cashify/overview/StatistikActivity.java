@@ -2,14 +2,18 @@ package com.cashify.overview;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.cashify.MainActivity;
 import com.cashify.R;
@@ -21,7 +25,11 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.opencsv.CSVWriter;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,16 +42,20 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public class StatistikActivity extends AppCompatActivity {
 
     private static final String TAG = "StatistikActivity";
     Button btn_list;
+    Button btn_csv;
     Button btn_3_months;
     Button btn_6_months;
     Button btn_12_months;
     EditText start_editText;
     EditText end_editText;
+
+    private OverviewManager manager;
 
     ArrayList<Entry> entries;
     ArrayList<String> PieEntryLabels;
@@ -71,6 +83,14 @@ public class StatistikActivity extends AppCompatActivity {
 
                 Intent i = new Intent(StatistikActivity.this, com.cashify.overview.OverviewListActivity.class);
                 StatistikActivity.this.startActivity(i);
+            }
+        });
+
+        btn_csv = (Button) findViewById(R.id.export_button);
+        btn_csv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exportData();
             }
         });
 
@@ -130,6 +150,82 @@ public class StatistikActivity extends AppCompatActivity {
                 end_editText.setText(dateUntil);
             }
         });
+    }
+
+    public void exportData() {
+        DatabaseHelper myDb = new DatabaseHelper(this);
+
+        File exportDir = new File(Environment.getExternalStorageDirectory()
+                .getPath(), "");
+        if (!exportDir.exists()) {
+            exportDir.mkdirs();
+        }
+        File file = new File(exportDir, "Filename.csv");
+
+        try {
+            file.createNewFile();
+
+            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
+            SQLiteDatabase db = myDb.getReadableDatabase();
+            List<com.cashify.overview.Entry> ent = manager.getEntries();
+
+
+            String header[] = {"ID","Titel","Betrag","Kategorie","Datum"};
+
+            csvWrite.writeNext(header);
+
+            Set<com.cashify.overview.Entry> set = myDb.getEntries();
+            for (com.cashify.overview.Entry e:set){
+                String [] text = {String.valueOf(e.getId()),e.getTitle(), String.valueOf(e.getAmount()),e.getCategory().getName(),e.getDatum()};
+                csvWrite.writeNext(text);
+            }
+            Toast.makeText(this, "Success", Toast.LENGTH_SHORT);
+            csvWrite.close();
+        } catch (SQLException sqlEx) {
+            Log.e("MainActivity", sqlEx.getMessage(), sqlEx);
+        } catch (IOException e) {
+            Log.e("MainActivity", e.getMessage(), e);
+        }
+
+       /* Cursor c = db.rawQuery("SELECT * FROM uebersicht", null);
+        int rowcount = 0;
+        int colcount = 0;
+        File dir = Environment.getExternalStorageDirectory();
+        String filename = "test.csv";
+        File saveFile = new File(dir, filename);
+        try {
+            FileWriter fw = new FileWriter(saveFile);
+            BufferedWriter bw = new BufferedWriter(fw);
+            rowcount = c.getCount();
+            colcount = c.getColumnCount();
+            if (rowcount < 0) {
+                c.moveToFirst();
+
+                for (int i = 0; i < colcount; i++) {
+                    if (i != colcount - 1) {
+                        bw.write(c.getColumnName(i) + ",");
+                    } else {
+                        bw.write(c.getColumnName(i));
+                    }
+                }
+                bw.newLine();
+
+                for (int i = 0; i < rowcount; i++) {
+                    c.moveToPosition(i);
+
+                    for (int j = 0; j < colcount; j++) {
+                        if (j != colcount - 1) bw.write(c.getString(j) + ",");
+                        else bw.write(c.getString(j));
+                    }
+                    bw.newLine();
+                }
+                bw.flush();
+                Toast.makeText(this, "Success", Toast.LENGTH_SHORT);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
     }
 
     public void stats(View v) {

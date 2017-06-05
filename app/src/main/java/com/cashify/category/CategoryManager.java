@@ -57,13 +57,15 @@ public class CategoryManager {
         return success;
     }
 
-    public boolean updateCategory(Category c) {
-        // TODO: update name, update icon
-        return false;
+    // Ändert den Namen einer Kategorie
+    public boolean changeCategory(int id, String name) {
+        boolean success = this.dbHelper.changeCategoryName(id,name);
+        if (success) this.reloadFromDb();
+        return success;
     }
 
-    public boolean removeCategory(Category c) {
-        boolean success = this.dbHelper.deleteCategory(c.getId());
+    public boolean removeCategory(int id) {
+        boolean success = this.dbHelper.deleteCategory(id);
         if (success) this.reloadFromDb();
         return success;
     }

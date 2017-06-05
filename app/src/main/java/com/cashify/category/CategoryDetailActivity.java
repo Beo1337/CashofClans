@@ -46,7 +46,7 @@ public class CategoryDetailActivity extends AppCompatActivity {
                             .setMessage(category.getName() + " - " + R.string.diag_text_category_delete)
                             .setPositiveButton(R.string.action_delete, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    catManager.removeCategory(category);
+                                    catManager.removeCategory(category.getId());
                                     dialog.dismiss();
                                     parent.finish();
                                 }

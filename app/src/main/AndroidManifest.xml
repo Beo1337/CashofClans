@@ -86,7 +86,8 @@
         <activity android:name=".overview.PictureActivity" />
         <activity android:name=".monthly_entries.AddMonthlyEntryActivity" />
         <activity android:name=".monthly_entries.ChangeMonthlyEntryActivity" />
-        <activity android:name=".overview.ChangeEntryActivity"></activity>
+        <activity android:name=".overview.ChangeEntryActivity" />
+        <activity android:name=".category.ChangeCategoryActivity"></activity>
     </application>
 
 </manifest>
