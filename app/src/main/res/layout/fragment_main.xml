@@ -12,26 +12,6 @@
     tools:layout_editor_absoluteY="81dp">
 
 
-    <TextView
-        android:id="@+id/total_amount"
-        android:layout_width="match_parent"
-        android:layout_height="53dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:maxLines="1"
-        android:paddingLeft="105dp"
-        android:paddingRight="105dp"
-        android:text="250,00 €"
-        android:textAlignment="center"
-        android:textSize="36sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
     <GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="0dp"
@@ -127,27 +107,104 @@
 
     </GridLayout>
 
-    <ImageButton
-        android:id="@+id/main_add"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:background="@android:color/transparent"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:srcCompat="@drawable/plusicon" />
+        app:layout_constraintRight_toRightOf="parent">
 
-    <ImageButton
-        android:id="@+id/main_sub"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/minusicon" />
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="?attr/colorBackgroundFloating"
+            app:cardCornerRadius="1dp"
+            app:cardElevation="4dp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/total_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:paddingLeft="105dp"
+                android:paddingRight="105dp"
+                android:text="250,00"
+                android:textAlignment="center"
+                android:textSize="36sp"
+                app:layout_constraintHorizontal_bias="0.6"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="76dp">
+
+            <Button
+                android:id="@+id/main_add"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="88dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:backgroundTintMode="src_over"
+                android:onClick="add"
+                android:text="IN"
+                android:textColor="@android:color/holo_green_dark"
+                android:textColorLink="@android:color/holo_red_dark"
+                android:textSize="36sp"
+                android:drawableLeft="@drawable/plus_circle"
+                android:drawableTint="@android:color/holo_green_dark"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="117dp" />
+
+            <Button
+                android:id="@+id/main_sub"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="88dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:backgroundTintMode="src_over"
+                android:onClick="sub"
+                android:text="OUT"
+                android:textColor="@android:color/holo_red_dark"
+                android:textColorLink="@android:color/holo_green_dark"
+                android:textSize="36sp"
+                android:drawableRight="@drawable/minus_circle"
+                android:drawableTint="@android:color/holo_red_dark"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="0dp" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>

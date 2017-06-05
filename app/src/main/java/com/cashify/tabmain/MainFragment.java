@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -61,9 +62,9 @@ public class MainFragment extends Fragment {
 
         // Get the big plus and minus buttons and attach click handlers to them
         // These open up new intents to add entries, after that is done refresh as above
-        ImageButton addButton, subButton;
-        addButton = (ImageButton) getActivity().findViewById(R.id.main_add);
-        subButton = (ImageButton) getActivity().findViewById(R.id.main_sub);
+        Button addButton, subButton;
+        addButton = (Button) getActivity().findViewById(R.id.main_add);
+        subButton = (Button) getActivity().findViewById(R.id.main_sub);
 
         addButton.setOnClickListener(
                 new View.OnClickListener() {
