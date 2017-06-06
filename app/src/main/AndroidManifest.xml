@@ -43,7 +43,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,19 +51,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".tabmain.TabMainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".settings.EinstellungenActivity"
-            android:label="@string/title_activity_einstellungen"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".add.AddActivity"
             android:label="@string/title_activity_add"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".overview.StatistikActivity"
-            android:label="@string/title_activity_statistik"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".category.CategoryActivity"

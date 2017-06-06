@@ -1,4 +1,4 @@
-package com.cashify.tabmain;
+package com.cashify.main;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

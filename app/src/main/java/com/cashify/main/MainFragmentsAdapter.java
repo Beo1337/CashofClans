@@ -1,4 +1,4 @@
-package com.cashify.tabmain;
+package com.cashify.main;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

@@ -12,11 +12,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.cashify.MainActivity;
 import com.cashify.R;
 import com.cashify.category.Category;
 import com.cashify.monthly_entries.MonthlyEntry;
 import com.cashify.overview.Entry;
+import com.cashify.main.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
