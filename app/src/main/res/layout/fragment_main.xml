@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/sky"
     android:tileMode="repeat"
-    tools:context="com.cashify.MainActivity"
+    tools:context="com.cashify.main.MainActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#85a8e5"
-    tools:context="com.cashify.overview.StatistikActivity">
+    tools:context="com.cashify.overview.OverviewFragment">
 
 
     <TextView
@@ -49,7 +49,7 @@
         tools:layout_constraintRight_creator="1" />
 
     <Button
-        android:id="@+id/pdf_button"
+        android:id="@+id/csv_button"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="123dp"
