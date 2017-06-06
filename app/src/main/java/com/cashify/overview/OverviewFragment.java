@@ -1,20 +1,14 @@
 package com.cashify.overview;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -195,7 +189,7 @@ public class OverviewFragment extends Fragment {
                     String[] text = {String.valueOf(e.getId()), e.getTitle(), String.valueOf(e.getAmount()), e.getCategory().getName(), e.getDatum()};
                     csvWrite.writeNext(text);
                 }
-                Toast.makeText(getContext(), "File erstellt /Cashify/Chasify_Export_Datum.csv", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "File erstellt /Cashify/Chasify_Export.csv", Toast.LENGTH_SHORT).show();
                 csvWrite.close();
                 Log.d("OverviewFragment", "Fertig mit Export!!");
             } catch (SQLException sqlEx) {
