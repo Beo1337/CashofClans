@@ -14,9 +14,9 @@ import android.util.Log;
 
 import com.cashify.R;
 import com.cashify.category.Category;
+import com.cashify.main.MainActivity;
 import com.cashify.monthly_entries.MonthlyEntry;
 import com.cashify.overview.Entry;
-import com.cashify.main.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -591,5 +591,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } else
             return false;
 
+    }
+
+    //TODO: Simon bitte Einträge innerhalb eines Datum und einer bestimmten Kategorie sollen zurückgegeben werden
+    public Set<Entry> getEntriesWithinDateAndCategory(String from, String to, String category) {
+        if (from.equals(null) && to.equals(null)) return getEntriesWithCategory(category); //Falls Startdatum ODER Enddatum leer sind geben wir alle Einträge einer bestimmten Kategorie zurück
+        return null;
+    }
+
+    private Set<Entry> getEntriesWithCategory(String category) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Set<Entry> allEntries = new HashSet<Entry>();
+        Map<Integer, Category> catMap = new TreeMap<>();
+
+        for (Category c : getCategoriesReuse(true)) catMap.put(c.getId(), c);
+
+        Cursor cursor = db.rawQuery("SELECT u.ID,u.BETRAG,u.TITEL,u.DATUM,U.FOTO,c.ID FROM " + TABLE_NAME_MAIN + " u JOIN " + TABLE_NAME_CATEGORY + " c ON u.KATEGORIE = c.ID WHERE c.NAME = " + category, null);
+        while (cursor.moveToNext()) {
+            //Log.d("DatabaseHelper"," "+cursor.getInt(0));
+            Entry e = new Entry(cursor.getInt(0), cursor.getDouble(1), cursor.getString(2), catMap.get(cursor.getInt(5)), cursor.getString(3), cursor.getString(4));
+            allEntries.add(e);
+        }
+        Log.i(TAG, "The list is:");
+        Iterator<Entry> i = allEntries.iterator();
+        while (i.hasNext())
+            Log.i(TAG, i.next().toString());
+        cursor.close();
+
+        return allEntries;
     }
 }

@@ -33,6 +33,14 @@ public class OverviewManager {
         });
     }
 
+    // Return list of elements which are within date and specified category
+    public List<Entry> getEntriesWithinDateAndCategory(String from, String to, String category){
+        if (entryList == null) entryList = new LinkedList<>();
+        entryList.clear();
+        entryList.addAll(dbHelper.getEntriesWithinDateAndCategory(from, to, category));
+        return entryList;
+    }
+
     // Return single entry by list position
     public Entry getEntryByIndex(int index) {
         return entryList.get(index);

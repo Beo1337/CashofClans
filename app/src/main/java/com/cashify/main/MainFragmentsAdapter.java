@@ -11,6 +11,7 @@ import android.text.Spanned;
 import android.text.style.ImageSpan;
 
 import com.cashify.R;
+import com.cashify.details.DetailsFragment;
 import com.cashify.overview.OverviewFragment;
 import com.cashify.settings.SettingsFragment;
 
@@ -47,7 +48,7 @@ public class MainFragmentsAdapter extends FragmentPagerAdapter {
             case 2:
                 return (Fragment) new SettingsFragment();
             default:
-                return TestFragment.newInstance(position + 1);
+                return new DetailsFragment();
         }
     }
 
