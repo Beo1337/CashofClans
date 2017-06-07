@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         final ActionBar actionbar = getSupportActionBar();
-        actionbar.setTitle(R.string.title_activity_main);
+        actionbar.setTitle(getResources().getString(R.string.app_name));
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new MainFragmentsAdapter(
@@ -47,11 +47,11 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
-            private final String tabs[] = new String[]{
-                    "Start",
-                    "Übersicht",
-                    "Einstellungen",
-                    "Hilfe"
+            private final int tabs[] = new int[]{
+                    R.string.title_activity_main,
+                    R.string.title_activity_overview,
+                    R.string.title_activity_einstellungen,
+                    R.string.title_activity_help
             };
 
             @Override
@@ -61,7 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                actionbar.setSubtitle(tabs[position]);
+                actionbar.setSubtitle(
+                        getResources().getString(tabs[position])
+                );
             }
 
             @Override
@@ -98,19 +100,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            default:
-                new DatePickerFragment().show(getSupportFragmentManager(), "");
-        }
+        new DatePickerFragment().show(getSupportFragmentManager(), "");
         return true;
     }
 
     private void refreshFragments() {
         for (Fragment f :  getSupportFragmentManager().getFragments()){
-            if (f instanceof Refreshable) {
-                Log.e("", f.toString());
-                ((Refreshable) f).refresh();
-            }
+            if (f instanceof Refreshable) ((Refreshable) f).refresh();
         }
     }
 }

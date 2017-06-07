@@ -58,7 +58,7 @@ public class CategoryManager {
     }
 
     public boolean updateCategory(Category c) {
-        // TODO: update name, update icon
+        this.dbHelper.changeCategoryName(c.getId(),c.getName());
         return false;
     }
 

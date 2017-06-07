@@ -39,10 +39,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     private void refreshFragments() {
         for (Fragment f :  getFragmentManager().getFragments()){
-            if (f instanceof Refreshable) {
-                Log.e("", f.toString());
-                ((Refreshable) f).refresh();
-            }
+            if (f instanceof Refreshable) ((Refreshable) f).refresh();
         }
     }
 }

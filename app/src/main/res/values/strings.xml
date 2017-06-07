@@ -12,22 +12,26 @@
     <string name="diag_text_entry_delete">Eintrag wirklich löschen?</string>
 
     <string name="diag_title_category_delete">Kategorie löschen</string>
-    <string name="diag_text_category_delete">Kategorie wirklich löschen?</string>
+    <string name="diag_text_category_delete">Kategorie löschen?</string>
 
+    <string name="diag_title_category_change">Kategorie ändern</string>
+    <string name="diag_text_category_change">Kategorie ändern?</string>
+
+    <string name="action_save">Speichern</string>
     <string name="action_add">Hinzufügen</string>
     <string name="action_delete">Entfernen</string>
     <string name="action_cancel">Abbrechen</string>
     <string name="action_calendar_filter">Datum einschränken…</string>
 
-    <string name="title_activity_statistik">StatistikActivity</string>
-    <string name="title_activity_category_detail" />
     <string name="title_activity_alarm">AlarmActivity</string>
     <string name="title_activity_password">Passwort</string>
     <string name="title_activity_einstellungen">Einstellungen</string>
     <string name="title_activity_add">AddActivity</string>
     <string name="title_activity_category">Kategorien</string>
+    <string name="title_activity_category_detail">Kategorie</string>
     <string name="title_activity_overview">Übersicht</string>
-    <string name="title_activity_main">Cashify</string>
+    <string name="title_activity_main">Start</string>
+    <string name="title_activity_help">Help</string>
 
     <string name="calendar_current_month">Aktuelles Monat</string>
     <string name="calendar_year">Aktuelles Jahr</string>

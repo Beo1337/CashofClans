@@ -18,7 +18,6 @@ public class CategoryDetailActivity extends AppCompatActivity {
 
     private Category category;
     private EditText catNameField;
-    private Button delButton;
     private final CategoryDetailActivity parent = this;
 
     @Override
@@ -35,7 +34,7 @@ public class CategoryDetailActivity extends AppCompatActivity {
             catNameField = (EditText) findViewById(R.id.category_detail_name);
             catNameField.setText(category.getName());
 
-            delButton = (Button) findViewById(R.id.category_detail_delete);
+            Button delButton = (Button) findViewById(R.id.category_detail_delete);
             delButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -60,8 +59,30 @@ public class CategoryDetailActivity extends AppCompatActivity {
                 }
             });
 
-            // TODO: rename, change icon mechanism
+            Button chgButton = (Button) findViewById(R.id.category_detail_save);
+            chgButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
 
+                    builder.setTitle(R.string.diag_title_category_change)
+                            .setMessage(category.getName() + " - " + R.string.diag_text_category_change)
+                            .setPositiveButton(R.string.action_save, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    category.setName(catNameField.getText().toString());
+                                    catManager.updateCategory(category);
+                                    dialog.dismiss();
+                                    parent.finish();
+                                }
+                            })
+                            .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                }
+            });
         } catch (Exception e) {
 
         }
