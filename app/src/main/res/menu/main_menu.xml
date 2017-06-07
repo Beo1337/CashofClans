@@ -3,8 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/switch_container"
+        app:actionLayout="@layout/calendar_switch_elem"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_calendar"
         android:icon="@drawable/calendar"
         android:title="@string/action_calendar_filter"
         app:showAsAction="always" />
+
 </menu>

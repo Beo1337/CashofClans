@@ -1,19 +1,13 @@
 package com.cashify.base;
 
-import android.content.SharedPreferences;
 import android.util.Log;
-
-import com.cashify.database.DatabaseHelper;
 import com.cashify.overview.Entry;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 import static android.content.ContentValues.TAG;
@@ -21,9 +15,9 @@ import static android.content.ContentValues.TAG;
 
 public class MoneyHelper {
 
-    private static int YEAR;
-    private static int MONTH;
-    private static int DAY;
+    private static int YEAR = 1900;
+    private static int MONTH = 0;
+    private static int DAY = 0;
     private static boolean FILTER_SET = false;
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -52,9 +46,11 @@ public class MoneyHelper {
         return FILTER_SET;
     }
 
-    public static void resetDate(){
+    public static void unsetFilter(){
         FILTER_SET = false;
     }
+
+    public static void setFilter() { FILTER_SET = true;}
 
     public static void setStartDate(int y, int m, int d) {
         FILTER_SET = true;

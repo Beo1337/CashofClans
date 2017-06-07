@@ -2,14 +2,11 @@ package com.cashify.base;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.DatePicker;
-import android.widget.TimePicker;
 
 import java.util.Calendar;
 
@@ -36,6 +33,9 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         MoneyHelper.setStartDate(year, month, dayOfMonth);
         refreshFragments();
     }
+
+    // Identify refreshable fragments and refresh them, there should be only one (refreshable)
+    // fragment loaded at any time, currently no better way to identify it.
 
     private void refreshFragments() {
         for (Fragment f :  getFragmentManager().getFragments()){

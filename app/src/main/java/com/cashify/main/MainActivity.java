@@ -3,6 +3,7 @@ package com.cashify.main;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +12,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import com.cashify.R;
 import com.cashify.base.DatePickerFragment;
+import com.cashify.base.MoneyHelper;
 import com.cashify.base.Refreshable;
 
 // Main activity with tabs
@@ -73,7 +78,22 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
-        return true;
+
+        View v = menu.findItem(R.id.switch_container).getActionView();
+        Switch calSwitch = (Switch) v.findViewById(R.id.calendar_switch);
+
+        calSwitch.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    MoneyHelper.setFilter();
+                } else {
+                    MoneyHelper.unsetFilter();
+                }
+                refreshFragments();
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -85,5 +105,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-
+    private void refreshFragments() {
+        for (Fragment f :  getSupportFragmentManager().getFragments()){
+            if (f instanceof Refreshable) {
+                Log.e("", f.toString());
+                ((Refreshable) f).refresh();
+            }
+        }
+    }
 }

@@ -48,11 +48,10 @@ public class MainFragment extends Fragment implements Refreshable {
     public void refresh() {
         double amount = MoneyHelper.count(MoneyHelper.filter(dbHelper.getEntries()));
         totalAmountView = (TextView) getActivity().findViewById(R.id.total_amount);
+
+        if (totalAmountView == null) return;
         totalAmountView.setText(String.valueOf(amount) + "€");
-        if (amount < 0)
-            totalAmountView.setTextColor(Color.RED);
-        else
-            totalAmountView.setTextColor(Color.GREEN);
+        totalAmountView.setTextColor(amount < 0 ? Color.RED : Color.GREEN);
     }
 
     // Once we are ready to go, set up event logic here and display stuff
