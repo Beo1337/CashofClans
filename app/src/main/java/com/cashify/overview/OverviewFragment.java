@@ -11,6 +11,8 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cashify.R;
+import com.cashify.base.MoneyHelper;
+import com.cashify.base.Refreshable;
 import com.cashify.category.Category;
 import com.cashify.database.DatabaseHelper;
 import com.github.mikephil.charting.charts.PieChart;
@@ -40,7 +44,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-public class OverviewFragment extends Fragment {
+public class OverviewFragment extends Fragment implements Refreshable {
 
     private static final String TAG = "StatistikActivity";
     private TextView totalAmountView;       // View that display combined sum of income and expenses
@@ -93,23 +97,25 @@ public class OverviewFragment extends Fragment {
         addChart();
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+    public void refresh() {
+        addChart();
+    }
+
     public void addChart() {
         List<Entry> entries = new ArrayList<>();
         List<String> PieEntryLabels = new ArrayList<String>();
-        List<Category> categoryList = new LinkedList<>();
         List<com.cashify.overview.Entry> entryList = new LinkedList<>();
         HashMap<String, Object> sumMap = new HashMap<String, Object>();
         int counter = 0;
 
-        categoryList.addAll(dbHelper.getCategories());
-        entryList.addAll(dbHelper.getEntries());
-
-        Collections.sort(categoryList, new Comparator<Category>() {
-            @Override
-            public int compare(Category o1, Category o2) {
-                return o1.getName().compareTo(o2.getName());
-            }
-        });
+        entryList.addAll(MoneyHelper.filter(dbHelper.getEntries()));
 
         String time = sharedPref.getString("zeit", "");
 
@@ -199,6 +205,5 @@ public class OverviewFragment extends Fragment {
             }
         }
     }
-
 
 }

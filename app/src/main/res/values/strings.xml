@@ -17,6 +17,7 @@
     <string name="action_add">Hinzufügen</string>
     <string name="action_delete">Entfernen</string>
     <string name="action_cancel">Abbrechen</string>
+    <string name="action_calendar_filter">Datum einschränken…</string>
 
     <string name="title_activity_statistik">StatistikActivity</string>
     <string name="title_activity_category_detail" />
@@ -26,6 +27,12 @@
     <string name="title_activity_add">AddActivity</string>
     <string name="title_activity_category">Kategorien</string>
     <string name="title_activity_overview">Übersicht</string>
+    <string name="title_activity_main">Cashify</string>
+
+    <string name="calendar_current_month">Aktuelles Monat</string>
+    <string name="calendar_year">Aktuelles Jahr</string>
+    <string name="calendar_all">Alles</string>
+    <string name="calendar_custom">Seit Datum…</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

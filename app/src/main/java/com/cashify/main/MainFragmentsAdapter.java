@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
@@ -26,10 +27,12 @@ public class MainFragmentsAdapter extends FragmentPagerAdapter {
     };
 
     private final Context context;
+    private final ActionBar actionBar;
 
-    public MainFragmentsAdapter(FragmentManager fm, Context context) {
+    public MainFragmentsAdapter(FragmentManager fm, Context context, ActionBar actionBar) {
         super(fm);
         this.context = context;
+        this.actionBar = actionBar;
     }
 
     @Override
@@ -48,7 +51,7 @@ public class MainFragmentsAdapter extends FragmentPagerAdapter {
             case 2:
                 return (Fragment) new SettingsFragment();
             default:
-                return new DetailsFragment();
+               return new DetailsFragment();
         }
     }
 
