@@ -6,6 +6,23 @@
     android:layout_height="match_parent"
     tools:context="com.cashify.overview.ChangeEntryActivity">
 
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="cam"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.974"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.375"
+        app:srcCompat="@drawable/cameraicon" />
+
     <EditText
         android:id="@+id/Betrag"
         android:layout_width="wrap_content"
@@ -70,18 +87,18 @@
         android:id="@+id/imageButton7"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:onClick="cam"
-        app:srcCompat="@drawable/cameraicon"
+        android:onClick="deletecam"
+        app:srcCompat="@drawable/cameradeleteicon"
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.974"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.375" />
+        app:layout_constraintVertical_bias="0.015"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
 
     <ImageButton
         android:id="@+id/imageButton10"

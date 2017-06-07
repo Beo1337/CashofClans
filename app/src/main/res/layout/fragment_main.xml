@@ -56,7 +56,7 @@
             app:srcCompat="@drawable/icon_beer" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/imageButton1"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginLeft="3dp"

@@ -65,6 +65,10 @@ public class ChangeEntryActivity extends AppCompatActivity {
     private Bundle bundle;
     /**Format für ein Datum*/
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    /**Button zum Löschen eines Bildes*/
+    private ImageButton delete;
+    /**Button zum Machen eines Fotos*/
+    private ImageButton cam;
 
     static final int REQUEST_TAKE_PHOTO = 1;
 
@@ -103,10 +107,15 @@ public class ChangeEntryActivity extends AppCompatActivity {
         selectValue(spin, bundle.getString("kategorie"));
         title.setText(bundle.getString("titel"));
         foto = bundle.getString("foto");
+        delete = (ImageButton) findViewById(R.id.imageButton7);
+        cam = (ImageButton) findViewById(R.id.imageButton);
         if (foto != null) {
-            ImageButton im = (ImageButton) findViewById(R.id.imageButton7);
-            im.setImageResource(R.drawable.cameracheckicon);
+
+            cam.setImageResource(R.drawable.cameracheckicon);
+            delete.setVisibility(View.VISIBLE);
         }
+        else
+            delete.setVisibility(View.INVISIBLE);
 
 
         try {
@@ -196,6 +205,7 @@ public class ChangeEntryActivity extends AppCompatActivity {
                             photoFile);
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                     startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                    cam.setImageResource(R.drawable.cameracheckicon);
                 }
             }
         } catch (Exception e1) {//Falls irgend ein Fehler mit der Camera auftreten sollte, wird dieser gefangen.
@@ -256,5 +266,14 @@ public class ChangeEntryActivity extends AppCompatActivity {
 
 
         }
+    }
+
+    /**Diese Methode löscht ein Bild von einem Eintrag*/
+    public void deletecam(View v){
+        Toast.makeText(ChangeEntryActivity.this, "Foto gelöscht!", Toast.LENGTH_LONG).show();
+        foto = null;
+        delete.setVisibility(View.INVISIBLE);
+        cam.setImageResource(R.drawable.cameraicon);
+
     }
 }
