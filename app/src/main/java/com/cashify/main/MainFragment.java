@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,13 +17,14 @@ import android.widget.TextView;
 
 import com.cashify.R;
 import com.cashify.add.AddActivity;
-import com.cashify.base.Money;
+import com.cashify.base.MoneyHelper;
+import com.cashify.base.Refreshable;
 import com.cashify.database.DatabaseHelper;
 
 
 // Lightweight fragment version of Main activity
 // To get views, we must work with getActivity() here, otherwise explodes with null pointer exceptions.
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements Refreshable {
 
     private TextView totalAmountView;       // View that display combined sum of income and expenses
     private SharedPreferences sharedPref;   // Computation needs that for some reason
@@ -42,8 +45,8 @@ public class MainFragment extends Fragment {
     }
 
     // Calculate amount of money left (hopefully) and refresh view
-    private void refresh() {
-        double amount = Money.count(sharedPref, dbHelper);
+    public void refresh() {
+        double amount = MoneyHelper.count(MoneyHelper.filter(dbHelper.getEntries()));
         totalAmountView = (TextView) getActivity().findViewById(R.id.total_amount);
         totalAmountView.setText(String.valueOf(amount) + "€");
         if (amount < 0)
@@ -88,5 +91,11 @@ public class MainFragment extends Fragment {
                     }
                 }
         );
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }
