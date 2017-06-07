@@ -11,12 +11,10 @@ import android.util.Log;
  * Der Service wird gestartet sobald der Intent USER_PRESENT vom System geschickt wird. (Entsperren des Bildschirms)
  */
 public class BootReceiver extends BroadcastReceiver {
-    /**
-     * Der TAG wird für das Log verwendet um anzuzeigen von welcher Klasse der Logeintrag stammt.
-     */
+    /**Der TAG wird für das Log verwendet um anzuzeigen von welcher Klasse der Logeintrag stammt.*/
     private static final String TAG = "BootReceiver";
 
-    //Diese Methode wird aufgerufen wenn vom System der Intent USER_PRESENT empfangen wird.
+    /**Diese Methode wird aufgerufen wenn vom System der Intent USER_PRESENT empfangen wird.*/
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -30,9 +28,7 @@ public class BootReceiver extends BroadcastReceiver {
         }
     }
 
-    /**
-     * Diese Methode schaut nach ob der Übergebene Service bereits gestart ist.
-     */
+    /**Diese Methode schaut nach ob der Übergebene Service bereits gestart ist.*/
     private boolean isMyServiceRunning(Class<?> serviceClass, Context context) {
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {

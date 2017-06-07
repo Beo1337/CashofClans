@@ -18,14 +18,10 @@ import com.cashify.R;
  */
 public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapter.ViewHolder> {
 
-    /**
-     * Über den Manager können die monatlichen Einträge aus der Datenbank geholt werden.
-     */
+    /**Über den Manager können die monatlichen Einträge aus der Datenbank geholt werden.*/
     private MonthlyEntryManager manager;
 
-    /**
-     * Diese Methode liefert den ViewHolder welcher mit den Daten aus der Datenbank befüllt wurde
-     */
+    /**Diese Methode liefert den ViewHolder welcher mit den Daten aus der Datenbank befüllt wurde*/
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private View view;
 
@@ -110,17 +106,13 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapte
         });
     }
 
-    /**
-     * Diese Methode liefert die Anzahl an Items in dem Viewholder.
-     */
+    /**Diese Methode liefert die Anzahl an Items in dem Viewholder.*/
     public int getItemCount() {
         return manager.getCount();
     }
 
 
-    /**
-     * Diese Methode liefert einen Abfragedialog bevor das Löschen durchgeführt wird.
-     */
+    /**Diese Methode liefert einen Abfragedialog bevor das Löschen durchgeführt wird.*/
     private AlertDialog AskOption(Context context, final MonthlyEntry ent) {
         AlertDialog myQuittingDialogBox = new AlertDialog.Builder(context)
                 .setTitle("Löschen")

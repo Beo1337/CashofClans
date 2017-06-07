@@ -20,33 +20,19 @@ import com.cashify.database.DatabaseHelper;
  */
 public class ChangeMonthlyEntryActivity extends AppCompatActivity {
 
-    /**
-     * In diesem Textfeld wird der aktuelle Kontostand angezeigt.
-     */
+    /**In diesem Textfeld wird der aktuelle Kontostand angezeigt.*/
     private EditText betrag;
-    /**
-     * In diesem Textfeld wird der aktuelle Title angezeigt.
-     */
+    /**In diesem Textfeld wird der aktuelle Title angezeigt.*/
     private EditText title;
-    /**
-     * Wird benötigt um die gewählte Zahl in das Textfeld zu schreiben.
-     */
+    /**Wird benötigt um die gewählte Zahl in das Textfeld zu schreiben.*/
     private String s;
-    /**
-     * Datenbank
-     */
+    /**Datenbank*/
     private DatabaseHelper myDb;
-    /**
-     * Speichert eine Auswahlliste der verfügbaren Kategorien.
-     */
+    /**Speichert eine Auswahlliste der verfügbaren Kategorien.*/
     private Spinner spin;
-    /**
-     * Diser Numberpicker repräsentiert den Tag an dem der Eintrag gebucht werden soll (1-31)
-     */
+    /**Diser Numberpicker repräsentiert den Tag an dem der Eintrag gebucht werden soll (1-31)*/
     private NumberPicker np;
-    /**
-     * Wird benötigt um Werte die der Aktivity mitgegeben wurden auszulesen.
-     */
+    /**Wird benötigt um Werte die der Aktivity mitgegeben wurden auszulesen.*/
     private Bundle bundle;
 
     @Override
@@ -85,9 +71,7 @@ public class ChangeMonthlyEntryActivity extends AppCompatActivity {
         title.setText(bundle.getString("titel"));
     }
 
-    /**
-     * Diese Methode setzt den Spinner auf eine Kategorie.
-     */
+    /**Diese Methode setzt den Spinner auf eine Kategorie.*/
     private void selectValue(Spinner spinner, String value) {
         for (int i = 0; i < spinner.getCount(); i++) {
             if (((Cursor) spinner.getItemAtPosition(i)).getString(1).equals(value)) {
@@ -97,9 +81,7 @@ public class ChangeMonthlyEntryActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Diese Methode speichert die eingegebenen Werte in die Datenbank.
-     */
+    /**Diese Methode speichert die eingegebenen Werte in die Datenbank.*/
     public void eintragen(View v) {
         boolean success;
 

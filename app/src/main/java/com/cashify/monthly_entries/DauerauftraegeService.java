@@ -6,13 +6,11 @@ import android.os.IBinder;
 import android.util.Log;
 
 /**
- * Dieser Service wird vom BootReceiver gestartet.
+ * Dieser Service wird vom BootReceiver gestartet und startet den Timer für die Überprüfung der monatlichen Einträge.
  */
 public class DauerauftraegeService extends Service {
 
-    /**
-     * In der diser Klasse wird die tägliche Überprüfung der monatlichen Einträge durchgeführt.
-     */
+    /**In der diser Klasse wird die tägliche Überprüfung der monatlichen Einträge durchgeführt.*/
     Dauerauftraege alarm = new Dauerauftraege();
 
     public void onCreate() {

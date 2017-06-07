@@ -12,11 +12,17 @@ import android.util.Log;
 import com.cashify.R;
 import com.cashify.database.DatabaseHelper;
 
+/**
+ * Diese Klasse stelt die Einträge dar, und bietet eine Möglichkeit neue Einträge hinzuzufügen.
+ */
 public class OverviewListActivity extends AppCompatActivity {
 
     private RecyclerView catRecycleView;
+    /**Toolbar für den hinzufügen-Button*/
     private Toolbar toolbar;
+    /**Dieser Adapter listed die einzelnen Einträge aus der Datenbank auf.*/
     private OverviewAdapter adapter;
+    /**Über den Manager werden die Daten aus der Datenbank ausgelesen.*/
     private OverviewManager manager;
 
     @Override
@@ -48,9 +54,7 @@ public class OverviewListActivity extends AppCompatActivity {
         actionbar.setTitle(R.string.title_activity_overview);
     }
 
-    /**
-     * Wird die Aktivity aus dem Hintergrund wieder in den Vordergrund gebarcht, soll der Adapter aktualisert werden da Änderungen an den Datensätzen vorgenommen werden konnten.
-     */
+    /**Wird die Aktivity aus dem Hintergrund wieder in den Vordergrund gebarcht, soll der Adapter aktualisert werden da Änderungen an den Datensätzen vorgenommen werden konnten.*/
     @Override
     public void onRestart() {
         super.onRestart();

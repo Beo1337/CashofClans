@@ -22,9 +22,11 @@ import com.cashify.database.DatabaseHelper;
 public class MonthlyEntryActivity extends AppCompatActivity {
 
     private RecyclerView catRecycleView;
+    /**Toolbar für den hinzufügen-Button*/
     private Toolbar toolbar;
-    /***/
+    /**Dieser Adapter listed die einzelnen Einträge aus der Datenbank auf.*/
     private MonthlyEntryAdapter adapter;
+    /**Über den Manager werden die Daten aus der Datenbank ausgelesen.*/
     private MonthlyEntryManager manager;
 
     @Override
@@ -56,9 +58,7 @@ public class MonthlyEntryActivity extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
     }
 
-    /**
-     * Diese  Methode initialisert das Contextmenu das durch drücken des + Buttons in der Titelleiste aufgerufen wird.
-     */
+    /**Diese  Methode initialisert das Contextmenu das durch drücken des + Buttons in der Titelleiste aufgerufen wird.*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -66,9 +66,7 @@ public class MonthlyEntryActivity extends AppCompatActivity {
         return true;
     }
 
-    /**
-     * Wenn eine der Optionen des Contexmenüs ausgewählt wurde, wird die entsprechende Aktion ausgeführt.
-     */
+    /**Wenn eine der Optionen des Contexmenüs ausgewählt wurde, wird die entsprechende Aktion ausgeführt.*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -82,9 +80,7 @@ public class MonthlyEntryActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Wird die Aktivity aus dem Hintergrund wieder in den Vordergrund gebarcht, soll der Adapter aktualisert werden da Änderungen an den Datensätzen vorgenommen werden konnten.
-     */
+    /**Wird die Aktivity aus dem Hintergrund wieder in den Vordergrund gebarcht, soll der Adapter aktualisert werden da Änderungen an den Datensätzen vorgenommen werden konnten.*/
     @Override
     public void onRestart() {
         super.onRestart();

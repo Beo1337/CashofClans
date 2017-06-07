@@ -20,17 +20,11 @@ import com.cashify.R;
  */
 public class PictureActivity extends AppCompatActivity {
 
-    /**
-     * Der TAG wird für das Log verwendet um anzuzeigen von welcher Klasse der Logeintrag stammt.
-     */
+    /**Der TAG wird für das Log verwendet um anzuzeigen von welcher Klasse der Logeintrag stammt.*/
     private static final String TAG = "PictureActivity";
-    /**
-     * Die Imageview in welche das Foto geladen wird.
-     */
+    /**Die Imageview in welche das Foto geladen wird.*/
     private ImageView bild;
-    /**
-     * Das Bitmap das aus dem gespeicherten Bild erstellt wird.
-     */
+    /**Das Bitmap das aus dem gespeicherten Bild erstellt wird.*/
     private Bitmap myBitmap;
 
     @Override
@@ -48,9 +42,7 @@ public class PictureActivity extends AppCompatActivity {
             Log.d(TAG, "Foto nicht da!");
     }
 
-    /**
-     * Diese Methode dreht das Bitmap um eine übergebene Anzahl an Grad.
-     */
+    /**Diese Methode dreht das Bitmap um eine übergebene Anzahl an Grad.*/
     public static Bitmap RotateBitmap(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);

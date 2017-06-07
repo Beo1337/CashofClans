@@ -8,12 +8,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Beo on 01.06.2017.
+ * Diese Klasse befüllt eine Liste mit den Einträgen aus der Datenbank und bietet Mehtoden für das Hinzufügen und Löschen von Einträgen an.
  */
-
 public class OverviewManager {
 
+    /**Liste mit den Einträgen die aus der Datenbank befüllt wird. */
     private static List<Entry> entryList;
+    /**Über den Databasehelper kann die Datenbank angesprochen werden.*/
     private DatabaseHelper dbHelper;
 
     public OverviewManager(DatabaseHelper dbHelper) {

@@ -34,28 +34,17 @@ import static android.content.Context.NOTIFICATION_SERVICE;
  * Diese Klasse wird benötigt um die Datenbank nach Installation der App zu erstelle und mit den vordefinierten Daten zu füllen.
  * Es werden Datenbankfunktionen angeboten, welche in der ganzen App verwendet werden können.
  */
-
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    /**
-     * Der TAG wird für das Log verwendet um anzuzeigen von welcher Klasse der Logeintrag stammt.
-     */
+    /**Der TAG wird für das Log verwendet um anzuzeigen von welcher Klasse der Logeintrag stammt.*/
     private static final String TAG = "DatabaseHelper";
-    /**
-     * Name der Datenbank
-     */
+    /**Name der Datenbank*/
     public static final String DATABASE_NAME = "cash.db";
-    /**
-     * Name der Tabelle welche die Einträge speichert
-     */
+    /**Name der Tabelle welche die Einträge speichert*/
     public static final String TABLE_NAME_MAIN = "uebersicht";
-    /**
-     * Name der Tabelle welche die Kategorien speichert
-     */
+    /**Name der Tabelle welche die Kategorien speichert*/
     public static final String TABLE_NAME_CATEGORY = "category";
-    /**
-     * Name der Tabelle welche die monatlich wiederholten Aufträge speichert.
-     */
+    /**Name der Tabelle welche die monatlich wiederholten Aufträge speichert.*/
     public static final String TABLE_NAME_REPEAT_ENTRY = "REPEAT_ENTRY";
 
     public static final SimpleDateFormat sdf = new SimpleDateFormat("dd");
@@ -95,9 +84,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    /**
-     * Diese Methode fügt eine neue Kategorie in die Kategorie-Tabelle ein.
-     */
+    /**Diese Methode fügt eine neue Kategorie in die Kategorie-Tabelle ein.*/
     private boolean addCat(String name, SQLiteDatabase db) {
         long newRowId = 0;
 
@@ -124,9 +111,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    /**
-     * Diese Methode fügt eine neue Kategorie in die Kategorie-Tabelle ein.
-     */
+    /**Diese Methode fügt eine neue Kategorie in die Kategorie-Tabelle ein.*/
     public boolean addCategory(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         long newRowId = 0;
@@ -154,9 +139,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    /**
-     * Diese Methode fügt eine neue Kategorie in die Kategorie-Tabelle ein. Optional ist es möglich String für ein Icon mitzugeben.
-     */
+    /**Diese Methode fügt eine neue Kategorie in die Kategorie-Tabelle ein. Optional ist es möglich String für ein Icon mitzugeben.*/
     public boolean addCategory(String name, String icon) {
         SQLiteDatabase db = this.getWritableDatabase();
         //Werte für Datenbank vorbereiten
@@ -182,9 +165,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
     }
 
-    /**
-     * Diese Methode ändert den Namen einer Kategorie.
-     */
+    /**Diese Methode ändert den Namen einer Kategorie.*/
     public boolean changeCategoryName(int id, String newname) {
         SQLiteDatabase db = this.getWritableDatabase();
         //Wert für Datenbank vorbereiten
@@ -209,9 +190,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
     }
 
-    /**
-     * Diese Methode ändert das Icon einer Kategorie.
-     */
+    /**Diese Methode ändert das Icon einer Kategorie.*/
     public boolean changeCategoryIcon(int id, String icon) {
         SQLiteDatabase db = this.getWritableDatabase();
         //Wert für Datenbank vorbereiten
@@ -236,9 +215,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
     }
 
-    /**
-     * Diese Methode löscht eine Kategorie aus der Datenbank.
-     */
+    /**Diese Methode löscht eine Kategorie aus der Datenbank.*/
     public boolean deleteCategory(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         int del;
@@ -258,16 +235,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
     }
 
-    /**
-     * Diese Methode liefert alle Kategorien als HashSet zurück.
-     */
+    /**Diese Methode liefert alle Kategorien als HashSet zurück.*/
     public Set<Category> getCategories() {
         return this.getCategoriesReuse(false);
     }
 
-    /**
-     * Diese Methode liefert alle Kategorien als HashSet zurück.
-     */
+    /**Diese Methode liefert alle Kategorien als HashSet zurück.*/
     private Set<Category> getCategoriesReuse(boolean keepOpen) {
         SQLiteDatabase db = this.getReadableDatabase();
         Set<Category> allCategories = new HashSet<Category>();
@@ -294,9 +267,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return allCategories;
     }
 
-    /**
-     * Diese Methode liefert alle Entries als HashSet zurück
-     */
+    /**Diese Methode liefert alle Entries als HashSet zurück*/
     public Set<Entry> getEntries() {
         SQLiteDatabase db = this.getReadableDatabase();
         Set<Entry> allEntries = new HashSet<Entry>();
@@ -319,9 +290,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return allEntries;
     }
 
-    /**
-     * Diese Methode fügt einen Eintrag in die Übersichtstabelle ein.
-     */
+    /**Diese Methode fügt einen Eintrag in die Übersichtstabelle ein.*/
     public boolean addEntry(double betrag, String title, String foto, String kategorie, String date) {
         SQLiteDatabase db;
         SQLiteDatabase dbr = this.getReadableDatabase();
@@ -356,9 +325,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return newRowId > 0;
     }
 
-    /**
-     * Diese Methode löscht den Eintrag mit der übergegenen ID aus der Datenbank.
-     */
+    /**Diese Methode löscht den Eintrag mit der übergegenen ID aus der Datenbank.*/
     public boolean removeEntry(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         int del = db.delete(TABLE_NAME_MAIN, "ID =" + id, null);
@@ -370,9 +337,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
     }
 
-    /**
-     * Diese Methode ändert den Eintrag der übergebenen ID.
-     */
+    /**Diese Methode ändert den Eintrag der übergebenen ID.*/
     public boolean changeEntry(int id, double betrag, String title, String foto, String kategorie, String date) {
 
         SQLiteDatabase db;
@@ -402,9 +367,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    /**
-     * Diese Methode checkt ob Einträge aus den monatlichen Einträgen heute eingetragen werden müssen.
-     */
+    /**Diese Methode checkt ob Einträge aus den monatlichen Einträgen heute eingetragen werden müssen.*/
     public void checkMonthlyEntries(Context context) {
         SQLiteDatabase db = this.getWritableDatabase();
         String strDate;
@@ -496,9 +459,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    /**
-     * Diese Methode liefert alle monatlichen Entries als HashSet zurück
-     */
+    /**Diese Methode liefert alle monatlichen Entries als HashSet zurück*/
     public Set<MonthlyEntry> getMonthlyEntries() {
         SQLiteDatabase db = this.getReadableDatabase();
         Set<MonthlyEntry> allEntries = new HashSet<MonthlyEntry>();
@@ -522,9 +483,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return allEntries;
     }
 
-    /**
-     * Diese Methode fügt einen neuen Monatlichen Eintrag in die Datenbank ein.
-     */
+    /**Diese Methode fügt einen neuen Monatlichen Eintrag in die Datenbank ein.*/
     public boolean addMonthlyEntry(double betrag, String titel, String kategorie, int tag) {
         SQLiteDatabase db;
         SQLiteDatabase dbr = this.getReadableDatabase();
@@ -550,9 +509,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
     }
 
-    /**
-     * Diese Methode löscht einen monatlichen Eintrag.
-     */
+    /**Diese Methode löscht einen monatlichen Eintrag.*/
     public boolean deleteMonthlyEntry(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         int del = db.delete(TABLE_NAME_REPEAT_ENTRY, "ID =" + id, null);
@@ -564,6 +521,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
     }
 
+    /**Diese Methode ändert den monatlichen Eintrag, dessen ID übergeben wurde.*/
     public boolean changeMonthlyEntry(int id, double betrag, String titel, String kategorie, int tag) {
         SQLiteDatabase db;
         SQLiteDatabase dbr = this.getReadableDatabase();
@@ -593,12 +551,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    //TODO: Simon bitte Einträge innerhalb eines Datum und einer bestimmten Kategorie sollen zurückgegeben werden
+    //TODO : Simon bitte Einträge innerhalb eines Datum und einer bestimmten Kategorie sollen zurückgegeben werden
     public Set<Entry> getEntriesWithinDateAndCategory(String from, String to, String category) {
         if (from.equals(null) && to.equals(null)) return getEntriesWithCategory(category); //Falls Startdatum ODER Enddatum leer sind geben wir alle Einträge einer bestimmten Kategorie zurück
         return null;
     }
 
+    /**Diese Methode liefert zu einer übergebenen Kategorie alle gebuchten Einträge.*/
     private Set<Entry> getEntriesWithCategory(String category) {
         SQLiteDatabase db = this.getReadableDatabase();
         Set<Entry> allEntries = new HashSet<Entry>();

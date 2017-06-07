@@ -41,13 +41,9 @@ public class DetailsFragment extends Fragment {
     private static final String TAG = "DetailsActivity";
     private DatabaseHelper myDb;        // Database helper object to retrieve database entries
     private SharedPreferences sharedPref;   // Shared preferences
-    /**
-     * Über den Manager werden die Einträge aus der Datenbank ausgelesen.
-     */
+    /**Über den Manager werden die Einträge aus der Datenbank ausgelesen.*/
     private OverviewManager manager;
-    /**
-     * Wert für die Datenbankabfrage
-     **/
+    /**Wert für die Datenbankabfrage*/
     String category;
 
     // Context for Database helper (and others) provided through onAttach event
@@ -175,9 +171,7 @@ public class DetailsFragment extends Fragment {
     }
 
 
-    /**
-     * Diese Methode schreibt die Einträge der Tabell in ein CSV-File
-     */
+    /**Diese Methode schreibt die Einträge der Tabell in ein CSV-File*/
     public void exportData(String from, String to, String category) {
         DatabaseHelper myDb = new DatabaseHelper(getContext());
         manager = new OverviewManager(myDb);

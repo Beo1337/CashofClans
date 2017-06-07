@@ -33,55 +33,32 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-
 /**
  * Diese Klasse wird verwendet um neue Einträge in die Überischtstabelle einzufügen.
  */
 public class AddActivity extends AppCompatActivity {
 
-    /**
-     * Der TAG wird für das Log verwendet um anzuzeigen von welcher Klasse der Logeintrag stammt.
-     */
+    /**Der TAG wird für das Log verwendet um anzuzeigen von welcher Klasse der Logeintrag stammt.*/
     private static final String TAG = "AddActivity";
-    /**
-     * In diesem Textfeld wird der aktuelle Kontostand angezeigt.
-     */
+    /**In diesem Textfeld wird der aktuelle Kontostand angezeigt.*/
     private EditText betrag;
-    /**
-     * Wird benötigt um die gewählte Zahl in das Textfeld zu schreiben.
-     */
+    /**Wird benötigt um die gewählte Zahl in das Textfeld zu schreiben.*/
     private String s;
-    /**
-     * Datenbank
-     */
+    /**Datenbank*/
     private DatabaseHelper myDb;
-    /**
-     * Wird benötigt um negative Einträge zu verbuchen
-     */
+    /**Wird benötigt um negative Einträge zu verbuchen*/
     private int vorzeichen = 1;
-    /**
-     * Speichert eine Auswahlliste der verfügbaren Kategorien.
-     */
+    /**Speichert eine Auswahlliste der verfügbaren Kategorien.*/
     private Spinner spin;
-    /**
-     * Speichername des Fotos
-     */
+    /**Speichername des Fotos*/
     private String foto = null;
-    /**
-     * File in dem das Foto gespeichert wird
-     */
+    /**File in dem das Foto gespeichert wird*/
     private File photoFile = null;
-    /**
-     * Jahr des Eintrags
-     */
+    /**Jahr des Eintrags*/
     private int mYear = -1;
-    /**
-     * Monat des Eintrags
-     */
+    /**Monat des Eintrags*/
     private int mMonth = -1;
-    /**
-     * Tag des Eintrags
-     */
+    /**Tag des Eintrags*/
     private int mDay = -1;
 
     static final int REQUEST_TAKE_PHOTO = 1;
@@ -137,9 +114,7 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Diese Methode setzt den Spinner auf eine Kategorie.
-     */
+    /**Diese Methode setzt den Spinner auf eine Kategorie.*/
     private void selectValue(Spinner spinner, String value) {
         for (int i = 0; i < spinner.getCount(); i++) {
             if (((Cursor) spinner.getItemAtPosition(i)).getString(1).equals(value)) {
@@ -150,9 +125,7 @@ public class AddActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * Diese Methode speichert die eingegebenen Werte in die Datenbank.
-     */
+    /**Diese Methode speichert die eingegebenen Werte in die Datenbank.*/
     public void eintragen(View v) {
 
         if (!betrag.getText().toString().equals("")) {//Wenn kein Betrag eingeben wurde, wird kein Eintrag in der Datenbank erstellt.
@@ -190,9 +163,7 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Diese Methode macht ein Foto welches zum Eintrag hinzugefügt wird
-     */
+    /**Diese Methode macht ein Foto welches zum Eintrag hinzugefügt wird*/
     public void cam(View v) {
 
         try {
@@ -221,9 +192,7 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Diese Methode wird aufgerufen sobald das Foto gemacht wurde. Es wird der Fotobutton durch das Bild ersetzt.
-     */
+    /**Diese Methode wird aufgerufen sobald das Foto gemacht wurde. Es wird der Fotobutton durch das Bild ersetzt.*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Bitmap myBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
@@ -235,9 +204,7 @@ public class AddActivity extends AppCompatActivity {
             Log.d(TAG, "Foto nicht da!");
     }
 
-    /**
-     * Diese Methode erstellt ein File in dem das Foto gespeichert wird und liefert dieses als Rückgabewert.
-     */
+    /**Diese Methode erstellt ein File in dem das Foto gespeichert wird und liefert dieses als Rückgabewert.*/
     private File createImageFile() throws IOException {
         //Ein neues File für ein Bild anlegen.
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -251,9 +218,7 @@ public class AddActivity extends AppCompatActivity {
         return image;
     }
 
-    /**
-     * Diese Methode ruft einen Auswahldialog für einen Datumspicker auf.
-     */
+    /**Diese Methode ruft einen Auswahldialog für einen Datumspicker auf.*/
     public void showStartDateDialog(View v) {
         if (mYear == -1) {//Wenn noch kein Tag gewählt wurde.
             Calendar c = Calendar.getInstance();
@@ -266,9 +231,7 @@ public class AddActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    /**
-     * Dieser Listener reagiert auf Änderungen des Datumspickers und schreibt das geänderte Datum in die dafür vorgesehnen Felder
-     */
+    /**Dieser Listener reagiert auf Änderungen des Datumspickers und schreibt das geänderte Datum in die dafür vorgesehnen Felder*/
     class mDateSetListener implements DatePickerDialog.OnDateSetListener {
 
         @Override
@@ -279,8 +242,6 @@ public class AddActivity extends AppCompatActivity {
             mDay = dayOfMonth;
             StringBuilder date = new StringBuilder().append(mMonth + 1).append("/").append(mDay).append("/").append(mYear).append(" ");
             Log.d(TAG, date.toString());
-
-
         }
     }
 }

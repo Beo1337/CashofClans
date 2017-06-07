@@ -14,28 +14,20 @@ import android.widget.Spinner;
 import com.cashify.R;
 import com.cashify.database.DatabaseHelper;
 
-
+/**
+ * Diese Klasse bietet ein Interface um neue monatliche Einträge in die Datenbank einzufügen.
+ * */
 public class AddMonthlyEntryActivity extends AppCompatActivity {
 
-    /**
-     * In diesem Textfeld wird der aktuelle Kontostand angezeigt.
-     */
+    /**In diesem Textfeld wird der aktuelle Kontostand angezeigt.*/
     private EditText betrag;
-    /**
-     * Wird benötigt um die gewählte Zahl in das Textfeld zu schreiben.
-     */
+    /**Wird benötigt um die gewählte Zahl in das Textfeld zu schreiben.*/
     private String s;
-    /**
-     * Datenbank
-     */
+    /**Datenbank*/
     private DatabaseHelper myDb;
-    /**
-     * Speichert eine Auswahlliste der verfügbaren Kategorien.
-     */
+    /**Speichert eine Auswahlliste der verfügbaren Kategorien.*/
     private Spinner spin;
-    /**
-     * Diser Numberpicker repräsentiert den Tag an dem der Eintrag gebucht werden soll (1-31)
-     */
+    /**Diser Numberpicker repräsentiert den Tag an dem der Eintrag gebucht werden soll (1-31)*/
     private NumberPicker np;
 
     @Override
@@ -66,9 +58,7 @@ public class AddMonthlyEntryActivity extends AppCompatActivity {
         spin.setAdapter(sca);
     }
 
-    /**
-     * Diese Methode setzt den Spinner auf eine Kategorie.
-     */
+    /**Diese Methode setzt den Spinner auf eine Kategorie.*/
     private void selectValue(Spinner spinner, String value) {
         for (int i = 0; i < spinner.getCount(); i++) {
             if (((Cursor) spinner.getItemAtPosition(i)).getString(1).equals(value)) {
@@ -78,9 +68,7 @@ public class AddMonthlyEntryActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Diese Methode löscht die letzte Stelle des Betragfelds.
-     */
+    /**Diese Methode löscht die letzte Stelle des Betragfelds.*/
     public void del(View v) {
         s = betrag.getText().toString();
         if (s.length() > 0)
@@ -88,9 +76,7 @@ public class AddMonthlyEntryActivity extends AppCompatActivity {
         betrag.setText(s);
     }
 
-    /**
-     * Diese Methode speichert die eingegebenen Werte in die Datenbank.
-     */
+    /**Diese Methode speichert die eingegebenen Werte in die Datenbank.*/
     public void eintragen(View v) {
 
         if (!betrag.getText().toString().equals("")) {//Wenn kein Betrag eingeben wurde, wird kein Eintrag in der Datenbank erstellt.

@@ -13,27 +13,21 @@ import com.cashify.database.DatabaseHelper;
 import java.util.Calendar;
 
 /**
- * Created by Beo on 29.05.2017.
+ * Diese Klasse startet die tägliche Überprüfung der monatlichen Einträge welche immer um 00:02 durchgeführt wird.
+ * Der Broadcastreceiver führt nach Empfangen des Intents die Methode zum Überprüfen der Einträge aus.
  */
 public class Dauerauftraege {
 
+    /**Der TAG wird für das Log verwendet um anzuzeigen von welcher Klasse der Logeintrag stammt.*/
     private static final String TAG = "Dauerauftraege";
-    /**
-     * Der Alarmmanger führt zu einer bestimmten Zeit eine Aktion durch.
-     */
+    /**Der Alarmmanger führt zu einer bestimmten Zeit eine Aktion durch.*/
     private AlarmManager alarmManager;
-    /**
-     * Intent der an den Receivier geschickt wird, wenn die monatlichen Einträge gecheckt werden sollen.
-     */
+    /**Intent der an den Receivier geschickt wird, wenn die monatlichen Einträge gecheckt werden sollen.*/
     private PendingIntent pendingIntent;
-    /**
-     * Dieser Receiver hört auf die vom Alarmmanger ausgelöste Aktion.
-     */
+    /**Dieser Receiver hört auf die vom Alarmmanger ausgelöste Aktion.*/
     private BroadcastReceiver mReceiver;
 
-    /**
-     * Diese Methode setzt die Zeit für die Überprüfung der monatlichen Einträge.
-     */
+    /**Diese Methode setzt die Zeit für die Überprüfung der monatlichen Einträge.*/
     public void setAlarm(Context context) {
         Log.d(TAG, "Alarm gesetzt.");
         RegisterAlarmBroadcast(context);
@@ -48,9 +42,7 @@ public class Dauerauftraege {
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() + 180000, AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
-    /**
-     * Diese Methode rechnet Millisekunden in Stunden, Minuten und Sekunden um
-     */
+    /**Diese Methode rechnet Millisekunden in Stunden, Minuten und Sekunden um*/
     private String getTimeFromMilli(long millies) {
 
         int stunde = (int) (millies / 3600000);
@@ -60,9 +52,7 @@ public class Dauerauftraege {
         return "" + stunde + ":" + minute + ":" + sekunde;
     }
 
-    /**
-     * Diese Methode registriert einen Receiver beim Alarmmanger um nach dem Auslösen dessen, die monatlichen Einträge zu checken.
-     */
+    /**Diese Methode registriert einen Receiver beim Alarmmanger um nach dem Auslösen dessen, die monatlichen Einträge zu checken.*/
     private void RegisterAlarmBroadcast(Context context) {
         Log.d(TAG, "BroadcastReceiver registriert.");
         mReceiver = new BroadcastReceiver() {

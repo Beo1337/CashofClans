@@ -119,16 +119,12 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
         });
     }
 
-    /**
-     * Diese Methode liefert die Anzahl an Items in dem Viewholder.
-     */
+    /**Diese Methode liefert die Anzahl an Items in dem Viewholder.*/
     public int getItemCount() {
         return manager.getCount();
     }
 
-    /**
-     * Diese Methode liefert einen Abfragedialog bevor das Löschen durchgeführt wird.
-     */
+    /**Diese Methode liefert einen Abfragedialog bevor das Löschen durchgeführt wird.*/
     private AlertDialog AskOption(Context context, final Entry ent) {
         return new AlertDialog.Builder(context)
                 .setTitle(R.string.diag_title_entry_delete)

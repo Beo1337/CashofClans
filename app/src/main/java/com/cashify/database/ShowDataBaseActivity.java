@@ -13,17 +13,11 @@ import com.cashify.R;
  */
 public class ShowDataBaseActivity extends AppCompatActivity {
 
-    /**
-     * Klasse für den Datenbankzugriff
-     */
+    /**Klasse für den Datenbankzugriff*/
     private DatabaseHelper myDb;
-    /**
-     * Datenbankobjekt
-     */
+    /**Datenbankobjekt*/
     private SQLiteDatabase db;
-    /**
-     * Textfeld welches den Inhalt der Datenbank anzeigt.
-     */
+    /**Textfeld welches den Inhalt der Datenbank anzeigt.*/
     private EditText ausg;
 
     @Override
@@ -40,9 +34,7 @@ public class ShowDataBaseActivity extends AppCompatActivity {
         showDB();
     }
 
-    /**
-     * Diese Methode gibt den Inhalt aller Datenbanktabellen für Testzwecke aus.
-     */
+    /**Diese Methode gibt den Inhalt aller Datenbanktabellen für Testzwecke aus.*/
     public void showDB() {
         myDb = new DatabaseHelper(this);
         db = myDb.getReadableDatabase();
