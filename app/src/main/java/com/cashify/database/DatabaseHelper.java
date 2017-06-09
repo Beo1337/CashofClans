@@ -190,38 +190,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
     }
 
-    /**Diese Methode ändert das Icon einer Kategorie.*/
-    public boolean changeCategoryIcon(int id, String icon) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        //Wert für Datenbank vorbereiten
-        ContentValues values = new ContentValues();
-        long rowId;
-        values.put("ICON", icon);
-
-        //In die Datenbank speichern
-        try {
-            rowId = db.update(TABLE_NAME_CATEGORY, values, "ID = " + id, null);
-            Log.i(TAG, "Kategoriename geändert!!!");
-        } catch (SQLiteException e) {
-            Log.i(TAG, "Fehler beim Ändern des Icons der Kategorie" + e.getMessage());
-            db.close();
-            return false;
-        }
-        db.close();
-
-        if (rowId > 0)
-            return true;
-        else
-            return false;
-    }
-
     /**Diese Methode löscht eine Kategorie aus der Datenbank.*/
     public boolean deleteCategory(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         int del;
         try {
-
-            del = db.delete(TABLE_NAME_CATEGORY, "id = " + id + " AND NOT EXISTS (SELECT KATEGORIE FROM " + TABLE_NAME_MAIN + " WHERE KATEGORIE = (SELECT ID FROM " + TABLE_NAME_CATEGORY + " WHERE id = " + id + ") AND NOT EXISTS (SELECT KATEGORIE FROM " + TABLE_NAME_REPEAT_ENTRY + " WHERE KATEGORIE = (SELECT ID FROM " + TABLE_NAME_CATEGORY + " WHERE id = " + id + "))", null);
+            del = db.delete(
+                    TABLE_NAME_CATEGORY,
+                    "id = " + id +
+                            " AND NOT EXISTS (SELECT KATEGORIE FROM " + TABLE_NAME_MAIN + " WHERE KATEGORIE = " + id + ")" +
+                            " AND NOT EXISTS (SELECT KATEGORIE FROM " + TABLE_NAME_REPEAT_ENTRY + " WHERE KATEGORIE = " + id + ")",
+                    null);
             Log.i("DataBaseHelper", "Kategorie gelöscht!!!  " + del);
         } catch (SQLiteException e) {
             Log.i(TAG, "Fehler beim Löschen einer Kategorie" + e.getMessage());

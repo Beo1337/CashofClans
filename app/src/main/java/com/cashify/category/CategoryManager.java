@@ -1,11 +1,15 @@
 package com.cashify.category;
 
+import android.util.Log;
+
 import com.cashify.database.DatabaseHelper;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 // Category manager is intended to be the central point to get category entries from
 
@@ -58,13 +62,15 @@ public class CategoryManager {
     }
 
     public boolean updateCategory(Category c) {
-        this.dbHelper.changeCategoryName(c.getId(),c.getName());
-        return false;
+        boolean success = this.dbHelper.changeCategoryName(c.getId(),c.getName());
+        if (success) this.reloadFromDb();
+        return success;
     }
 
     public boolean removeCategory(Category c) {
         boolean success = this.dbHelper.deleteCategory(c.getId());
         if (success) this.reloadFromDb();
+        Log.e(TAG, "removeCategory: " + success);
         return success;
     }
 }
