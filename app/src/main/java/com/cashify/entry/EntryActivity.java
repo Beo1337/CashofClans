@@ -1,4 +1,4 @@
-package com.cashify.add;
+package com.cashify.entry;
 
 
 import android.app.DatePickerDialog;
@@ -13,7 +13,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,10 +35,10 @@ import java.util.Date;
 /**
  * Diese Klasse wird verwendet um neue Einträge in die Überischtstabelle einzufügen.
  */
-public class AddActivity extends AppCompatActivity {
+public class EntryActivity extends AppCompatActivity {
 
     /**Der TAG wird für das Log verwendet um anzuzeigen von welcher Klasse der Logeintrag stammt.*/
-    private static final String TAG = "AddActivity";
+    private static final String TAG = "EntryActivity";
     /**In diesem Textfeld wird der aktuelle Kontostand angezeigt.*/
     private EditText betrag;
     /**Wird benötigt um die gewählte Zahl in das Textfeld zu schreiben.*/
@@ -81,7 +80,7 @@ public class AddActivity extends AppCompatActivity {
 
         //Cursor von der Kategorietabelle holen.
         Cursor c = myDb.getReadableDatabase().rawQuery("SELECT ID AS _id, NAME FROM category", null);
-        Log.i("AddActivity", "CURSOR COUNT: " + c.getCount());
+        Log.i("EntryActivity", "CURSOR COUNT: " + c.getCount());
         //Adapter aus dem Cursor erstellen.
         String[] from = new String[]{"NAME"};
         int[] to = new int[]{android.R.id.text1};
@@ -188,7 +187,7 @@ public class AddActivity extends AppCompatActivity {
                 }
             }
         } catch (Exception e1) {//Falls irgend ein Fehler mit der Camera auftreten sollte, wird dieser gefangen.
-            Toast.makeText(AddActivity.this, "Foto aufnehmen nicht möglich!", Toast.LENGTH_LONG).show();
+            Toast.makeText(EntryActivity.this, "Foto aufnehmen nicht möglich!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -226,7 +225,7 @@ public class AddActivity extends AppCompatActivity {
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
         }
-        DatePickerDialog dialog = new DatePickerDialog(AddActivity.this,
+        DatePickerDialog dialog = new DatePickerDialog(EntryActivity.this,
                 new mDateSetListener(), mYear, mMonth, mDay);
         dialog.show();
     }

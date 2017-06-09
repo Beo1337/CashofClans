@@ -14,7 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cashify.R;
-import com.cashify.add.AddActivity;
+import com.cashify.entry.EntryActivity;
 import com.cashify.base.MoneyHelper;
 import com.cashify.base.Refreshable;
 import com.cashify.database.DatabaseHelper;
@@ -70,7 +70,7 @@ public class MainFragment extends Fragment implements Refreshable {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(v.getContext(), AddActivity.class);
+                        Intent i = new Intent(v.getContext(), EntryActivity.class);
                         i.putExtra("mode", "add");
                         startActivityForResult(i, 0);
                         refresh();
@@ -82,7 +82,7 @@ public class MainFragment extends Fragment implements Refreshable {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(v.getContext(), AddActivity.class);
+                        Intent i = new Intent(v.getContext(), EntryActivity.class);
                         i.putExtra("mode", "sub");
                         startActivityForResult(i, 0);
                         refresh();
@@ -163,7 +163,7 @@ public class MainFragment extends Fragment implements Refreshable {
     // Shortcut helper function for the shortcut on-click handlers
     public void shortcut(ImageButton b) {
         Log.i("MainActivity", "Shortcut: " + b.getTag().toString() + " gewählt");
-        Intent i = new Intent(b.getContext(), AddActivity.class);
+        Intent i = new Intent(b.getContext(), EntryActivity.class);
         i.putExtra("mode", "sub");
         i.putExtra("cat", b.getTag().toString());
         startActivityForResult(i, 0);

@@ -45,7 +45,7 @@ public class AddMonthlyEntryActivity extends AppCompatActivity {
 
         //Cursor von der Kategorietabelle holen.
         Cursor c = myDb.getReadableDatabase().rawQuery("SELECT ID AS _id, NAME FROM category", null);
-        Log.i("AddActivity", "CURSOR COUNT: " + c.getCount());
+        Log.i("EntryActivity", "CURSOR COUNT: " + c.getCount());
         //Adapter aus dem Cursor erstellen.
         String[] from = new String[]{"NAME"};
         int[] to = new int[]{android.R.id.text1};
