@@ -27,7 +27,6 @@ public class OverviewAdapter extends RecyclerView.Adapter<ViewHolder> {
         this.manager = manager;
     }
 
-
     // Generates a new ViewHolder and preloads a layout
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -55,10 +54,7 @@ public class OverviewAdapter extends RecyclerView.Adapter<ViewHolder> {
         final Entry ent = manager.getEntryByIndex(position);
 
         entryText.setText(ent.getTitle());
-        if (ent.getAmount() < 0)
-            entryAmount.setTextColor(Color.RED);
-        else
-            entryAmount.setTextColor(Color.GREEN);
+        entryAmount.setTextColor(ent.getAmount() < 0 ? Color.RED : Color.GREEN);
         entryAmount.setText("" + Math.round(ent.getAmount() * 100) / 100.0 + "");
         entryCategory.setText(ent.getCategory().getName());
         entryDate.setText(ent.getDatum());
