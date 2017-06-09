@@ -12,24 +12,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cashify.R;
+import com.cashify.base.ViewHolder;
 
 /**
  * Diese Klasse befüllt den Viewholder mit den einzelnen Einträgen aus der Datenbank.
  */
-public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapter.ViewHolder> {
+public class MonthlyEntryAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     /**Über den Manager können die monatlichen Einträge aus der Datenbank geholt werden.*/
     private MonthlyEntryManager manager;
-
-    /**Diese Methode liefert den ViewHolder welcher mit den Daten aus der Datenbank befüllt wurde*/
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private View view;
-
-        public ViewHolder(View v) {
-            super(v);
-            view = v;
-        }
-    }
 
     public MonthlyEntryAdapter(MonthlyEntryManager manager) {
         this.manager = manager;
@@ -38,7 +29,7 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapte
 
     // Generates a new ViewHolder and preloads a layout
     @Override
-    public MonthlyEntryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.content_monthly_entry_elem, parent, false);
@@ -49,12 +40,13 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
+        final View view = ((ViewHolder) holder).getView();
 
         //Felder des Eintrags holen
-        TextView entryText = (TextView) holder.view.findViewById(R.id.entry_text);
-        TextView entryAmount = (TextView) holder.view.findViewById(R.id.entry_amount);
-        TextView entryCategory = (TextView) holder.view.findViewById(R.id.entry_category);
-        TextView entryDate = (TextView) holder.view.findViewById(R.id.entry_date);
+        TextView entryText = (TextView) view.findViewById(R.id.entry_text);
+        TextView entryAmount = (TextView) view.findViewById(R.id.entry_amount);
+        TextView entryCategory = (TextView) view.findViewById(R.id.entry_category);
+        TextView entryDate = (TextView) view.findViewById(R.id.entry_date);
 
         //Felder befüllen
         final MonthlyEntry ent = manager.getMonthlyEntryByIndex(position);
@@ -69,11 +61,11 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapte
         entryDate.setText("Monatstag: " + ent.getTag());
 
         //Wenn lange auf einen Eintrag gedrückt wird
-        holder.view.setOnLongClickListener(new View.OnLongClickListener() {
+        view.setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View arg0) {
 
                 //Es wird ein Dialog mit den
-                AlertDialog.Builder optionsDialog = new AlertDialog.Builder(holder.view.getContext());
+                AlertDialog.Builder optionsDialog = new AlertDialog.Builder(view.getContext());
                 optionsDialog.setTitle("Bitte Option auswählen").setItems(
                         R.array.options_without_pic, new DialogInterface.OnClickListener() {
                             @Override
@@ -82,17 +74,17 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<MonthlyEntryAdapte
                                 item++;
 
                                 if (item == 1) {//Bearbeiten
-                                    Intent i = new Intent(holder.view.getContext(), ChangeMonthlyEntryActivity.class);
+                                    Intent i = new Intent(view.getContext(), ChangeMonthlyEntryActivity.class);
                                     i.putExtra("id", "" + ent.getId());
                                     i.putExtra("titel", ent.getTitle());
                                     i.putExtra("betrag", "" + ent.getAmount());
                                     i.putExtra("tag", "" + ent.getTag());
                                     i.putExtra("kategorie", ent.getCategory().getId());
-                                    holder.view.getContext().startActivity(i);
+                                    view.getContext().startActivity(i);
 
 
                                 } else if (item == 2) {//Löschen
-                                    AlertDialog diaBox = AskOption(holder.view.getContext(), ent);
+                                    AlertDialog diaBox = AskOption(view.getContext(), ent);
                                     diaBox.show();
                                 }
                             }

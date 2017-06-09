@@ -255,9 +255,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null // no order
         );
 
-        while (c.moveToNext()) allCategories.add(
-                new Category(c.getInt(0), c.getString(1), c.getString(2))
-        );
+        while (c.moveToNext()) allCategories.add(new Category(c.getInt(0), c.getString(1)));
 
         Log.i(TAG, "The list is:");
         for (Category cat : allCategories) Log.i(TAG, cat.toString());

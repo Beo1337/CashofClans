@@ -20,7 +20,7 @@ import com.cashify.database.DatabaseHelper;
 // primarily provides a scrolling list of all categories.
 // * Functionality:
 // - add new categories
-// (- rename categories through CategoryDetailActivity - to be added)
+// - rename categories through CategoryDetailActivity
 // - delete categories through CategoryDetailActivity
 
 public class CategoryActivity extends AppCompatActivity implements CategoryAddFragment.Listener {

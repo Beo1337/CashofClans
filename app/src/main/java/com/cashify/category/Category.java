@@ -3,12 +3,10 @@ package com.cashify.category;
 public class Category {
     private int id;
     private String categoryName;
-    private String icon;
 
-    public Category(int id, String categoryName, String icon) {
+    public Category(int id, String categoryName) {
         this.id = id;
         this.categoryName = categoryName;
-        this.icon = icon;
     }
 
     public int getId() {
@@ -19,16 +17,8 @@ public class Category {
         return categoryName;
     }
 
-    public String getIcon() {
-        return icon;
-    }
-
     public void setName(String categoryName) {
         this.categoryName = categoryName;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
     }
 
     @Override
@@ -36,12 +26,11 @@ public class Category {
         return "Category{" +
                 "id=" + id +
                 ", categoryName='" + categoryName + '\'' +
-                ", icon='" + icon + '\'' +
                 '}';
     }
 
     // Provide a default object so that we do not need to except
     public static Category DefaultError() {
-        return new Category(Integer.MIN_VALUE, "Fehler", "");
+        return new Category(Integer.MIN_VALUE, "Fehler");
     }
 }

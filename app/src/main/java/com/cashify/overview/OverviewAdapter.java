@@ -13,25 +13,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cashify.R;
+import com.cashify.base.ViewHolder;
 
 // Adapter interfaces between presentation layer and model
 // - Generates singular view elements for each item that is currently visible on screen
 // - Takes data from a manager
 
-public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHolder> {
+public class OverviewAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private OverviewManager manager;
-
-    // ViewHolder wraps the view that we want to pass to the RecyclerView,
-    // we only need this because RecyclerView.ViewHolder is abstract
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private View view;
-
-        public ViewHolder(View v) {
-            super(v);
-            view = v;
-        }
-    }
 
     public OverviewAdapter(OverviewManager manager) {
         this.manager = manager;
@@ -40,7 +30,7 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
 
     // Generates a new ViewHolder and preloads a layout
     @Override
-    public OverviewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.content_overview_elem, parent, false);
@@ -50,12 +40,15 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
     // Once the ViewHolder is bound, populate the view it contains with data and event action code
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+
+        final View view = ((ViewHolder) holder).getView();
+
         //Felder des Eintrags holen
-        TextView entryText = (TextView) holder.view.findViewById(R.id.entry_text);
-        TextView entryAmount = (TextView) holder.view.findViewById(R.id.entry_amount);
-        TextView entryCategory = (TextView) holder.view.findViewById(R.id.entry_category);
-        TextView entryDate = (TextView) holder.view.findViewById(R.id.entry_date);
-        ImageView cam = (ImageView) holder.view.findViewById(R.id.entry_cam_icon);
+        TextView entryText = (TextView) view.findViewById(R.id.entry_text);
+        TextView entryAmount = (TextView) view.findViewById(R.id.entry_amount);
+        TextView entryCategory = (TextView) view.findViewById(R.id.entry_category);
+        TextView entryDate = (TextView) view.findViewById(R.id.entry_date);
+        ImageView cam = (ImageView) view.findViewById(R.id.entry_cam_icon);
         cam.setVisibility(View.INVISIBLE);
 
         //Felder befüllen
@@ -75,10 +68,10 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
 
 
         //Wenn lange auf einen Eintrag gedrückt wird
-        holder.view.setOnLongClickListener(new View.OnLongClickListener() {
+        view.setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View arg0) {
 
-                AlertDialog.Builder optionsDialog = new AlertDialog.Builder(holder.view.getContext());
+                AlertDialog.Builder optionsDialog = new AlertDialog.Builder(view.getContext());
                 optionsDialog.setTitle("Bitte Option auswählen")
                         .setItems(
                                 ent.getFoto() != null ? R.array.options : R.array.options_without_pic,
@@ -90,22 +83,22 @@ public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.ViewHo
 
                                         switch (item) {
                                             case 0:
-                                                Intent pic = new Intent(holder.view.getContext(), PictureActivity.class);
+                                                Intent pic = new Intent(view.getContext(), PictureActivity.class);
                                                 pic.putExtra("picture", ent.getFoto());
-                                                holder.view.getContext().startActivity(pic);
+                                                view.getContext().startActivity(pic);
                                                 break;
                                             case 1:
-                                                Intent i = new Intent(holder.view.getContext(), ChangeEntryActivity.class);
+                                                Intent i = new Intent(view.getContext(), ChangeEntryActivity.class);
                                                 i.putExtra("id", "" + ent.getId());
                                                 i.putExtra("titel", ent.getTitle());
                                                 i.putExtra("betrag", "" + ent.getAmount());
                                                 i.putExtra("datum", "" + ent.getDatum());
                                                 i.putExtra("kategorie", ent.getCategory().getName());
                                                 i.putExtra("foto", ent.getFoto());
-                                                holder.view.getContext().startActivity(i);
+                                                view.getContext().startActivity(i);
                                                 break;
                                             case 2:
-                                                AlertDialog diaBox = AskOption(holder.view.getContext(), ent);
+                                                AlertDialog diaBox = AskOption(view.getContext(), ent);
                                                 diaBox.show();
                                                 break;
                                         }
