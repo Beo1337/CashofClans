@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cashify.R;
+import com.cashify.base.ViewHolder;
 
 import static android.content.ContentValues.TAG;
 
@@ -16,20 +17,9 @@ import static android.content.ContentValues.TAG;
 // - Generates singular view elements for each item that is currently visible on screen
 // - Takes data from a CategoryManager, which for all practical purposes acts as a singleton
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
+public class CategoryAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private CategoryManager manager;
-
-    // ViewHolder wraps the view that we want to pass to the RecyclerView,
-    // we only needs this because RecyclerView.ViewHolder is abstract
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private View view;
-
-        public ViewHolder(View v) {
-            super(v);
-            view = v;
-        }
-    }
 
     public CategoryAdapter(CategoryManager manager) {
         this.manager = manager;
@@ -38,7 +28,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     // Generates a new ViewHolder and preloads a layout
     @Override
-    public CategoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.content_category_elem, parent, false);
@@ -49,7 +39,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Category cat = manager.getCategoryByIndex(position);
-        TextView textView = (TextView) holder.view.findViewById(R.id.category_label);
+        TextView textView = (TextView) holder.getView().findViewById(R.id.category_label);
         textView.setText(cat.getName());
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
