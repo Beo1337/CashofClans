@@ -47,19 +47,14 @@ import java.util.Set;
 public class OverviewFragment extends Fragment implements Refreshable {
 
     private static final String TAG = "StatistikActivity";
-    private TextView totalAmountView;       // View that display combined sum of income and expenses
     private DatabaseHelper dbHelper;        // Database helper object to retrieve database entries
-    private SharedPreferences sharedPref;   // Shared preferences
     private PieChart pieChart;              // Fancy pie chart!!
-    /**Über den Manager werden die Einträge aus der Datenbank ausgelesen.*/
-    private OverviewManager manager;
 
     // Context for Database helper (and others) provided through onAttach event
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         dbHelper = new DatabaseHelper(context);
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     // On View instantiation, load and return fragment layout
@@ -73,8 +68,7 @@ public class OverviewFragment extends Fragment implements Refreshable {
     public void onStart() {
         super.onStart();
 
-        Button listButton;
-        Button csvButton;
+        Button listButton, csvButton;
 
         listButton = (Button) getActivity().findViewById(R.id.list_button);
         listButton.setOnClickListener(new View.OnClickListener() {
@@ -97,13 +91,6 @@ public class OverviewFragment extends Fragment implements Refreshable {
         addChart();
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.main_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-
     public void refresh() {
         addChart();
     }
@@ -116,8 +103,6 @@ public class OverviewFragment extends Fragment implements Refreshable {
         int counter = 0;
 
         entryList.addAll(MoneyHelper.filter(dbHelper.getEntries()));
-
-        String time = sharedPref.getString("zeit", "");
 
         for (com.cashify.overview.Entry e : entryList) {
             if (e.getAmount() < 0) {
@@ -164,7 +149,8 @@ public class OverviewFragment extends Fragment implements Refreshable {
     /**Diese Methode schreibt die Einträge der Tabell in ein CSV-File*/
     public void exportData() {
         DatabaseHelper myDb = new DatabaseHelper(getContext());
-        manager = new OverviewManager(myDb);
+        /*Über den Manager werden die Einträge aus der Datenbank ausgelesen.*/
+        OverviewManager manager = new OverviewManager(myDb);
 
         MarshMallowPermission mmp = new MarshMallowPermission(OverviewFragment.this.getActivity());
         if (!mmp.checkPermissionForExternalStorage())//Wenn die Berechtigung noch nicht vorhanden ist
@@ -198,10 +184,8 @@ public class OverviewFragment extends Fragment implements Refreshable {
                 Toast.makeText(getContext(), "File erstellt /Cashify/Chasify_Export.csv", Toast.LENGTH_SHORT).show();
                 csvWrite.close();
                 Log.d("OverviewFragment", "Fertig mit Export!!");
-            } catch (SQLException sqlEx) {
+            } catch (SQLException | IOException sqlEx) {
                 Log.e("OverviewFragment", sqlEx.getMessage(), sqlEx);
-            } catch (IOException e) {
-                Log.e("OverviewFragment", e.getMessage(), e);
             }
         }
     }

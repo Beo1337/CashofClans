@@ -1,22 +1,28 @@
-package com.cashify.base;
+package com.cashify.main;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.widget.DatePicker;
+
+import com.cashify.base.MoneyHelper;
+import com.cashify.base.Refreshable;
 
 import java.util.Calendar;
 
+// DatePickerFragment
+// Dialog fragment to select a date which is used for the entry date filter
+
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
+    final private Calendar c = Calendar.getInstance();
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final Calendar c = Calendar.getInstance();
         int year, month, day;
-        if (MoneyHelper.isFilterSet()){
+        if (MoneyHelper.isFilterSet()) {
             year = MoneyHelper.getYear();
             month = MoneyHelper.getMonth();
             day = MoneyHelper.getDay();
@@ -36,9 +42,8 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     // Identify refreshable fragments and refresh them, there should be only one (refreshable)
     // fragment loaded at any time, currently no better way to identify it.
-
     private void refreshFragments() {
-        for (Fragment f :  getFragmentManager().getFragments()){
+        for (Fragment f : getFragmentManager().getFragments()) {
             if (f instanceof Refreshable) ((Refreshable) f).refresh();
         }
     }

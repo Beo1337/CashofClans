@@ -60,19 +60,19 @@ public class MoneyHelper {
         Log.e(TAG, "setStartDate: " + YEAR + " " + MONTH + " " + DAY);
     }
 
+    // !!!!!!!!!!!!!!!!!!!!!!
     // Date is just plain evil and there is a very good reason why everything is deprecated!
     // This very, very hacky and shame on me for even considering leaving it this way.
+
     public static Set<Entry> filter(Set<Entry> in) {
         if (!FILTER_SET) return in;
         Set<Entry> out = new HashSet<>();
-        Date baseDate = new Date(YEAR-1900, MONTH, DAY);
         try {
+            Date baseDate = new Date(YEAR-1900, MONTH, DAY);
             for (Entry e : in) {
                 Date entryDate = sdf.parse(e.getDatum());
                 Log.e(TAG, "filter: " + baseDate + " " + entryDate);
-                if (entryDate.after(baseDate)) {
-                    out.add(e);
-                }
+                if (entryDate.after(baseDate)) out.add(e);
             }
         } catch (ParseException ex) {
             return Collections.emptySet();

@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
@@ -15,6 +14,9 @@ import com.cashify.R;
 import com.cashify.details.DetailsFragment;
 import com.cashify.overview.OverviewFragment;
 import com.cashify.settings.SettingsFragment;
+
+// MainFragmentsAdapter
+// Provides the tab handling logic for the view pager and tab bar displayed in the main activity
 
 public class MainFragmentsAdapter extends FragmentPagerAdapter {
 
@@ -27,12 +29,10 @@ public class MainFragmentsAdapter extends FragmentPagerAdapter {
     };
 
     private final Context context;
-    private final ActionBar actionBar;
 
-    public MainFragmentsAdapter(FragmentManager fm, Context context, ActionBar actionBar) {
+    public MainFragmentsAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
-        this.actionBar = actionBar;
     }
 
     @Override
@@ -49,15 +49,16 @@ public class MainFragmentsAdapter extends FragmentPagerAdapter {
             case 1:
                 return new OverviewFragment();
             case 2:
-                return (Fragment) new SettingsFragment();
+                return new SettingsFragment();
             default:
-               return new DetailsFragment();
+                return new DetailsFragment();
         }
     }
 
     // Set tab title - in our case set up a nice icon
     @Override
     public CharSequence getPageTitle(int position) {
+        // we need a new special empty string in which we place the icon
         SpannableStringBuilder sbBuilder = new SpannableStringBuilder(" ");
         Drawable drawable = ContextCompat.getDrawable(context, tabIcons[position]);
         drawable.setBounds(0, 0, 48, 48);
