@@ -252,7 +252,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         for (Category c : getCategoriesReuse(true)) catMap.put(c.getId(), c);
 
-        Cursor cursor = db.rawQuery("SELECT u.ID,u.BETRAG,u.TITEL,u.DATUM,U.FOTO,c.ID FROM " + TABLE_NAME_MAIN + " u JOIN " + TABLE_NAME_CATEGORY + " c ON u.KATEGORIE = c.ID", null);
+        Cursor cursor = db.query(
+                TABLE_NAME_MAIN, // Category table
+                new String[]{ // all columns, but make sure order is this way
+                        "ID",
+                        "BETRAG",
+                        "TITEL",
+                        "DATUM",
+                        "FOTO",
+                        "KATEGORIE"
+                }, // All columns
+                null, // no selection
+                null, // no selection args
+                null, // no grouping
+                null, // no having
+                null // no order
+        );
+
         while (cursor.moveToNext()) {
             //Log.d("DatabaseHelper"," "+cursor.getInt(0));
             Entry e = new Entry(cursor.getInt(0), cursor.getDouble(1), cursor.getString(2), catMap.get(cursor.getInt(5)), cursor.getString(3), cursor.getString(4));
@@ -349,9 +365,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String strDate;
         String entries = "";
-        int aktuellerTag;
-        int aktuellerMonat;
-        int aktuellesJahr;
+        int aktuellerTag, aktuellerMonat, aktuellesJahr;
         int count = 0;
 
         //aktuellen Tag festellen.
@@ -361,13 +375,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //aktuelles Jahr feststellen.
         aktuellesJahr = Integer.valueOf(sdfy.format(new Date()));
 
-        List<MonthlyEntry> entryList = new LinkedList<>();
-        entryList.addAll(getMonthlyEntries());
+        Set<MonthlyEntry> monthlySet = getMonthlyEntries();
 
-        Iterator<MonthlyEntry> i = entryList.iterator();//Die Liste der monatlichen Einträge durchgehen.
-        Log.d(TAG, "Anzahl monatlicher Einträge: " + entryList.size());
-        while (i.hasNext()) {//Für jeden Eintrag
-            MonthlyEntry e = i.next();
+        Log.d(TAG, "Anzahl monatlicher Einträge: " + monthlySet.size());
+
+        for(MonthlyEntry e : monthlySet) {//Für jeden Eintrag
             Log.d(TAG, "Tag des Eintrags: " + e.getTag());
             if (e.getTag() == aktuellerTag)//Wenn Tag genau der Tag des Monats ist.
             {
