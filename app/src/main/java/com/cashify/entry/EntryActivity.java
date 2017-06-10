@@ -98,9 +98,9 @@ public class EntryActivity extends AppCompatActivity {
             if (bundle.getString("mode").equals("sub"))//Wenn abgezogen wird, Vorzeichen ändern.
             {
                 vorzeichen = -1;//Wenn abgezogen wird, Vorzeichen ändern
-                commit.setBackgroundColor(Color.RED);
+                commit.setBackgroundColor(getResources().getColor(R.color.colorRed));
             } else
-                commit.setBackgroundColor(Color.GREEN);
+                commit.setBackgroundColor(getResources().getColor(R.color.colorGreen));
 
             if (bundle.getString("cat") != null)//Wenn Shortcut gewählt wurde, ist Kategorie schon vorausgewählt.
             {
