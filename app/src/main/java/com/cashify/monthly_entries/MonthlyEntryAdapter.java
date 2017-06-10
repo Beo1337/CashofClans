@@ -21,9 +21,13 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     /**Über den Manager können die monatlichen Einträge aus der Datenbank geholt werden.*/
     private MonthlyEntryManager manager;
+    /** Context für die Farbe der Beträge*/
+    private Context context;
 
-    public MonthlyEntryAdapter(MonthlyEntryManager manager) {
+    public MonthlyEntryAdapter(MonthlyEntryManager manager, Context context) {
         this.manager = manager;
+        this.context = context;
+
     }
 
 
@@ -53,9 +57,9 @@ public class MonthlyEntryAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         entryText.setText(ent.getTitle());
         if (ent.getAmount() < 0)
-            entryAmount.setTextColor(Color.RED);
+            entryAmount.setTextColor(this.context.getResources().getColor(R.color.colorRed));
         else
-            entryAmount.setTextColor(Color.GREEN);
+            entryAmount.setTextColor(this.context.getResources().getColor(R.color.colorGreen));
         entryAmount.setText("" + Math.round(ent.getAmount() * 100) / 100.0 + "");
         entryCategory.setText(ent.getCategory().getName());
         entryDate.setText("Monatstag: " + ent.getTag());

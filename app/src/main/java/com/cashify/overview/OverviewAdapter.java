@@ -22,9 +22,12 @@ import com.cashify.base.ViewHolder;
 public class OverviewAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private OverviewManager manager;
+    /** Context für Farben der Einträge */
+    private Context context;
 
-    public OverviewAdapter(OverviewManager manager) {
+    public OverviewAdapter(OverviewManager manager, Context context) {
         this.manager = manager;
+        this.context = context;
     }
 
     // Generates a new ViewHolder and preloads a layout
@@ -54,7 +57,7 @@ public class OverviewAdapter extends RecyclerView.Adapter<ViewHolder> {
         final Entry ent = manager.getEntryByIndex(position);
 
         entryText.setText(ent.getTitle());
-        entryAmount.setTextColor(ent.getAmount() < 0 ? Color.RED : Color.GREEN);
+        entryAmount.setTextColor(ent.getAmount() < 0 ? (this.context.getResources().getColor(R.color.colorRed)) : (this.context.getResources().getColor(R.color.colorGreen)));
         entryAmount.setText("" + Math.round(ent.getAmount() * 100) / 100.0 + "");
         entryCategory.setText(ent.getCategory().getName());
         entryDate.setText(ent.getDatum());

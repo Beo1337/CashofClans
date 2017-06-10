@@ -34,7 +34,7 @@ public class OverviewListActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.overview_toolbar);
 
         manager = new OverviewManager(new DatabaseHelper(this));
-        adapter = new OverviewAdapter(manager);
+        adapter = new OverviewAdapter(manager, getApplicationContext());
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 

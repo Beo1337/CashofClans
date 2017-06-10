@@ -38,7 +38,7 @@ public class MonthlyEntryActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.overview_toolbar);
 
         manager = new MonthlyEntryManager(new DatabaseHelper(this));
-        adapter = new MonthlyEntryAdapter(manager);
+        adapter = new MonthlyEntryAdapter(manager, this.getApplicationContext());
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
