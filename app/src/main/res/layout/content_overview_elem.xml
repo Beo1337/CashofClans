@@ -5,16 +5,6 @@
     android:layout_height="64dp">
 
     <ImageView
-        android:id="@+id/entry_cat_icon"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/icon_beer"
-        app:layout_constraintLeft_toRightOf="@+id/entry_date" />
-
-    <ImageView
         android:id="@+id/entry_cam_icon"
         android:visibility="invisible"
         android:layout_width="16dp"
@@ -66,7 +56,7 @@
         android:textAppearance="@android:style/TextAppearance.Material.Small"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/entry_cat_icon"
+        app:layout_constraintLeft_toRightOf="@+id/space"
         tools:targetApi="lollipop">
 
     </TextView>

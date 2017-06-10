@@ -5,7 +5,7 @@
     android:layout_height="64dp">
 
     <ImageView
-        android:id="@+id/entry_cat_icon"
+        android:id="@+id/space"
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_marginBottom="8dp"
@@ -54,7 +54,7 @@
         android:textAppearance="@android:style/TextAppearance.Material.Small"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/entry_cat_icon"
+        app:layout_constraintLeft_toRightOf="@+id/space"
         tools:targetApi="lollipop">
 
     </TextView>

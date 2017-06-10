@@ -5,25 +5,24 @@
     android:layout_height="64dp">
 
     <ImageView
-        android:id="@+id/entry_cat_icon"
+        android:id="@+id/space"
         android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_height="20dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/icon_beer"
         app:layout_constraintLeft_toRightOf="@+id/entry_date" />
 
     <ImageView
         android:id="@+id/entry_cam_icon"
-        android:visibility="invisible"
         android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_height="18dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="5dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/cameraicon"
-        app:layout_constraintLeft_toRightOf="@+id/entry_category" />
+        app:layout_constraintLeft_toRightOf="@+id/entry_category"
+        app:srcCompat="@drawable/cameraicon" />
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -43,7 +42,7 @@
     <TextView
         android:id="@+id/entry_date"
         android:layout_width="0dp"
-        android:layout_height="16dp"
+        android:layout_height="18dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="16dp"
         android:textAppearance="@android:style/TextAppearance.Material.Small"
@@ -56,14 +55,14 @@
     <TextView
         android:id="@+id/entry_category"
         android:layout_width="wrap_content"
-        android:layout_height="16dp"
+        android:layout_height="18dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:text="Kategorie"
         android:textAppearance="@android:style/TextAppearance.Material.Small"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/entry_cat_icon">
+        app:layout_constraintLeft_toRightOf="@+id/space">
 
     </TextView>
 
