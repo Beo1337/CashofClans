@@ -36,7 +36,7 @@
                 android:background="@android:color/transparent"
                 android:drawableLeft="@drawable/listicon50"
                 android:elevation="0dp"
-                android:text="List"
+                android:text="Liste"
                 android:textSize="30sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"

@@ -19,7 +19,7 @@
         android:layout_marginStart="8dp"
 
         android:onClick="eintragen"
-        android:text="bearbeiten"
+        android:text="Eintrag bearbeiten"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
