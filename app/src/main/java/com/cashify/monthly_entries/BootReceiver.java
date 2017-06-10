@@ -20,10 +20,10 @@ public class BootReceiver extends BroadcastReceiver {
 
         Log.d(TAG, "Name des Intents: " + intent.getAction());
         //Wenn unser Service nicht schon gestartet ist.
-        if (!isMyServiceRunning(DauerauftraegeService.class, context)) {
+        if (!isMyServiceRunning(ReoccurringJobService.class, context)) {
             //Den unseren Service für die monatlichen Einträge starten.
             Log.d(TAG, "Service gestartet!");
-            Intent myIntent = new Intent(context, DauerauftraegeService.class);
+            Intent myIntent = new Intent(context, ReoccurringJobService.class);
             context.startService(myIntent);
         }
     }

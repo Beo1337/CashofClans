@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/switch_container"
-        app:actionLayout="@layout/calendar_switch_elem"
+        app:actionLayout="@layout/content_calendar_switch_elem"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_calendar"

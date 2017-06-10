@@ -57,7 +57,9 @@ public class OverviewAdapter extends RecyclerView.Adapter<ViewHolder> {
         final Entry ent = manager.getEntryByIndex(position);
 
         entryText.setText(ent.getTitle());
-        entryAmount.setTextColor(ent.getAmount() < 0 ? (this.context.getResources().getColor(R.color.colorRed)) : (this.context.getResources().getColor(R.color.colorGreen)));
+        entryAmount.setTextColor(
+                this.context.getResources().getColor(ent.getAmount() < 0 ? R.color.colorRed : R.color.colorGreen)
+        );
         entryAmount.setText("" + Math.round(ent.getAmount() * 100) / 100.0 + "");
         entryCategory.setText(ent.getCategory().getName());
         entryDate.setText(ent.getDatum());
