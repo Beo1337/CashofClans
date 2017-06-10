@@ -16,16 +16,16 @@ import java.util.Calendar;
  * Diese Klasse startet die tägliche Überprüfung der monatlichen Einträge welche immer um 00:02 durchgeführt wird.
  * Der Broadcastreceiver führt nach Empfangen des Intents die Methode zum Überprüfen der Einträge aus.
  */
-public class Dauerauftraege {
+public class ReoccurringJob {
 
     /**Der TAG wird für das Log verwendet um anzuzeigen von welcher Klasse der Logeintrag stammt.*/
-    private static final String TAG = "Dauerauftraege";
+    private static final String TAG = "ReoccurringJob";
     /**Der Alarmmanger führt zu einer bestimmten Zeit eine Aktion durch.*/
     private AlarmManager alarmManager;
     /**Intent der an den Receivier geschickt wird, wenn die monatlichen Einträge gecheckt werden sollen.*/
     private PendingIntent pendingIntent;
     /**Dieser Receiver hört auf die vom Alarmmanger ausgelöste Aktion.*/
-    private BroadcastReceiver mReceiver;
+    private BroadcastReceiver receiver;
 
     /**Diese Methode setzt die Zeit für die Überprüfung der monatlichen Einträge.*/
     public void setAlarm(Context context) {
@@ -55,7 +55,7 @@ public class Dauerauftraege {
     /**Diese Methode registriert einen Receiver beim Alarmmanger um nach dem Auslösen dessen, die monatlichen Einträge zu checken.*/
     private void RegisterAlarmBroadcast(Context context) {
         Log.d(TAG, "BroadcastReceiver registriert.");
-        mReceiver = new BroadcastReceiver() {
+        receiver = new BroadcastReceiver() {
 
 
             //Wenn der Alarmmanger den PendingIntent auslöst wird die Überprüfung der monatlichen Einträge angestoßen.
@@ -63,15 +63,15 @@ public class Dauerauftraege {
             public void onReceive(Context context, Intent intent) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(System.currentTimeMillis());
-                Log.d("mReceiver", "Name des Intents:   " + intent.getAction());
-                Log.d("mReceiver", "ALARM Zeit zum Eintragen " + calendar.getTime());
+                Log.d("receiver", "Name des Intents:   " + intent.getAction());
+                Log.d("receiver", "ALARM Zeit zum Eintragen " + calendar.getTime());
                 //Überprüfen der monatlichen Einträge.
                 DatabaseHelper db = new DatabaseHelper(context);
                 db.checkMonthlyEntries(context);
             }
         };
 
-        context.getApplicationContext().registerReceiver(mReceiver, new IntentFilter("sample"));
+        context.getApplicationContext().registerReceiver(receiver, new IntentFilter("sample"));
         pendingIntent = PendingIntent.getBroadcast(context, 0, new Intent("sample"), 0);
         alarmManager = (AlarmManager) (context.getSystemService(Context.ALARM_SERVICE));
     }
