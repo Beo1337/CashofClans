@@ -11,7 +11,6 @@ import android.text.Spanned;
 import android.text.style.ImageSpan;
 
 import com.cashify.R;
-import com.cashify.details.DetailsFragment;
 import com.cashify.overview.OverviewFragment;
 import com.cashify.settings.SettingsFragment;
 
@@ -24,8 +23,7 @@ public class MainFragmentsAdapter extends FragmentPagerAdapter {
     private final int tabIcons[] = new int[]{
             R.drawable.home,
             R.drawable.chart_donut,
-            R.drawable.settings,
-            R.drawable.help_circle
+            R.drawable.settings
     };
 
     private final Context context;
@@ -51,7 +49,7 @@ public class MainFragmentsAdapter extends FragmentPagerAdapter {
             case 2:
                 return new SettingsFragment();
             default:
-                return new DetailsFragment();
+                return new MainFragment();
         }
     }
 

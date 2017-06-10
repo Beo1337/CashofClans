@@ -540,12 +540,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    //TODO : Simon bitte Einträge innerhalb eines Datum und einer bestimmten Kategorie sollen zurückgegeben werden
-    public Set<Entry> getEntriesWithinDateAndCategory(String from, String to, String category) {
-        if (from.equals(null) && to.equals(null)) return getEntriesWithCategory(category); //Falls Startdatum ODER Enddatum leer sind geben wir alle Einträge einer bestimmten Kategorie zurück
-        return null;
-    }
-
     /**Diese Methode liefert zu einer übergebenen Kategorie alle gebuchten Einträge.*/
     private Set<Entry> getEntriesWithCategory(String category) {
         SQLiteDatabase db = this.getReadableDatabase();
