@@ -49,7 +49,7 @@ public class MainFragment extends Fragment implements Refreshable {
 
         if (totalAmountView == null) return;
         totalAmountView.setText(String.valueOf(amount) + "€");
-        totalAmountView.setTextColor(amount < 0 ? Color.RED : Color.GREEN);
+        totalAmountView.setTextColor(getResources().getColor(amount < 0 ? R.color.colorRed : R.color.colorGreen));
     }
 
     // Once we are ready to go, set up event logic here and display stuff

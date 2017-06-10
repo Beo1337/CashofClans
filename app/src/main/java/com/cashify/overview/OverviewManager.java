@@ -33,7 +33,7 @@ public class OverviewManager {
             }
         });
     }
-    
+
     // Return single entry by list position
     public Entry getEntryByIndex(int index) {
         return entryList.get(index);

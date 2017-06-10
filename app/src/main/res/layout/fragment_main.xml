@@ -108,7 +108,7 @@
     </GridLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_weight="1"
@@ -170,40 +170,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@android:color/holo_red_dark"
-                app:cardElevation="4dp">
-
-                <Button
-                    android:id="@+id/main_sub"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:backgroundTintMode="src_over"
-                    android:drawableLeft="@drawable/minus_circle"
-                    android:drawableTint="@color/colorWhite"
-                    android:elevation="4dp"
-                    android:onClick="sub"
-                    android:text="OUT"
-                    android:textColor="@color/colorWhite"
-                    android:textColorLink="@android:color/holo_green_dark"
-                    android:textSize="30sp"
-                    tools:layout_editor_absoluteX="8dp"
-                    tools:layout_editor_absoluteY="0dp" />
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@android:color/holo_green_dark"
+                app:cardBackgroundColor="@color/colorGreen"
                 app:cardElevation="4dp">
 
                 <Button
                     android:id="@+id/main_add"
                     style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:backgroundTintMode="src_over"
@@ -218,6 +191,33 @@
                     tools:layout_editor_absoluteX="8dp"
                     tools:layout_editor_absoluteY="117dp" />
 
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/colorRed"
+                app:cardElevation="4dp">
+
+                <Button
+                    android:id="@+id/main_sub"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="201dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:backgroundTintMode="src_over"
+                    android:drawableLeft="@drawable/minus_circle"
+                    android:drawableTint="@color/colorWhite"
+                    android:elevation="4dp"
+                    android:onClick="sub"
+                    android:text="OUT"
+                    android:textColor="@color/colorWhite"
+                    android:textColorLink="@color/colorGreen"
+                    android:textSize="30sp"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="0dp" />
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
