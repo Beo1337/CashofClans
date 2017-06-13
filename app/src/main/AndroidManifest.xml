@@ -7,9 +7,9 @@
     <application
         android:allowBackup="true"
         android:background="#85a8e5"
-        android:icon="@drawable/notificationicon"
+        android:icon="@drawable/piggyicon"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/notificationicon"
+        android:roundIcon="@drawable/piggyicon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
