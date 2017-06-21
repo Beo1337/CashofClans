@@ -1,4 +1,4 @@
-package com.cashify.category;
+package com.cashify.main;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,16 +8,16 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.InputType;
 import android.widget.EditText;
-
 import com.cashify.R;
 
 // CategoryAddFragment is a glorified input dialog, kinda like back in Windows 95
 
-public class CategoryAddFragment extends DialogFragment {
+public class PasswordCheckFragment extends DialogFragment {
 
     // Necessary to pass the dialog input back to the activity that created the dialog
     public interface Listener {
-        public void onCategoryAdd(String catName);
+        public void onPasswordEntered(String password);
+        public void onCancel();
     }
 
     private Listener listener;
@@ -29,14 +29,15 @@ public class CategoryAddFragment extends DialogFragment {
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
 
-        builder.setTitle(getResources().getString(R.string.diag_title_category_add))
-                .setPositiveButton(getResources().getString(R.string.action_add), new DialogInterface.OnClickListener() {
+        builder.setTitle(getResources().getString(R.string.diag_title_password))
+                .setPositiveButton(getResources().getString(R.string.action_ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        listener.onCategoryAdd(input.getText().toString());
+                        listener.onPasswordEntered(input.getText().toString());
                     }
                 })
                 .setNegativeButton(getResources().getString(R.string.action_cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        listener.onCancel();
                     }
                 });
         return builder.create();

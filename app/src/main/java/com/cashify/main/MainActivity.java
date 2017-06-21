@@ -1,7 +1,9 @@
 package com.cashify.main;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -17,12 +19,19 @@ import android.widget.Switch;
 import com.cashify.R;
 import com.cashify.base.MoneyHelper;
 import com.cashify.base.Refreshable;
+import com.cashify.category.CategoryAddFragment;
+import com.cashify.password.PasswordFiler;
+
+import java.security.NoSuchAlgorithmException;
 
 // Main activity with tabs
 // Load the layout and set up things as well as the fragment adapter,
 // MainFragmentsAdapter handles everything else
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PasswordCheckFragment.Listener {
+
+    private final DialogFragment passwordFragment = new PasswordCheckFragment();
+    private PasswordFiler passwordFiler;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +41,17 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         final ActionBar actionbar = getSupportActionBar();
         actionbar.setTitle(getResources().getString(R.string.app_name));
+        passwordFragment.setCancelable(false);
+
+        try {
+            passwordFiler = new PasswordFiler(getApplicationContext());
+            if (passwordFiler.hasSetPassword()) passwordFragment.show(
+                    getSupportFragmentManager(),
+                    "password_check_diag"
+            );
+        } catch (NoSuchAlgorithmException ex) {
+
+        }
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(
@@ -101,5 +121,20 @@ public class MainActivity extends AppCompatActivity {
         for (Fragment f :  getSupportFragmentManager().getFragments()){
             if (f instanceof Refreshable) ((Refreshable) f).refresh();
         }
+    }
+
+    @Override
+    public void onPasswordEntered(String password) {
+        if (!passwordFiler.checkPassword(password)) {
+            passwordFragment.dismiss();
+            passwordFragment.show(getSupportFragmentManager(), "password_check_diag");
+        } else {
+            passwordFragment.dismiss();
+        }
+    }
+
+    @Override
+    public void onCancel() {
+        finish();
     }
 }

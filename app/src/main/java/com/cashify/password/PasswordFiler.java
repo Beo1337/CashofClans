@@ -3,6 +3,7 @@ package com.cashify.password;
 import android.content.Context;
 import android.util.Log;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.security.MessageDigest;
@@ -27,30 +28,44 @@ public class PasswordFiler {
     }
 
     public boolean setPassword(String p) {
+        Log.i(TAG, "setPassword: " + p);
         byte[] hash = sha256.digest(p.getBytes());
         return writeFile(hash);
     }
 
-    public boolean clearPassword(String p) {
-        return writeFile(new byte[]{});
+    public boolean clearPassword() {
+        Log.i(TAG, "clearPassword");
+        return context.deleteFile(filename);
     }
 
     public boolean hasSetPassword() {
-        return readFile().length != 0;
-    } // TODO: sha256 has fixed length
+        File f = context.getFileStreamPath(filename);
+        Log.i(TAG, "hasSetPassword: " + (f != null && f.exists()));
+        return f != null && f.exists();
+    }
 
-    public boolean checkPassword(String p) {
+    public boolean checkPassword(String p)
+    {
         byte[] hashFile = readFile();
-        byte[] hashInput = p.getBytes();
+        byte[] hashInput = sha256.digest(p.getBytes());
+
+        Log.i(TAG, "checkPassword file: " + arrayToHex(hashFile));
+        Log.i(TAG, "checkPassword pass: " + arrayToHex(hashInput));
 
         if (hashFile.length != hashInput.length) return false;
-        for (int i = 0; i < hashFile.length; i++) if (hashFile[i] != hashInput[i]) return false;
+
+        for(int i = 0; i < hashFile.length; i++) {
+            if (hashFile[i] != hashInput[i]) return false;
+        }
+
         return true;
     }
 
 
     private boolean writeFile(byte[] c) {
+        Log.i(TAG, "writeFile");
         try {
+            context.deleteFile(filename);
             FileOutputStream outputStream = context.openFileOutput(filename, Context.MODE_PRIVATE);
             outputStream.write(c);
             outputStream.flush();
@@ -62,9 +77,8 @@ public class PasswordFiler {
     }
 
     private byte[] readFile() {
+        Log.i(TAG, "readFile");
         byte[] c = new byte[]{
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
         };
@@ -78,5 +92,16 @@ public class PasswordFiler {
         } catch (Exception e) {
             return new byte[]{};
         }
+    }
+
+    private String arrayToHex(byte[] bytes) {
+        char[] hexArray = "0123456789ABCDEF".toCharArray();
+        char[] hexChars = new char[bytes.length * 2];
+        for ( int j = 0; j < bytes.length; j++ ) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(hexChars);
     }
 }
